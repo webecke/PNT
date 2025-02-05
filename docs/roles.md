@@ -27,7 +27,7 @@ Module implementation, unit and integration testing, code quality, performance o
 
 **Developer**
 - Than Gerlek (front-end team)
-- Dallin Webecke (back-end team)
+- Ammon Harps (back-end team)
 
 *Implementation, testing, and code quality. Reports to Technical Lead.*
 
