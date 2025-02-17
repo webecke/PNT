@@ -1,0 +1,115 @@
+name: Backend CI/CD
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+    types: [opened, reopened, synchronize, closed]
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+
+env:
+  PROJECT_ID: cs428-pnt
+  REGION: us-west2
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build and Test
+        run: ./mvnw test
+
+  deploy:
+    needs: test
+    if: github.event.pull_request.state != 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      pull-requests: 'write'
+      issues: 'write'
+
+    name: ${{ github.event_name == 'push' && 'Deploy to Google Cloud Run' || 'Deploy to Test Staging' }}
+    env:
+      SERVICE_NAME: ${{ github.event_name == 'push' && 'pnt-backend' || format('pnt-backend-pr-{0}', github.event.pull_request.number) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: ./mvnw package -DskipTests  # Skip tests since they already ran
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: 'projects/19046648310/locations/global/workloadIdentityPools/github-actions-pool-1/providers/github-provider'
+          service_account: 'github-actions@cs428-pnt.iam.gserviceaccount.com'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        run: |
+          if gcloud run services describe ${{ env.SERVICE_NAME }} --region ${{ env.REGION }} --platform managed 2>/dev/null; then
+            echo "Service exists, updating..."
+            DEPLOY_OUTPUT=$(gcloud run deploy ${{ env.SERVICE_NAME }} \
+              --source . \
+              --region ${{ env.REGION }} \
+              --platform managed \
+              --allow-unauthenticated \
+              --project ${{ env.PROJECT_ID }} \
+              --format=json \
+              --quiet)
+          else
+            echo "Creating new service..."
+            DEPLOY_OUTPUT=$(gcloud run deploy ${{ env.SERVICE_NAME }} \
+              --source . \
+              --region ${{ env.REGION }} \
+              --platform managed \
+              --allow-unauthenticated \
+              --project ${{ env.PROJECT_ID }} \
+              --format=json \
+              --quiet)
+          fi
+          echo "DEPLOY_URL=$(echo $DEPLOY_OUTPUT | jq -r '.status.url')" >> $GITHUB_ENV
+
+      - name: Comment PR
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🤔 Interesting... your PR has made changes to the backend service! 🥳
+            I have graciously deployed the changes to a staging environment for you to test.
+            
+            🎉 ${{ env.DEPLOY_URL }} 🎉
+            
+            > This is an automated message from the CI/CD pipeline, graciously constructed by Claude.
+            > To clean up these resources, someone with admin access on the GCloud command line can run:
+            > ```gcloud run services list --platform managed --region us-west2 --format="table(name)" | grep "pnt-backend-pr-" | xargs -I {} gcloud run services delete {} --platform managed --region us-west2 --quiet```
