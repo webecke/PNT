@@ -1,4 +1,3 @@
-import Image from "next/image";
 import ContactList from "./components/contactList";
 
 export default function Home() {
