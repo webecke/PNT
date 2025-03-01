@@ -9,6 +9,14 @@ import provider.EventContactDAO;
 import provider.EventDAO;
 import provider.UserDAO;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
+
+import org.springframework.boot.json.JsonParser;
+import org.springframework.boot.json.JsonParserFactory;
+
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
@@ -19,15 +27,38 @@ public class MongoFactory implements DAOFactory{
     private MongoDatabase database;
 
     public MongoFactory() {
-        // Initialize MongoDB client 
-        String connectionString = "CONNECTION_STRING_HERE";         // TODO replace
+        // Initialize MongoDB client & database
+        try {
+            String connectionString = readConfig("uri");
+            String dbName = readConfig("db");
             try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-                this.database = mongoClient.getDatabase("DATABASE_NAME_HERE");    // TODO replace
+                this.database = mongoClient.getDatabase(dbName);
                 System.out.println("Connected to MongoDB successfully!");
-                // Perform database operations here
             } catch (Exception e) {
                 System.err.println("Error connecting to MongoDB: " + e.getMessage());
             }
+        } catch (IOException e) {
+            System.err.println("Error: Failed to read Mongo connection info from config file.");
+            e.printStackTrace();
+        }
+        
+    }
+
+    public static String readConfig(String key) throws IOException {
+        String filePath = "config.json";
+
+        // Create a JsonParser instance
+        JsonParser jsonParser = JsonParserFactory.getJsonParser();
+
+        // Read the JSON file content into a String
+        String jsonContent = new String(Files.readAllBytes(Paths.get(filePath)));
+
+        // Read and parse the JSON file content into a Map
+        Map<String, Object> jsonMap = jsonParser.parseMap(jsonContent);
+
+        // Extract the Mongo URI from the parsed map
+        Map<String, Object> mongodb = (Map<String, Object>) jsonMap.get("mongodb");
+        return (String) mongodb.get(key);
     }
 
     @Override
