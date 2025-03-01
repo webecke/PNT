@@ -4,7 +4,6 @@ import { mockContacts } from "../utils/mockContacts";
 const ContactList = () => {
   return (
     <div className="w-1/2 mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Contacts</h2>
       <ul className="border rounded-lg p-4 bg-white shadow">
         {mockContacts.map((contact) => (
           <li
