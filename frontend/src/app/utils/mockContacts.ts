@@ -1,6 +1,6 @@
 import { HarryPotter } from "./harrypotterimg";
 
-interface Contact {
+export interface Contact {
   id: number;
   name: string;
   phone: string;

@@ -1,3 +1,5 @@
+import { Contact } from "@/app/utils/mockContacts";
+
 export interface TimelineEvent {
   id: number;
   name: string;
@@ -58,9 +60,9 @@ const mockTimelineEvents: TimelineEvent[] = [
   }
 ];
 
-export function getMockTimeline(contactId?: number) {
-  if (contactId) {
-    return mockTimelineEvents.filter((event) => event.contacts.includes(contactId));
+export function getMockTimeline(contact?: Contact) {
+  if (contact) {
+    return mockTimelineEvents.filter((event) => event.contacts.includes(contact.name));
   }
   return mockTimelineEvents;
 }
