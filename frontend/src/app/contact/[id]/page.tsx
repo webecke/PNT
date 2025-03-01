@@ -15,7 +15,7 @@ const ContactDetail = () => {
   const timelineEvents = getMockTimeline(contact);
 
   return (
-    <div className="flex m-12 p-6 shadow-lg w-max rounded-lg bg-white">
+    <div className="flex m-12 p-6 shadow-lg rounded-lg bg-white">
       <div className="max-w-xs ">
         <ProfileIcon src={contact.image} alt={contact.name} />
         <h1 className="text-3xl font-bold mb-4">{contact.name}</h1>
