@@ -3,7 +3,7 @@ export interface TimelineEvent {
   name: string;
   date: string;
   desc: string | null;
-  contacts: number[];
+  contacts: string[];
   categories: string[];
 }
 
@@ -13,7 +13,7 @@ const mockTimelineEvents: TimelineEvent[] = [
     name: "B-day Celebration",
     date: "31 July",
     desc: "Harry's bday. It was mildly explosive.",
-    contacts: [1],
+    contacts: ["Harry Potter"],
     categories: ["party", "memories"]
   },
   {
@@ -21,7 +21,7 @@ const mockTimelineEvents: TimelineEvent[] = [
     name: "HS Graduation",
     date: "17 August",
     desc: "Really long and boring, me and Harry just played cards. Hermione had a blast tho",
-    contacts: [1, 2],
+    contacts: ["Harry Potter", "Hermione Granger"],
     categories: ["school"]
   },
   {
@@ -29,7 +29,7 @@ const mockTimelineEvents: TimelineEvent[] = [
     name: "Band Concert",
     date: "2 September",
     desc: "Harry dragged me along to see the Diagon Digons. Weirdly sketchy; surprising amount of maths.",
-    contacts: [1],
+    contacts: ["Harry Potter"],
     categories: ["memories"]
   },
   {
@@ -37,7 +37,7 @@ const mockTimelineEvents: TimelineEvent[] = [
     name: "Went to park",
     date: "12 September",
     desc: "Pretty chill.",
-    contacts: [2],
+    contacts: ["Hermione Granger"],
     categories: []
   },
   {
@@ -45,7 +45,7 @@ const mockTimelineEvents: TimelineEvent[] = [
     name: "Study group",
     date: "25 August",
     desc: "I swear herbology will be the death of me.",
-    contacts: [2],
+    contacts: ["Hermione Granger"],
     categories: ["school"]
   },
   {
@@ -53,7 +53,7 @@ const mockTimelineEvents: TimelineEvent[] = [
     name: "Book club",
     date: "2 October",
     desc: "Beasts were less fantastic than advertised",
-    contacts: [2],
+    contacts: ["Hermione Granger"],
     categories: ["school"]
   }
 ];
