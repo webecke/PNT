@@ -2,12 +2,12 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="bg-gray-800 text-white">
+    <header className="w-screen overflow-auto bg-gray-800 text-white">
       <div className="flex justify-between items-center">
         {/* Left Section: Title and Navigation */}
         <div className="flex items-center">
           <div className="text-3xl py-4 ml-4">Personal Network Tracker</div>
-          <nav className="ml-16">
+          <nav>
             <ul className="flex space-x-6">
               <li>
                 <Link href="/" className="hover:text-gray-300">
