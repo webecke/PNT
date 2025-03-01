@@ -2,13 +2,17 @@
 
 import { useParams } from "next/navigation";
 import { mockContacts } from "../../utils/mockContacts";
+import { getMockTimeline } from "../../utils/mockTimelineEvents";
 import ProfileIcon from "../../components/profileIcon";
+import Timeline from "@/app/components/timeline/timeline";
 
 const ContactDetail = () => {
   const { id } = useParams();
   const contact = mockContacts.find((c) => c.id.toString() === id);
 
   if (!contact) return <div>Contact not found.</div>;
+
+  const timelineEvents = getMockTimeline(contact);
 
   return (
     <div className="flex m-12 p-6 shadow-lg w-max rounded-lg bg-white">
@@ -27,13 +31,7 @@ const ContactDetail = () => {
         </div>
         <div className="mt-4">
           <h2 className="text-xl font-semibold">Timeline</h2>
-          <ul className="list-disc ml-6">
-            {contact.timeline.map((event, index) => (
-              <li key={index} className="mt-1">
-                {event}
-              </li>
-            ))}
-          </ul>
+          <Timeline timelineEvents={timelineEvents} />
         </div>
       </div>
     </div>
