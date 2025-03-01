@@ -7,7 +7,7 @@ interface TimelineProps {
 
 export default function Timeline(props: TimelineProps) {
   return (
-    <ul className="list-disc ml-6">
+    <ul className="list-disc">
       {props.timelineEvents.map((timelineEvent, index) => (
         <TimelineItem key={index} timelineEvent={timelineEvent}></TimelineItem>
       ))}
