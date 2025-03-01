@@ -8,7 +8,7 @@ interface ProfileIconProps {
   alt: string;
 }
 
-const ProfileIcon: React.FC<ProfileIconProps> = ({ src, alt }) => {
+const ProfileIcon = ({ src, alt }: ProfileIconProps) => {
   return (
     <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden bg-gray-200">
       {src ? (
