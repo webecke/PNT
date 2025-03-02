@@ -32,12 +32,13 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
 
             if (userDocument != null) {
                 // Extract fields from the document and create a User object
-                String name = userDocument.getString("name");
+                String firstName = userDocument.getString("firstName");
+                String lastName = userDocument.getString("lastName");
                 String username = userDocument.getString("username");
                 String password = userDocument.getString("password");
 
                 // Create and return the User object
-                return new User(id, name, username, password);
+                return new User(id, firstName, lastName, username, password);
             } else {
                 throw new DataAccessException("User not found in database.");
             }
@@ -46,14 +47,15 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
         }
     }
 
-    public void addUser(String id, String name, String username, String password) throws DataAccessException {
+    public void addUser(String id, String firstName, String lastName, String username, String password) throws DataAccessException {
         try {
             // Access the 'users' collection in the database
             MongoCollection<Document> usersCollection = this.database.getCollection("users");
 
             // Create a new user document
             Document newUser = new Document("_id", id)
-                    .append("name", name)
+                    .append("firstName", firstName)
+                    .append("lastName", lastName)
                     .append("username", username)
                     .append("password", password);
 
@@ -80,20 +82,22 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
         }
     }
 
-    public void updateUser(String id, String name, String username, String password) throws DataAccessException {
+    public void updateUser(String id, String firstName, String lastName, String username, String password) throws DataAccessException {
         try {
             // Access the 'users' collection in the database
             MongoCollection<Document> usersCollection = this.database.getCollection("users");
 
             // Create the update query for the user
             Document updateFields = new Document();
-            if (name != null) updateFields.append("name", name);
+            if (firstName != null) updateFields.append("firstName", firstName);
+            if (lastName != null) updateFields.append("lastName", lastName);
             if (username != null) updateFields.append("username", username);
             if (password != null) updateFields.append("password", password);
 
             // Apply the update to the user
             usersCollection.updateOne(Filters.eq("_id", id), Updates.combine(
-                    Updates.set("name", name),
+                    Updates.set("firstName", firstName),
+                    Updates.set("lastName", lastName),
                     Updates.set("username", username),
                     Updates.set("password", password)
             ));

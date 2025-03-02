@@ -2,13 +2,13 @@ package edu.byu.pnt.model;
 
 
 public class User extends Person {
-    private String username;
-    private String hashed_password;
+    private final String username;
+    private final String password;
 
-    public User(String id, String name, String username, String password) {
-        super(id, name);
+    public User(String id, String firstName, String lastName, String username, String password) {
+        super(id, firstName, lastName);
         this.username = username;
-        this.hashed_password = password;    // TODO hash password
+        this.password = password;    // TODO hash password
     }
 
     public String getUsername() {
@@ -16,6 +16,6 @@ public class User extends Person {
     }
 
     public String getHashedPassword() {
-        return this.hashed_password;
+        return this.password;
     }
 }

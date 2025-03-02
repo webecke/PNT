@@ -1,18 +1,19 @@
 package edu.byu.pnt.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Event {
-    private String id;
-    private String name;
-    private Date date;
-    private String description;
-    private Contact[] contacts;
-    private Category[] categories;
+    private final String id;
+    private final String title;
+    private final String date;
+    private final String description;
+    private final List<String> contacts;
+    private final List<String> categories;
 
-    public Event(String id, String name, Date date, String description, Contact[] contacts, Category[] categories) {
+    public Event(String id, String title, String date, String description, List<String> contacts, List<String> categories) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.date = date;
         this.description = description;
         this.contacts = contacts;
@@ -23,11 +24,11 @@ public class Event {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -35,11 +36,11 @@ public class Event {
         return description;
     }
 
-    public Contact[] getContacts() {
+    public List<String> getContacts() {
         return contacts;
     }
 
-    public Category[] getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 }

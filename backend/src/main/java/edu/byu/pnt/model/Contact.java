@@ -1,13 +1,13 @@
 package edu.byu.pnt.model;
 
 public class Contact extends Person {
-    private Category[] categories;
-    private String email;
-    private String phone;
-    private String note;
+    private final Category[] categories;
+    private final String email;
+    private final String phone;
+    private final String note;
 
-    Contact(String id, String name, Category[] categories, String email, String phone, String note) {
-        super(id, name);
+    Contact(String id, String firstName, String lastName, Category[] categories, String email, String phone, String note) {
+        super(id, firstName, lastName);
         this.categories = categories;
         this.email = email;
         this.phone = phone;

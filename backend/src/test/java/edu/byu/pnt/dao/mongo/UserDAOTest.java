@@ -5,70 +5,56 @@ import edu.byu.pnt.dao.factory.DAOFactory;
 import edu.byu.pnt.dao.factory.FactoryProvider;
 import edu.byu.pnt.dao.provider.UserDAO;
 import edu.byu.pnt.model.User;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-//<dependency>
-//        <groupId>org.mongodb</groupId>
-//        <artifactId>mongodb-driver-sync</artifactId>
-//        <version>4.8.0</version>
-//        </dependency>
 
 import static org.junit.jupiter.api.Assertions.*;
 public class UserDAOTest {
 
     private DAOFactory factory;
     private UserDAO userDAO;
-    private String testID = "TESTING_ID";
-    private String testName = "TESTING NAME";
-    private String testUsername = "TESTING_USERNAME";
-    private String testPassword = "TESTING_PASSWORD";
+    private final String testID = "TESTING_ID";
+    private final String testFirstName = "TEST_FIRST_NAME";
+    private final String testLastName = "TEST_LAST_NAME";
+    private final String testUsername = "TESTING_USERNAME";
+    private final String testPassword = "TESTING_PASSWORD";
     private User testUser;
 
     @BeforeEach
     void setUp() throws DataAccessException {
         factory = new FactoryProvider().getFactory();
         userDAO = factory.createUserDAO();
-        testUser = new User(testID, testName, testUsername, testPassword);
+        testUser = new User(testID, testFirstName, testLastName, testUsername, testPassword);
         // Delete testing user if in database
         userDAO.deleteUser(testUser.getID());
     }
 
     @Test
-    void addUser() {
-        try {
-            userDAO.addUser(testID, testName, testUsername, testPassword);
-            User newUser = userDAO.getUser(testID);
-            assert(newUser.getID().equals(testID));
-            assert(newUser.getName().equals(testName));
-            assert(newUser.getUsername().equals(testUsername));
-            assert(newUser.getHashedPassword().equals(testPassword));
-        }
-        catch (DataAccessException e) {
-            fail(e.getMessage());
-        }
+    void addUser() throws DataAccessException {
+        userDAO.addUser(testID, testFirstName, testLastName, testUsername, testPassword);
+        User newUser = userDAO.getUser(testID);
+        assert(newUser.getID().equals(testID));
+        assert(newUser.getFirstName().equals(testFirstName));
+        assert(newUser.getLastName().equals(testLastName));
+        assert(newUser.getUsername().equals(testUsername));
+        assert(newUser.getHashedPassword().equals(testPassword));
     }
 
     @Test
-    void getUser() {
-        try {
-            userDAO.addUser(testID, testName, testUsername, testPassword);
-            User newUser = userDAO.getUser(testID);
-            assert(newUser.getID().equals(testID));
-            assert(newUser.getName().equals(testName));
-            assert(newUser.getUsername().equals(testUsername));
-            assert(newUser.getHashedPassword().equals(testPassword));
-        }
-        catch (DataAccessException e) {
-            fail(e.getMessage());
-        }
+    void getUser() throws DataAccessException {
+        userDAO.addUser(testID, testFirstName, testLastName, testUsername, testPassword);
+        User newUser = userDAO.getUser(testID);
+        assert(newUser.getID().equals(testID));
+        assert(newUser.getFirstName().equals(testFirstName));
+        assert(newUser.getLastName().equals(testLastName));
+        assert(newUser.getUsername().equals(testUsername));
+        assert(newUser.getHashedPassword().equals(testPassword));
     }
 
     @Test
     void deleteUser() {
         try {
-            userDAO.addUser(testID, testName, testUsername, testPassword);
+            userDAO.addUser(testID, testFirstName ,testLastName, testUsername, testPassword);
             userDAO.deleteUser(testID);
             User newUser = userDAO.getUser(testID);
             fail("Found deleted user in database.");
@@ -81,5 +67,24 @@ public class UserDAOTest {
         }
     }
 
-    // TODO update user test
+    @Test
+    void updateUser() {
+        String updatedFirstName = "UPDATED_FIRST_NAME";
+        String updatedLastName = "UPDATED_LAST_NAME";
+        String updatedUsername = "UPDATED_USERNAME";
+        String updatedPassword = "UPDATED_PASSWORD";
+        try {
+            userDAO.addUser(testID, updatedFirstName, updatedLastName, testUsername, testPassword);
+            userDAO.updateUser(testID, updatedFirstName, updatedLastName, updatedUsername, updatedPassword);
+            User updatedUser = userDAO.getUser(testID);
+            assert(updatedUser.getID().equals(testID));
+            assert(updatedUser.getFirstName().equals(updatedFirstName));
+            assert(updatedUser.getLastName().equals(updatedLastName));
+            assert(updatedUser.getUsername().equals(updatedUsername));
+            assert(updatedUser.getHashedPassword().equals(updatedPassword));
+        }
+        catch (DataAccessException e) {
+            fail(e.getMessage());
+        }
+    }
 }
