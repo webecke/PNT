@@ -1,9 +1,8 @@
-package implementations.MongoDB;
+package edu.byu.pnt.dao.implementations.MongoDB;
 
 import com.mongodb.client.MongoDatabase;
 
-import provider.ContactDAO;
-
+import edu.byu.pnt.dao.provider.ContactDAO;
 public class MongoContactDAO extends MongoDAO implements ContactDAO {
 
     MongoContactDAO(MongoDatabase database) {

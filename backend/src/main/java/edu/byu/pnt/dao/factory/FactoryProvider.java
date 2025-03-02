@@ -1,10 +1,10 @@
-package factory;
+package edu.byu.pnt.dao.factory;
 
-import implementations.MongoDB.MongoFactory;
+import edu.byu.pnt.dao.implementations.MongoDB.MongoFactory;
 
 public class FactoryProvider {
 
-    private DAOFactory factory;
+    private DAOFactory factory = null;
 
     public DAOFactory getFactory() {
         if (factory == null) {

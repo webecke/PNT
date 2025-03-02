@@ -1,4 +1,4 @@
-package provider;
+package edu.byu.pnt.dao.provider;
 
 public interface EventCategoryDAO {
     void getEventCategory();

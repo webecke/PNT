@@ -1,13 +1,13 @@
-package implementations.MongoDB;
+package edu.byu.pnt.dao.implementations.MongoDB;
 
-import factory.DAOFactory;
-import provider.CategoryDAO;
-import provider.ContactCategoryDAO;
-import provider.ContactDAO;
-import provider.EventCategoryDAO;
-import provider.EventContactDAO;
-import provider.EventDAO;
-import provider.UserDAO;
+import edu.byu.pnt.dao.factory.DAOFactory;
+import edu.byu.pnt.dao.provider.CategoryDAO;
+import edu.byu.pnt.dao.provider.ContactCategoryDAO;
+import edu.byu.pnt.dao.provider.ContactDAO;
+import edu.byu.pnt.dao.provider.EventCategoryDAO;
+import edu.byu.pnt.dao.provider.EventContactDAO;
+import edu.byu.pnt.dao.provider.EventDAO;
+import edu.byu.pnt.dao.provider.UserDAO;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,6 +28,8 @@ public class MongoFactory implements DAOFactory{
 
     public MongoFactory() {
         // Initialize MongoDB client & database
+        // TODO need to handle client connections differently to allow for database connection to not go out of scope
+        // TODO maybe create database class to handle connections?
         try {
             String connectionString = readConfig("uri");
             String dbName = readConfig("db");
