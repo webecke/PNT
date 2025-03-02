@@ -24,18 +24,21 @@ import com.mongodb.client.MongoDatabase;
 public class MongoFactory implements DAOFactory{
 
     // private MongoClient mongoClient;
-    private MongoDatabase database;
+    private static MongoClient mongoClient;
+    private static MongoDatabase database;
 
     public MongoFactory() {
         // Initialize MongoDB client & database
-        // TODO need to handle client connections differently to allow for database connection to not go out of scope
-        // TODO maybe create database class to handle connections?
         try {
             String connectionString = readConfig("uri");
             String dbName = readConfig("db");
-            try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-                this.database = mongoClient.getDatabase(dbName);
+            try {
+                mongoClient = MongoClients.create(connectionString);
+                database = mongoClient.getDatabase(dbName);
                 System.out.println("Connected to MongoDB successfully!");
+
+                // Close connection when class scope ends
+                Runtime.getRuntime().addShutdownHook(new Thread(MongoFactory::closeConnection));
             } catch (Exception e) {
                 System.err.println("Error connecting to MongoDB: " + e.getMessage());
             }
@@ -44,6 +47,14 @@ public class MongoFactory implements DAOFactory{
             e.printStackTrace();
         }
         
+    }
+
+    public static void closeConnection() {
+        if (mongoClient != null) {
+            mongoClient.close();
+            mongoClient = null;
+            System.out.print("Database connection successfully closed.");
+        }
     }
 
     public static String readConfig(String key) throws IOException {

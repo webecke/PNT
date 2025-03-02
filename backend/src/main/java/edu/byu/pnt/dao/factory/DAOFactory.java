@@ -1,12 +1,6 @@
 package edu.byu.pnt.dao.factory;
 
-import edu.byu.pnt.dao.provider.UserDAO;
-import edu.byu.pnt.dao.provider.ContactDAO;
-import edu.byu.pnt.dao.provider.EventDAO;
-import edu.byu.pnt.dao.provider.CategoryDAO;
-import edu.byu.pnt.dao.provider.EventContactDAO;
-import edu.byu.pnt.dao.provider.EventCategoryDAO;
-import edu.byu.pnt.dao.provider.ContactCategoryDAO;
+import edu.byu.pnt.dao.provider.*;
 
 public interface DAOFactory {
 

@@ -4,7 +4,7 @@ import edu.byu.pnt.dao.implementations.MongoDB.MongoFactory;
 
 public class FactoryProvider {
 
-    private DAOFactory factory = null;
+    private DAOFactory factory;
 
     public DAOFactory getFactory() {
         if (factory == null) {
