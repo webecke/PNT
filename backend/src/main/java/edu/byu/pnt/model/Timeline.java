@@ -1,9 +1,9 @@
 package edu.byu.pnt.model;
 
 public class Timeline {
-    private String id;
-    private String ownerID;
-    private Event[] events;
+    private final String id;
+    private final String ownerID;
+    private final Event[] events;
 
     Timeline(String id, String ownerID, Event[] events) {
         this.id = id;

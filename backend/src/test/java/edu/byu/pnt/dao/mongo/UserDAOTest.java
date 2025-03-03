@@ -37,7 +37,7 @@ public class UserDAOTest {
         assert(newUser.getFirstName().equals(testFirstName));
         assert(newUser.getLastName().equals(testLastName));
         assert(newUser.getUsername().equals(testUsername));
-        assert(newUser.getHashedPassword().equals(testPassword));
+        assert(newUser.getPassword().equals(testPassword));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class UserDAOTest {
         assert(newUser.getFirstName().equals(testFirstName));
         assert(newUser.getLastName().equals(testLastName));
         assert(newUser.getUsername().equals(testUsername));
-        assert(newUser.getHashedPassword().equals(testPassword));
+        assert(newUser.getPassword().equals(testPassword));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class UserDAOTest {
             assert(updatedUser.getFirstName().equals(updatedFirstName));
             assert(updatedUser.getLastName().equals(updatedLastName));
             assert(updatedUser.getUsername().equals(updatedUsername));
-            assert(updatedUser.getHashedPassword().equals(updatedPassword));
+            assert(updatedUser.getPassword().equals(updatedPassword));
         }
         catch (DataAccessException e) {
             fail(e.getMessage());

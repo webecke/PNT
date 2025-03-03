@@ -2,7 +2,9 @@ package edu.byu.pnt.dao.implementations.MongoDB;
 
 import com.mongodb.client.MongoDatabase;
 
+import edu.byu.pnt.dao.DataAccessException;
 import edu.byu.pnt.dao.provider.CategoryDAO;
+import edu.byu.pnt.model.Category;
 
 public class MongoCategoryDAO extends MongoDAO implements CategoryDAO {
 
@@ -10,26 +12,21 @@ public class MongoCategoryDAO extends MongoDAO implements CategoryDAO {
         super(database);
     }
 
-    @Override
-    public void getCategory() {
+    public Category getCategory(String id)  throws DataAccessException{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCategory'");
     }
 
-    @Override
-    public void addCategory() {
+    public void addCategory(Category category) throws DataAccessException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addCategory'");
     }
 
-    @Override
-    public void deleteCategory() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCategory'");
+    public void deleteCategory(String id) throws DataAccessException {
+        this.deleteDocument("categories", id);
     }
 
-    @Override
-    public void updateCategory() {
+    public void updateCategory() throws DataAccessException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateCategory'");
     }

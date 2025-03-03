@@ -4,15 +4,13 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import edu.byu.pnt.dao.DataAccessException;
 import edu.byu.pnt.dao.provider.EventDAO;
-import edu.byu.pnt.model.Contact;
-import edu.byu.pnt.model.Event;
-import edu.byu.pnt.model.User;
+import edu.byu.pnt.model.EventFragment;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MongoEventDAO extends MongoDAO implements EventDAO{
 
@@ -20,6 +18,7 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
         super(database);
     }
 
+    /*
     public Event getEvent(String id) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
@@ -77,8 +76,36 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
             throw new DataAccessException(e.getMessage());
         }
     }
+    */
 
-    public void addEvent(Event event) throws DataAccessException {
+    public EventFragment getEventFragment(String id) throws DataAccessException {
+        try {
+            // Access the 'events' collection in the database
+            MongoCollection<Document> usersCollection = this.database.getCollection("events");
+
+            // Create a query filter to search for the event by its _id field
+            Document eventQuery = new Document("_id", id);
+
+            // Execute the query to find the event
+            FindIterable<Document> eventResult = usersCollection.find(eventQuery);
+            Document eventDocument = eventResult.first();  // Assuming _id is unique
+
+            if (eventDocument != null) {
+                // Extract fields from the document
+                String title = eventDocument.getString("title");
+                String date = eventDocument.getString("date");
+                String description = eventDocument.getString("description");
+
+                return new EventFragment(id, title, date, description);
+            } else {
+                throw new DataAccessException("Event not found in database.");
+            }
+        } catch (Exception e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
+    public void addEventFragment(EventFragment event) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
             MongoCollection<Document> eventsCollection = this.database.getCollection("events");
@@ -93,16 +120,16 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
             eventsCollection.insertOne(newEvent);
 
             // Insert all contacts into event-contacts table
-            MongoCollection<Document> eventContactCollection = this.database.getCollection("event-contact");
-            for (String contactID : event.getContacts()) {
-                eventContactCollection.insertOne(new Document("eventID", event.getID()).append("contactID", contactID));
-            }
-
-            // Insert all categories into event-category table
-            MongoCollection<Document> eventCategoryCollection = this.database.getCollection("event-category");
-            for (String categoryID : event.getCategories()) {
-                eventCategoryCollection.insertOne(new Document("eventID", event.getID()).append("categoryID", categoryID));
-            }
+//            MongoCollection<Document> eventContactCollection = this.database.getCollection("event-contact");
+//            for (String contactID : event.getContacts()) {
+//                eventContactCollection.insertOne(new Document("eventID", event.getID()).append("contactID", contactID));
+//            }
+//
+//            // Insert all categories into event-category table
+//            MongoCollection<Document> eventCategoryCollection = this.database.getCollection("event-category");
+//            for (String categoryID : event.getCategories()) {
+//                eventCategoryCollection.insertOne(new Document("eventID", event.getID()).append("categoryID", categoryID));
+//            }
         }
         catch (Exception e) {
             throw new DataAccessException(e.getMessage());
@@ -110,14 +137,32 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
         System.out.println("Event added: " + event.getTitle());
     }
 
-    public void deleteEvent() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteEvent'");
+    public void deleteEventFragment(String id) throws DataAccessException {
+        this.deleteDocument("events", id);
     }
 
-    public void updateEvent() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateEvent'");
+    public void updateEventFragment(String id, String title, String date, String description) throws DataAccessException {
+        try {
+            // Access the 'users' collection in the database
+            MongoCollection<Document> usersCollection = this.database.getCollection("events");
+
+            // Create the update query for the user
+            Document updateFields = new Document();
+            if (title != null) updateFields.append("title", title);
+            if (date != null) updateFields.append("date", date);
+            if (description != null) updateFields.append("description", description);
+
+            // Apply the update to the user
+            usersCollection.updateOne(Filters.eq("_id", id), Updates.combine(
+                    Updates.set("title", title),
+                    Updates.set("date", date),
+                    Updates.set("description", description)
+            ));
+
+            System.out.println("Event updated with id: " + id + " (" + title + ").");
+        } catch (Exception e) {
+            throw new DataAccessException(e.getMessage());
+        }
     }
     
 }

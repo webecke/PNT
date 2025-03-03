@@ -69,17 +69,7 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
     }
 
     public void deleteUser(String id) throws DataAccessException {
-        try {
-            // Access the 'users' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("users");
-
-            // Delete the user with the given _id
-            usersCollection.deleteOne(Filters.eq("_id", id));
-
-            System.out.println("User deleted: " + id);
-        } catch (Exception e) {
-            throw new DataAccessException(e.getMessage());
-        }
+        this.deleteDocument("users", id);
     }
 
     public void updateUser(String id, String firstName, String lastName, String username, String password) throws DataAccessException {

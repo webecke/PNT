@@ -26,19 +26,19 @@ public class EventDAOTest {
     }
 
     @Test
-    void addUser() throws DataAccessException {
-        // TODO implement addUser test
+    void addEvent() throws DataAccessException {
+        // TODO implement addEvent test
     }
     @Test
-    void getUser() throws DataAccessException {
-        // TODO implement getUser test
+    void getEvent() throws DataAccessException {
+        // TODO implement getEvent test
     }
     @Test
-    void deleteUser() {
-        // TODO implement deleteUser test
+    void deleteEvent() {
+        // TODO implement deleteEvent test
     }
     @Test
-    void updateUser() {
-        // TODO implement updateUser test
+    void updateEvent() {
+        // TODO implement updateEvent test
     }
 }

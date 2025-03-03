@@ -15,5 +15,6 @@ public interface DAOFactory {
     EventContactDAO createEventContactDAO();
     EventCategoryDAO createEventCategoryDAO();
     ContactCategoryDAO createContactCategoryDAO();
+    AuthtokenDAO createAuthtokenDAO();
 
 }

@@ -15,7 +15,7 @@ public class User extends Person {
         return this.username;
     }
 
-    public String getHashedPassword() {
+    public String getPassword() {
         return this.password;
     }
 }
