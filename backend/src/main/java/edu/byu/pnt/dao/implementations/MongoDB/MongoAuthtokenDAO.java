@@ -21,7 +21,7 @@ public class MongoAuthtokenDAO extends MongoDAO implements AuthtokenDAO {
         // TODO implement addAuthtoken
     }
 
-    public void deleteAuthtoken() {
+    public void deleteAuthtoken(String userID) throws DataAccessException {
         // TODO implement deleteAuthtoken
     }
 }

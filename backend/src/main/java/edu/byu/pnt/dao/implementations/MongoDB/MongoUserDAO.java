@@ -47,17 +47,17 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
         }
     }
 
-    public void addUser(String id, String firstName, String lastName, String username, String password) throws DataAccessException {
+    public void addUser(User user) throws DataAccessException {
         try {
             // Access the 'users' collection in the database
             MongoCollection<Document> usersCollection = this.database.getCollection("users");
 
             // Create a new user document
-            Document newUser = new Document("_id", id)
-                    .append("firstName", firstName)
-                    .append("lastName", lastName)
-                    .append("username", username)
-                    .append("password", password);
+            Document newUser = new Document("_id", user.getID())
+                    .append("firstName", user.getFirstName())
+                    .append("lastName", user.getLastName())
+                    .append("username", user.getUsername())
+                    .append("password", user.getPassword());
 
             // Insert the new user document into the 'users' collection
             usersCollection.insertOne(newUser);
@@ -65,7 +65,7 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
         catch (Exception e) {
             throw new DataAccessException(e.getMessage());
         }
-        System.out.println("User added: " + username);
+        System.out.println("User added with id: " + user.getID() + "(" + user.getUsername() + ")");
     }
 
     public void deleteUser(String id) throws DataAccessException {
@@ -92,20 +92,10 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
                     Updates.set("password", password)
             ));
 
-            System.out.println("User updated: " + id);
+            System.out.println("User updated with id: " + id + "(" + username + ")");
         } catch (Exception e) {
             throw new DataAccessException(e.getMessage());
         }
-    }
-
-    public void login() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'login'");
-    }
-
-    public void logout() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'logout'");
     }
     
 }

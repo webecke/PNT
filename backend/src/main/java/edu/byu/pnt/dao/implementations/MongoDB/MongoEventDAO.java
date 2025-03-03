@@ -111,14 +111,15 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
             MongoCollection<Document> eventsCollection = this.database.getCollection("events");
 
             // Create an event document
-            Document newEvent = new Document("_id", event.getID())
-                    .append("title", event.getTitle())
-                    .append("date", event.getDate())
-                    .append("description", event.getDescription());
+            Document newEvent = new Document("_id", event.id())
+                    .append("title", event.title())
+                    .append("date", event.date())
+                    .append("description", event.description());
 
             // Insert the new event document into the 'events' collection
             eventsCollection.insertOne(newEvent);
 
+            // TODO delete unnecessary code after discussing with team
             // Insert all contacts into event-contacts table
 //            MongoCollection<Document> eventContactCollection = this.database.getCollection("event-contact");
 //            for (String contactID : event.getContacts()) {
@@ -134,7 +135,7 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
         catch (Exception e) {
             throw new DataAccessException(e.getMessage());
         }
-        System.out.println("Event added: " + event.getTitle());
+        System.out.println("Event added: " + event.title());
     }
 
     public void deleteEventFragment(String id) throws DataAccessException {

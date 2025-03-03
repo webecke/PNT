@@ -6,5 +6,5 @@ import edu.byu.pnt.model.Authtoken;
 public interface AuthtokenDAO {
     Authtoken getAuthtoken(String userID) throws DataAccessException;
     void addAuthtoken(Authtoken authtoken) throws DataAccessException;
-    void deleteAuthtoken();
+    void deleteAuthtoken(String userID) throws DataAccessException; // TODO what should be the unique id of authtokens?
 }

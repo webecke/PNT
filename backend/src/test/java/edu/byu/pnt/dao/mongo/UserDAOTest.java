@@ -31,7 +31,7 @@ public class UserDAOTest {
 
     @Test
     void addUser() throws DataAccessException {
-        userDAO.addUser(testID, testFirstName, testLastName, testUsername, testPassword);
+        userDAO.addUser(testUser);
         User newUser = userDAO.getUser(testID);
         assert(newUser.getID().equals(testID));
         assert(newUser.getFirstName().equals(testFirstName));
@@ -42,7 +42,7 @@ public class UserDAOTest {
 
     @Test
     void getUser() throws DataAccessException {
-        userDAO.addUser(testID, testFirstName, testLastName, testUsername, testPassword);
+        userDAO.addUser(testUser);
         User newUser = userDAO.getUser(testID);
         assert(newUser.getID().equals(testID));
         assert(newUser.getFirstName().equals(testFirstName));
@@ -52,19 +52,10 @@ public class UserDAOTest {
     }
 
     @Test
-    void deleteUser() {
-        try {
-            userDAO.addUser(testID, testFirstName ,testLastName, testUsername, testPassword);
-            userDAO.deleteUser(testID);
-            User newUser = userDAO.getUser(testID);
-            fail("Found deleted user in database.");
-        }
-        catch (DataAccessException e) {
-            // Check that exception with "User not found" was thrown
-            if (!e.getMessage().contains("User not found")) {
-                fail(e.getMessage());
-            }
-        }
+    void deleteUser() throws DataAccessException {
+        userDAO.addUser(testUser);
+        userDAO.deleteUser(testID);
+        assertThrows(DataAccessException.class, () -> userDAO.getUser(testUser.getID()));
     }
 
     @Test
@@ -74,7 +65,7 @@ public class UserDAOTest {
         String updatedUsername = "UPDATED_USERNAME";
         String updatedPassword = "UPDATED_PASSWORD";
         try {
-            userDAO.addUser(testID, updatedFirstName, updatedLastName, testUsername, testPassword);
+            userDAO.addUser(testUser);
             userDAO.updateUser(testID, updatedFirstName, updatedLastName, updatedUsername, updatedPassword);
             User updatedUser = userDAO.getUser(testID);
             assert(updatedUser.getID().equals(testID));

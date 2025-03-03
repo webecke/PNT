@@ -21,7 +21,7 @@ public abstract class MongoDAO {
             // Delete the user with the given _id
             usersCollection.deleteOne(Filters.eq("_id", id));
 
-            System.out.println("Document with id:" + id + " deleted from collection: " + collection);
+            System.out.println("Document with id: " + id + " deleted from collection: " + collection);
         } catch (Exception e) {
             throw new DataAccessException(e.getMessage());
         }

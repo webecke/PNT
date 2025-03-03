@@ -27,11 +27,4 @@ public class MongoEventCategory extends MongoDAO implements EventCategoryDAO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteEventCategory'");
     }
-
-    @Override
-    public void updateEventCategory() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateEventCategory'");
-    }
-    
 }
