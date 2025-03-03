@@ -3,6 +3,7 @@ package edu.byu.pnt.dao.implementations.MongoDB;
 import com.mongodb.client.MongoDatabase;
 
 import edu.byu.pnt.dao.provider.EventContactDAO;
+import edu.byu.pnt.model.EventContact;
 
 public class MongoEventContact extends MongoDAO implements EventContactDAO {
 
@@ -11,13 +12,13 @@ public class MongoEventContact extends MongoDAO implements EventContactDAO {
     }
 
     @Override
-    public void getEventContact() {
+    public EventContact getEventContact() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEventContact'");
     }
 
     @Override
-    public void addEventContact() {
+    public void addEventContact(EventContact eventContact) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addEventContact'");
     }
@@ -27,11 +28,4 @@ public class MongoEventContact extends MongoDAO implements EventContactDAO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteEventContact'");
     }
-
-    @Override
-    public void updateEventContact() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateEventContact'");
-    }
-    
 }

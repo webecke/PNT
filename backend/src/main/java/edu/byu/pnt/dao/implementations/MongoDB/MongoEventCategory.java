@@ -3,6 +3,7 @@ package edu.byu.pnt.dao.implementations.MongoDB;
 import com.mongodb.client.MongoDatabase;
 
 import edu.byu.pnt.dao.provider.EventCategoryDAO;
+import edu.byu.pnt.model.EventCategory;
 
 public class MongoEventCategory extends MongoDAO implements EventCategoryDAO {
 
@@ -11,13 +12,13 @@ public class MongoEventCategory extends MongoDAO implements EventCategoryDAO {
     }
 
     @Override
-    public void getEventCategory() {
+    public EventCategory getEventCategory() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEventCategory'");
     }
 
     @Override
-    public void addEventCategory() {
+    public void addEventCategory(EventCategory eventCategory) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addEventCategory'");
     }

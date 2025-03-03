@@ -1,8 +1,9 @@
 package edu.byu.pnt.dao.provider;
 
+import edu.byu.pnt.model.ContactCategory;
+
 public interface ContactCategoryDAO {
-    void getContactCategory();
-    void addContactCategory();
+    ContactCategory getContactCategory();
+    void addContactCategory(ContactCategory contactCategory);
     void deleteContactCategory();
-    void updateContactCategory();
 }

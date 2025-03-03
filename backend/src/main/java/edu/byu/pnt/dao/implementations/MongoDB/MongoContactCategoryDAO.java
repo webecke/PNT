@@ -3,6 +3,7 @@ package edu.byu.pnt.dao.implementations.MongoDB;
 import com.mongodb.client.MongoDatabase;
 
 import edu.byu.pnt.dao.provider.ContactCategoryDAO;
+import edu.byu.pnt.model.ContactCategory;
 
 public class MongoContactCategoryDAO extends MongoDAO implements ContactCategoryDAO {
 
@@ -11,13 +12,13 @@ public class MongoContactCategoryDAO extends MongoDAO implements ContactCategory
     }
 
     @Override
-    public void getContactCategory() {
+    public ContactCategory getContactCategory() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getContactCategory'");
     }
 
     @Override
-    public void addContactCategory() {
+    public void addContactCategory(ContactCategory contactCategory) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addContactCategory'");
     }
@@ -27,11 +28,4 @@ public class MongoContactCategoryDAO extends MongoDAO implements ContactCategory
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteContactCategory'");
     }
-
-    @Override
-    public void updateContactCategory() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateContactCategory'");
-    }
-    
 }
