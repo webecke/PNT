@@ -30,30 +30,53 @@ public class EventDAOTest {
 
     @Test
     void addEvent() throws DataAccessException {
+        // Add and then get the event fragment
         eventDAO.addEventFragment(testEvent);
         EventFragment newEvent = eventDAO.getEventFragment(testEvent.id());
-        assert(newEvent.id().equals(testID));
-        assert(newEvent.title().equals(testEvent.title()));
-        assert(newEvent.date().equals(testEvent.date()));
-        assert(newEvent.description().equals(testEvent.description()));
+
+        // Assert values are unchanged
+        assertEquals(newEvent.id(), testEvent.id(), "ID changed after being added.");
+        assertEquals(newEvent.title(), testEvent.title(), "Title changed after being added.");
+        assertEquals(newEvent.date(), testEvent.date(), "Date changed after being added.");
+        assertEquals(newEvent.description(), testEvent.description(), "Description changed after being added.");
     }
     @Test
     void getEvent() throws DataAccessException {
+        // Add and then get the event fragment
         eventDAO.addEventFragment(testEvent);
         EventFragment newEvent = eventDAO.getEventFragment(testEvent.id());
-        assert(newEvent.id().equals(testID));
-        assert(newEvent.title().equals(testEvent.title()));
-        assert(newEvent.date().equals(testEvent.date()));
-        assert(newEvent.description().equals(testEvent.description()));
+
+        // Assertions values are unchanged
+        assertEquals(newEvent.id(), testEvent.id(), "ID changed after get.");
+        assertEquals(newEvent.title(), testEvent.title(), "Title changed after get.");
+        assertEquals(newEvent.date(), testEvent.date(), "Date changed after get.");
+        assertEquals(newEvent.description(), testEvent.description(), "Description changed after get.");
     }
     @Test
     void deleteEvent() throws DataAccessException {
+        // Add and then delete event fragment
         eventDAO.addEventFragment(testEvent);
         eventDAO.deleteEventFragment(testEvent.id());
+
+        // Assert retrieval fails
         assertThrows(DataAccessException.class, () -> eventDAO.getEventFragment(testEvent.id()));
     }
     @Test
-    void updateEvent() {
-        // TODO implement updateEvent test
+    void updateEvent() throws DataAccessException {
+        // Updated testing values
+        String updatedTitle = "UPDATED_EVENT_TITLE";
+        String updatedDate = "UPDATED_EVENT_DATE";
+        String updatedDescription = "UPDATED_EVENT_DESCRIPTION";
+
+        // Add event fragment, update it, then retrieve it
+        eventDAO.addEventFragment(testEvent);
+        eventDAO.updateEventFragment(testEvent.id(), updatedTitle, updatedDate, updatedDescription);
+        EventFragment updatedEvent = eventDAO.getEventFragment(testEvent.id());
+
+        // Assert values were updated
+        assertEquals(updatedEvent.id(), testEvent.id(), "ID changed after update.");
+        assertEquals(updatedEvent.title(), updatedTitle, "Title not updated");
+        assertEquals(updatedEvent.date(), updatedDate, "Date not updated");
+        assertEquals(updatedEvent.description(), updatedDescription, "Description not updated");
     }
 }

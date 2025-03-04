@@ -31,51 +31,60 @@ public class UserDAOTest {
 
     @Test
     void addUser() throws DataAccessException {
+        // Add user, then retrieve user
         userDAO.addUser(testUser);
         User newUser = userDAO.getUser(testID);
-        assert(newUser.getID().equals(testID));
-        assert(newUser.getFirstName().equals(testFirstName));
-        assert(newUser.getLastName().equals(testLastName));
-        assert(newUser.getUsername().equals(testUsername));
-        assert(newUser.getPassword().equals(testPassword));
+
+        // Assert values unchanged
+        assertEquals(newUser.getID(), testUser.getID(), "ID changed after added.");
+        assertEquals(newUser.getFirstName(), testUser.getFirstName(), "First name changed after added.");
+        assertEquals(newUser.getLastName(), testUser.getLastName(), "Last name changed after added.");
+        assertEquals(newUser.getUsername(), testUser.getUsername(), "Username changed after added.");
+        assertEquals(newUser.getPassword(), testUser.getPassword(), "Password changed after added.");
     }
 
     @Test
     void getUser() throws DataAccessException {
+        // Add user, then retrieve user
         userDAO.addUser(testUser);
         User newUser = userDAO.getUser(testID);
-        assert(newUser.getID().equals(testID));
-        assert(newUser.getFirstName().equals(testFirstName));
-        assert(newUser.getLastName().equals(testLastName));
-        assert(newUser.getUsername().equals(testUsername));
-        assert(newUser.getPassword().equals(testPassword));
+
+        // Assert values unchanged
+        assertEquals(newUser.getID(), testUser.getID(), "ID changed after get.");
+        assertEquals(newUser.getFirstName(), testUser.getFirstName(), "First name changed after get.");
+        assertEquals(newUser.getLastName(), testUser.getLastName(), "Last name changed after get.");
+        assertEquals(newUser.getUsername(), testUser.getUsername(), "Username changed after get.");
+        assertEquals(newUser.getPassword(), testUser.getPassword(), "Password changed after get.");
     }
 
     @Test
     void deleteUser() throws DataAccessException {
+        // Add user, then delete
         userDAO.addUser(testUser);
         userDAO.deleteUser(testID);
+
+        // Assert retrieval fails
         assertThrows(DataAccessException.class, () -> userDAO.getUser(testUser.getID()));
     }
 
     @Test
-    void updateUser() {
+    void updateUser() throws DataAccessException {
+        // Updated values
         String updatedFirstName = "UPDATED_FIRST_NAME";
         String updatedLastName = "UPDATED_LAST_NAME";
         String updatedUsername = "UPDATED_USERNAME";
         String updatedPassword = "UPDATED_PASSWORD";
-        try {
-            userDAO.addUser(testUser);
-            userDAO.updateUser(testID, updatedFirstName, updatedLastName, updatedUsername, updatedPassword);
-            User updatedUser = userDAO.getUser(testID);
-            assert(updatedUser.getID().equals(testID));
-            assert(updatedUser.getFirstName().equals(updatedFirstName));
-            assert(updatedUser.getLastName().equals(updatedLastName));
-            assert(updatedUser.getUsername().equals(updatedUsername));
-            assert(updatedUser.getPassword().equals(updatedPassword));
-        }
-        catch (DataAccessException e) {
-            fail(e.getMessage());
-        }
+
+        // Add user, update values, then retrieve
+        userDAO.addUser(testUser);
+        userDAO.updateUser(testID, updatedFirstName, updatedLastName, updatedUsername, updatedPassword);
+        User updatedUser = userDAO.getUser(testID);
+
+        // Assert values were updated
+        assertEquals(updatedUser.getID(), testID, "ID changed after update.");
+        assertEquals(updatedUser.getFirstName(), updatedFirstName, "First name not updated.");
+        assertEquals(updatedUser.getLastName(), updatedLastName, "Last name not updated.");
+        assertEquals(updatedUser.getUsername(), updatedUsername, "Username not updated.");
+        assertEquals(updatedUser.getPassword(), updatedPassword, "Password not updated.");
     }
 }
