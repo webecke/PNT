@@ -1,24 +1,29 @@
 "use client";
 
 // pages/signup.tsx
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { SignupPresenter, SignupPresenterView } from "@/presenter/authentication/SignupPresenter";
 
-const Signup = () => {
+interface Props {
+  presenter?: SignupPresenter;
+}
+
+const Signup = (props: Props) => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const listener: SignupPresenterView = {
+    navigateTo: url => router.push(url)
+  }
+
+  const presenter = useRef(props.presenter ? props.presenter : new SignupPresenter(listener));
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle signup logic here
-    if (password === confirmPassword) {
-      // send register request to the backend here
-      router.push("/login"); // Redirect to login after successful signup
-    } else {
-      alert("Passwords do not match!");
-    }
+    await presenter.current.signup(email, password, confirmPassword);
   };
 
   return (

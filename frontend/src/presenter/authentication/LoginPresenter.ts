@@ -1,16 +1,14 @@
-import AuthenticationService from "@/service/AuthenticationService";
-import {Presenter, View} from "@/presenter/Presenter";
+import {
+  AuthenticationPresenter,
+  AuthenticationPresenterView
+} from "@/presenter/authentication/AuthenticationPresenter";
 
-export interface LoginPresenterView extends View {
-  navigateTo: (url: string) => void;
+export interface LoginPresenterView extends AuthenticationPresenterView {
 }
 
-export class LoginPresenter extends Presenter<LoginPresenterView> {
-  protected _service: AuthenticationService;
-
+export class LoginPresenter extends AuthenticationPresenter<LoginPresenterView> {
   constructor(view: LoginPresenterView) {
     super(view);
-    this._service = this.createService();
   }
 
   public async login(email: string, password: string) {
@@ -21,9 +19,5 @@ export class LoginPresenter extends Presenter<LoginPresenterView> {
     // TODO set logged in user, preferably with a userID (cookie? ReactContext?)
 
     this.view.navigateTo("/"); // Redirect to main page is login was successful
-  }
-
-  private createService() {
-    return new AuthenticationService();
   }
 }
