@@ -7,8 +7,8 @@ export default function Header() {
         {/* Left Section: Title and Navigation */}
         <div className="flex items-center">
           <div className="text-3xl py-4 ml-4 max-sm:hidden">Personal Network Tracker</div>
-          <nav>
-            <ul className="flex space-x-6 p-1">
+          <nav className="p-1">
+            <ul className="flex space-x-5 p-1">
               <li>
                 <Link href="/" className="hover:text-gray-300">
                   Home
