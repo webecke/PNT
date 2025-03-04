@@ -1,9 +1,11 @@
 package edu.byu.pnt.dao.implementations.MongoDB;
 
+import edu.byu.pnt.dao.DataAccessException;
 import edu.byu.pnt.dao.factory.DAOFactory;
 import edu.byu.pnt.dao.provider.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -21,24 +23,25 @@ public class MongoFactory implements DAOFactory{
     private static MongoClient mongoClient;
     private static MongoDatabase database;
 
-    public MongoFactory() {
+    public MongoFactory() throws DataAccessException {
         // Initialize MongoDB client & database
+        String connectionString;
+        String dbName;
         try {
-            String connectionString = readConfig("uri");
-            String dbName = readConfig("db");
-            try {
-                mongoClient = MongoClients.create(connectionString);
-                database = mongoClient.getDatabase(dbName);
-                System.out.println("Connected to MongoDB successfully!");
-
-                // Close connection when class scope ends
-                Runtime.getRuntime().addShutdownHook(new Thread(MongoFactory::closeConnection));
-            } catch (Exception e) {
-                System.err.println("Error connecting to MongoDB: " + e.getMessage());
-            }
+            connectionString = readConfig("uri");
+            dbName = readConfig("db");
         } catch (IOException e) {
-            System.err.println("Error: Failed to read Mongo connection info from config file.");
-            e.printStackTrace();
+            throw new DataAccessException("Error: Failed to read Mongo connection info from config file: " + e.getMessage());
+        }
+        try {
+            mongoClient = MongoClients.create(connectionString);
+            database = mongoClient.getDatabase(dbName);
+            System.out.println("Connected to MongoDB successfully!");
+
+            // Close connection when class scope ends
+            Runtime.getRuntime().addShutdownHook(new Thread(MongoFactory::closeConnection));
+        } catch (Exception e) {
+            throw new DataAccessException("Error connecting to MongoDB: " + e.getMessage());
         }
         
     }
@@ -52,18 +55,23 @@ public class MongoFactory implements DAOFactory{
     }
 
     public static String readConfig(String key) throws IOException {
-        String filePath = "config.json";
+        // Get the resource as an InputStream from the classpath
+        InputStream inputStream = MongoFactory.class.getClassLoader().getResourceAsStream("config.json");
+
+        if (inputStream == null) {
+            throw new IOException("config.json not found in classpath");
+        }
+
+        // Read the JSON file content into a String
+        String jsonContent = new String(inputStream.readAllBytes());
 
         // Create a JsonParser instance
         JsonParser jsonParser = JsonParserFactory.getJsonParser();
 
-        // Read the JSON file content into a String
-        String jsonContent = new String(Files.readAllBytes(Paths.get(filePath)));
-
-        // Read and parse the JSON file content into a Map
+        // Parse the JSON file content into a Map
         Map<String, Object> jsonMap = jsonParser.parseMap(jsonContent);
 
-        // Extract the Mongo URI from the parsed map
+        // Extract the Mongo URI and DB Name from the parsed map
         Map<String, Object> mongodb = (Map<String, Object>) jsonMap.get("mongodb");
         return (String) mongodb.get(key);
     }
