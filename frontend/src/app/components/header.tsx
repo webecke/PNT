@@ -15,12 +15,12 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="/resume" className="hover:text-gray-300">
+                <Link href="/" className="hover:text-gray-300">
                   Contacts
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="hover:text-gray-300">
+                <Link href="/schedule" className="hover:text-gray-300">
                   Schedule
                 </Link>
               </li>
