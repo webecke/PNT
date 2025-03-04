@@ -1,19 +1,29 @@
 "use client";
 
 // pages/login.tsx
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoginPresenter } from "@/presenter/authentication/LoginPresenter";
+import {View} from "@/presenter/Presenter";
 
-const Login = () => {
+interface Props {
+  presenter?: LoginPresenter;
+}
+
+const Login = (props: Props) => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const listener: View = {
+    navigateTo: url => router.push(url)
+  }
+
+  const presenter = useRef(props.presenter ? props.presenter : new LoginPresenter(listener));
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    // call the backend to see if authentication was successful
-    router.push("/"); // Redirect to main page is login was successful preferably with a userID in the cookie
+    await presenter.current.login(email, password);
   };
 
   return (
