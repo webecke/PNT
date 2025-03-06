@@ -21,13 +21,13 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
     public EventFragment getEventFragment(String id) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("events");
+            MongoCollection<Document> collection = this.database.getCollection("events");
 
             // Create a query filter to search for the event by its _id field
             Document eventQuery = new Document("_id", id);
 
             // Execute the query to find the event
-            FindIterable<Document> eventResult = usersCollection.find(eventQuery);
+            FindIterable<Document> eventResult = collection.find(eventQuery);
             Document eventDocument = eventResult.first();  // Assuming _id is unique
 
             if (eventDocument != null) {
@@ -72,7 +72,7 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
     public void updateEventFragment(String id, String title, String date, String description) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("events");
+            MongoCollection<Document> eventsCollection = this.database.getCollection("events");
 
             // Create the update query for the event fragment
             Document updateFields = new Document();
@@ -81,7 +81,7 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
             updateFields.append("description", description);
 
             // Apply the update to the event fragment
-            usersCollection.updateOne(Filters.eq("_id", id), Updates.combine(
+            eventsCollection.updateOne(Filters.eq("_id", id), Updates.combine(
                     Updates.set("title", title),
                     Updates.set("date", date),
                     Updates.set("description", description)
