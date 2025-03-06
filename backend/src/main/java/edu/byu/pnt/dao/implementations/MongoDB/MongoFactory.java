@@ -78,7 +78,7 @@ public class MongoFactory implements DAOFactory{
 
     @Override
     public UserDAO createUserDAO() {
-        return new MongoUserDAO(this.database);
+        return new MongoUserDAO(database);
     }
 
     @Override

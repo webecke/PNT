@@ -13,7 +13,7 @@ public abstract class MongoDAO {
         this.database = database;
     }
 
-    public void deleteDocument(String collection, String id) throws DataAccessException {
+    protected void deleteDocument(String collection, String id) throws DataAccessException {
         try {
             // Access the collection in the database
             MongoCollection<Document> usersCollection = this.database.getCollection(collection);
@@ -25,6 +25,10 @@ public abstract class MongoDAO {
         } catch (Exception e) {
             throw new DataAccessException(e.getMessage());
         }
+    }
+
+    protected MongoCollection<Document> getCollection(String collection) {
+        return database.getCollection(collection);
     }
 
 }
