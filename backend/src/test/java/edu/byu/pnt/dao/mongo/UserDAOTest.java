@@ -13,18 +13,22 @@ public class UserDAOTest {
 
     private DAOFactory factory;
     private UserDAO userDAO;
-    private final String testID = "TESTING_ID";
-    private final String testFirstName = "TEST_FIRST_NAME";
-    private final String testLastName = "TEST_LAST_NAME";
-    private final String testUsername = "TESTING_USERNAME";
-    private final String testPassword = "TESTING_PASSWORD";
     private User testUser;
 
     @BeforeEach
     void setUp() throws DataAccessException {
+        // Get DAO
         factory = new FactoryProvider().getFactory();
         userDAO = factory.createUserDAO();
+
+        // Create test user
+        final String testID = "TESTING_ID";
+        final String testFirstName = "TEST_FIRST_NAME";
+        final String testLastName = "TEST_LAST_NAME";
+        final String testUsername = "TESTING_USERNAME";
+        final String testPassword = "TESTING_PASSWORD";
         testUser = new User(testID, testFirstName, testLastName, testUsername, testPassword);
+
         // Delete testing user if in database
         userDAO.deleteUser(testUser.getID());
     }
@@ -33,7 +37,7 @@ public class UserDAOTest {
     void addUser() throws DataAccessException {
         // Add user, then retrieve user
         userDAO.addUser(testUser);
-        User newUser = userDAO.getUser(testID);
+        User newUser = userDAO.getUser(testUser.getID());
 
         // Assert values unchanged
         assertEquals(newUser.getID(), testUser.getID(), "ID changed after added.");
@@ -47,7 +51,7 @@ public class UserDAOTest {
     void getUser() throws DataAccessException {
         // Add user, then retrieve user
         userDAO.addUser(testUser);
-        User newUser = userDAO.getUser(testID);
+        User newUser = userDAO.getUser(testUser.getID());
 
         // Assert values unchanged
         assertEquals(newUser.getID(), testUser.getID(), "ID changed after get.");
@@ -61,7 +65,7 @@ public class UserDAOTest {
     void deleteUser() throws DataAccessException {
         // Add user, then delete
         userDAO.addUser(testUser);
-        userDAO.deleteUser(testID);
+        userDAO.deleteUser(testUser.getID());
 
         // Assert retrieval fails
         assertThrows(DataAccessException.class, () -> userDAO.getUser(testUser.getID()));
@@ -77,11 +81,11 @@ public class UserDAOTest {
 
         // Add user, update values, then retrieve
         userDAO.addUser(testUser);
-        userDAO.updateUser(testID, updatedFirstName, updatedLastName, updatedUsername, updatedPassword);
-        User updatedUser = userDAO.getUser(testID);
+        userDAO.updateUser(testUser.getID(), updatedFirstName, updatedLastName, updatedUsername, updatedPassword);
+        User updatedUser = userDAO.getUser(testUser.getID());
 
         // Assert values were updated
-        assertEquals(updatedUser.getID(), testID, "ID changed after update.");
+        assertEquals(updatedUser.getID(), testUser.getID(), "ID changed after update.");
         assertEquals(updatedUser.getFirstName(), updatedFirstName, "First name not updated.");
         assertEquals(updatedUser.getLastName(), updatedLastName, "Last name not updated.");
         assertEquals(updatedUser.getUsername(), updatedUsername, "Username not updated.");

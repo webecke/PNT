@@ -13,17 +13,21 @@ public class EventDAOTest {
 
     private DAOFactory factory;
     private EventDAO eventDAO;
-    private final String testID = "TESTING_ID";
-    private final String testTitle = "TESTING_TITLE";
-    private final String testDate = "TEST_DATE";
-    private final String testDescription = "TEST_DESCRIPTION";
     private EventFragment testEvent;
 
     @BeforeEach
     void setUp() throws DataAccessException {
+        // Get DAO
         factory = new FactoryProvider().getFactory();
         eventDAO = factory.createEventDAO();
+
+        // Create test event
+        final String testID = "TESTING_ID";
+        final String testTitle = "TESTING_TITLE";
+        final String testDate = "TEST_DATE";
+        final String testDescription = "TEST_DESCRIPTION";
         testEvent = new EventFragment(testID, testTitle, testDate, testDescription);
+
         // Delete testing event if in database
         eventDAO.deleteEventFragment(testEvent.id());
     }

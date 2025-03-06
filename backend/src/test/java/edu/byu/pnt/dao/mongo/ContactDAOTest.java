@@ -18,9 +18,11 @@ public class ContactDAOTest {
 
     @BeforeEach
     void setUp() throws DataAccessException {
+        // Get DAO
         factory = new FactoryProvider().getFactory();
         dao = factory.createContactDAO();
 
+        // Create test contact fragment
         final String testID = "TESTING_ID";
         final String firstName = "TESTING_FIRST_NAME";
         final String lastName = "TESTING_LAST_NAME";
@@ -28,6 +30,7 @@ public class ContactDAOTest {
         final String phone = "(123)456-7890";
         final String note = "TESTING_NOTE";
         testContact = new ContactFragment(testID, firstName, lastName, email, phone, note);
+
         // Delete testing contact if in database
         dao.deleteContactFragment(testContact.getID());
     }

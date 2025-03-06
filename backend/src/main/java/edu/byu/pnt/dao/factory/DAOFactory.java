@@ -9,7 +9,6 @@ public interface DAOFactory {
     ContactDAO createContactDAO();
     EventDAO createEventDAO();
     CategoryDAO createCategoryDAO();
-    // ImageDAO createImageDAO();   // additional feature - profile pics
 
     // Relationship tables
     EventContactDAO createEventContactDAO();

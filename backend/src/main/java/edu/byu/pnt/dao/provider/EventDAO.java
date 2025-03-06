@@ -1,7 +1,6 @@
 package edu.byu.pnt.dao.provider;
 
 import edu.byu.pnt.dao.DataAccessException;
-import edu.byu.pnt.model.Event;
 import edu.byu.pnt.model.EventFragment;
 
 public interface EventDAO {

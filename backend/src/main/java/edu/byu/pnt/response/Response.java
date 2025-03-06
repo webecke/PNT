@@ -1,7 +1,5 @@
 package edu.byu.pnt.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Response {
     private final boolean  success;
     private final String message;

@@ -50,7 +50,7 @@ public class MongoFactory implements DAOFactory{
         if (mongoClient != null) {
             mongoClient.close();
             mongoClient = null;
-            System.out.print("Database connection successfully closed.");
+            System.out.println("Database connection successfully closed.");
         }
     }
 
