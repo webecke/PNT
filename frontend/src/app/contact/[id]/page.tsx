@@ -2,7 +2,9 @@
 
 import { useParams } from "next/navigation";
 import { mockContacts } from "../../utils/mockContacts";
+import { getMockTimeline } from "../../utils/mockTimelineEvents";
 import ProfileIcon from "../../components/profileIcon";
+import Timeline from "@/app/components/timeline/timeline";
 
 const ContactDetail = () => {
   const { id } = useParams();
@@ -10,31 +12,35 @@ const ContactDetail = () => {
 
   if (!contact) return <div>Contact not found.</div>;
 
+  const timelineEvents = getMockTimeline(contact);
+
   return (
-    <div className="flex m-12 p-6 shadow-lg w-max rounded-lg bg-white">
-      <div className="max-w-xs ">
-        <ProfileIcon src={contact.image} alt={contact.name} />
-        <h1 className="text-3xl font-bold mb-4">{contact.name}</h1>
-        <p className="text-gray-700 bg-gray-100 rounded-lg shadow-sm p-2">
+    <div className="m-12 p-6 shadow-lg rounded-lg bg-white">
+      <div className="flex flex-col">
+
+        <div className="flex flex-row">
+          {/* Profile pic */}
+          <div className="max-w-xs">
+            <ProfileIcon src={contact.image} alt={contact.name} />
+            <h1 className="text-3xl font-bold mb-4">{contact.name}</h1>
+          </div>
+          {/* Contact info */}
+          <div className="mt-4 max-w-xs">
+            <h2 className="text-xl font-semibold">Contact Info</h2>
+            <p>📞 {contact.phone}</p>
+            <p>✉️ {contact.email}</p>
+          </div>
+        </div>
+
+        <p className="text-gray-700 bg-gray-100 rounded-lg shadow-sm p-2 flex-shrink">
           {contact.notes}
         </p>
       </div>
-      <div className="ml-6">
-        <div className="mt-4">
-          <h2 className="text-xl font-semibold">Contact Info</h2>
-          <p>📞 {contact.phone}</p>
-          <p>✉️ {contact.email}</p>
-        </div>
-        <div className="mt-4">
-          <h2 className="text-xl font-semibold">Timeline</h2>
-          <ul className="list-disc ml-6">
-            {contact.timeline.map((event, index) => (
-              <li key={index} className="mt-1">
-                {event}
-              </li>
-            ))}
-          </ul>
-        </div>
+
+      {/* Timeline */}
+      <div className="mt-4">
+        <h2 className="text-xl font-semibold">Timeline</h2>
+        <Timeline timelineEvents={timelineEvents} />
       </div>
     </div>
   );
