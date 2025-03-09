@@ -6,12 +6,11 @@ import edu.byu.pnt.dao.factory.DAOFactory;
 import edu.byu.pnt.dao.factory.FactoryProvider;
 import edu.byu.pnt.dao.provider.UserDAO;
 import edu.byu.pnt.model.User;
+import edu.byu.pnt.request.UpdateUserRequest;
 import edu.byu.pnt.response.AddUserResponse;
+import edu.byu.pnt.response.UpdateUserResponse;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -33,5 +32,10 @@ public class UserController {
             return new AddUserResponse(false, e.getMessage(), null);
         }
         return new AddUserResponse(true, null, newUser);
+    }
+
+    @PostMapping("/update")
+    public UpdateUserResponse updateUser(@Valid @RequestBody UpdateUserRequest request) {
+        return new UpdateUserResponse(false, "Not implemented yet");
     }
 }
