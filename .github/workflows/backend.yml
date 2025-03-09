@@ -32,6 +32,15 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Write config file
+        run: |
+          echo '{
+            "mongodb": {
+              "uri": "${{ secrets.DB_URI }}",
+              "db": "${{ secrets.DB_NAME }}"
+            }
+          }' > src/main/resources/config.json
+
       - name: Build and Test
         run: ./mvnw test
 
