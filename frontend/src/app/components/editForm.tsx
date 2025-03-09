@@ -1,6 +1,6 @@
 interface EditFormProps {
   name: string;
-  value: string | undefined;
+  value: string;
   fullWidth?: boolean;
   setValue: (value: string) => void;
   setEditing: (editing: boolean) => void;

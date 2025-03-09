@@ -9,11 +9,11 @@ import { useEffect, useState } from "react";
 import EditForm from "@/app/components/editForm";
 
 const ContactDetail = () => {
-  const [image, setImage] = useState<string>();
-  const [name, setName] = useState<string>();
-  const [phone, setPhone] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [notes, setNotes] = useState<string>();
+  const [image, setImage] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [notes, setNotes] = useState<string>("");
 
   const [editing, setEditing] = useState<boolean>(false);
 
@@ -23,11 +23,12 @@ const ContactDetail = () => {
   const timelineEvents = getMockTimeline(contact);
 
   useEffect(() => {
-    setImage(contact?.image);
-    setName(contact?.name);
-    setPhone(contact?.phone);
-    setEmail(contact?.email);
-    setNotes(contact?.notes);
+    if (!contact) return;
+    setImage(contact.image ? contact.image : "");
+    setName(contact.name ? contact.name : "");
+    setPhone(contact.phone ? contact.phone : "");
+    setEmail(contact.email ? contact.email : "");
+    setNotes(contact.notes ? contact.notes : "");
   }, [contact]);
 
   if (!contact) return <div>Contact not found.</div>;
@@ -66,12 +67,21 @@ const ContactDetail = () => {
               )}
             </div>
           </div>
-          <div
-            className="bg-blue-600 rounded shadow-lg text-white p-2 hover:bg-blue-700 text-lg"
-            onClick={() => setEditing(true)}
-          >
-            Edit
-          </div>
+          {!editing ? (
+            <div
+              className="bg-blue-600 rounded shadow-lg text-white p-2 hover:bg-blue-700 text-lg"
+              onClick={() => setEditing(true)}
+            >
+              Edit
+            </div>
+          ) : (
+            <div
+              className="bg-blue-600 rounded shadow-lg text-white p-2 hover:bg-blue-700 text-lg"
+              onClick={() => setEditing(false)}
+            >
+              Save Edits
+            </div>
+          )}
         </div>
 
         {editing ? (
@@ -106,14 +116,6 @@ const ContactDetail = () => {
         <h2 className="text-xl font-semibold">Timeline</h2>
         <Timeline timelineEvents={timelineEvents} />
       </div>
-      {editing && (
-        <button
-          className="bg-blue-600 rounded shadow-lg text-white p-2 hover:bg-blue-700 text-lg mt-4 w-min"
-          onClick={() => setEditing(false)}
-        >
-          Save Edits
-        </button>
-      )}
     </div>
   );
 };
