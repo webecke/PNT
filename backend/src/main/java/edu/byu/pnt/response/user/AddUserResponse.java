@@ -1,7 +1,8 @@
-package edu.byu.pnt.response;
+package edu.byu.pnt.response.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.byu.pnt.model.User;
+import edu.byu.pnt.response.Response;
 
 public class AddUserResponse extends Response {
     private final User user;
