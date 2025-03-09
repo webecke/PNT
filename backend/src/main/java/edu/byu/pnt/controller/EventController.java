@@ -2,10 +2,10 @@ package edu.byu.pnt.controller;
 
 import edu.byu.pnt.request.AddEventRequest;
 import edu.byu.pnt.request.UpdateEventRequest;
-import edu.byu.pnt.response.AddEventResponse;
-import edu.byu.pnt.response.DeleteEventResponse;
-import edu.byu.pnt.response.GetEventResponse;
-import edu.byu.pnt.response.UpdateEventResponse;
+import edu.byu.pnt.response.event.AddEventResponse;
+import edu.byu.pnt.response.event.DeleteEventResponse;
+import edu.byu.pnt.response.event.GetEventResponse;
+import edu.byu.pnt.response.event.UpdateEventResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

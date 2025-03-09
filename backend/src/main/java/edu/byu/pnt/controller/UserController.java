@@ -7,8 +7,8 @@ import edu.byu.pnt.dao.factory.FactoryProvider;
 import edu.byu.pnt.dao.provider.UserDAO;
 import edu.byu.pnt.model.User;
 import edu.byu.pnt.request.UpdateUserRequest;
-import edu.byu.pnt.response.AddUserResponse;
-import edu.byu.pnt.response.UpdateUserResponse;
+import edu.byu.pnt.response.user.AddUserResponse;
+import edu.byu.pnt.response.user.UpdateUserResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
