@@ -22,7 +22,7 @@ public class MongoAuthtokenDAO extends MongoDAO implements AuthtokenDAO {
     @Override
     public Authtoken getAuthtokenByUserID(String userID) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<Authtoken> authtokens = new ArrayList<>();
 
             // Find all documents matching the userID
@@ -46,7 +46,7 @@ public class MongoAuthtokenDAO extends MongoDAO implements AuthtokenDAO {
     @Override
     public Authtoken getAuthtokenByToken(String token) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<Authtoken> authtokens = new ArrayList<>();
 
             // Find all documents matching the token
@@ -69,7 +69,7 @@ public class MongoAuthtokenDAO extends MongoDAO implements AuthtokenDAO {
 
     public void addAuthtoken(Authtoken authtoken) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Prepare the document to be inserted
             Document document = new Document("token", authtoken.token())
@@ -86,7 +86,7 @@ public class MongoAuthtokenDAO extends MongoDAO implements AuthtokenDAO {
     @Override
     public void deleteAuthtoken(Authtoken authtoken) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Delete the document matching the contactID and categoryID
             collection.deleteOne(Filters.and(

@@ -23,7 +23,7 @@ public class MongoEventContact extends MongoDAO implements EventContactDAO {
     @Override
     public List<EventContact> getEventContactsByEventID(String eventID) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<EventContact> eventContacts = new ArrayList<>();
 
             // Find all documents matching the categoryID
@@ -42,7 +42,7 @@ public class MongoEventContact extends MongoDAO implements EventContactDAO {
     @Override
     public List<EventContact> getEventContactsByContactID(String contactID) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<EventContact> eventContacts = new ArrayList<>();
 
             // Find all documents matching the categoryID
@@ -61,7 +61,7 @@ public class MongoEventContact extends MongoDAO implements EventContactDAO {
     @Override
     public void addEventContact(EventContact eventContact) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Prepare the document to insert
             Document document = new Document("eventID", eventContact.eventID())
@@ -77,7 +77,7 @@ public class MongoEventContact extends MongoDAO implements EventContactDAO {
     @Override
     public void deleteEventContact(EventContact eventContact) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Delete the document matching the eventID and contactID
             collection.deleteOne(Filters.and(

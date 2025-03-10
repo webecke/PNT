@@ -12,6 +12,8 @@ import edu.byu.pnt.dao.provider.UserDAO;
 
 public class MongoUserDAO extends MongoDAO implements UserDAO {
 
+    private final String collectionName = "users";
+
     MongoUserDAO(MongoDatabase database) {
         super(database);
     }
@@ -19,7 +21,7 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
     public User getUser(String id) throws DataAccessException{
         try {
             // Access the 'users' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("users");
+            MongoCollection<Document> usersCollection = this.getCollection(collectionName);
 
             // Create a query filter to search for the user by their _id field
             Document query = new Document("_id", id);
@@ -50,7 +52,7 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
     public void addUser(User user) throws DataAccessException {
         try {
             // Access the 'users' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("users");
+            MongoCollection<Document> usersCollection = this.getCollection(collectionName);
 
             // Create a new user document
             Document newUser = new Document("_id", user.getID())
@@ -69,13 +71,13 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
     }
 
     public void deleteUser(String id) throws DataAccessException {
-        this.deleteDocument("users", id);
+        this.deleteDocument(collectionName, id);
     }
 
     public void updateUser(String id, String firstName, String lastName, String username, String password) throws DataAccessException {
         try {
             // Access the 'users' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("users");
+            MongoCollection<Document> usersCollection = this.getCollection(collectionName);
 
             // Create the update query for the user
             Document updateFields = new Document();

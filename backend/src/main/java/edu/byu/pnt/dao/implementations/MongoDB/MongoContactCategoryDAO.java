@@ -26,7 +26,7 @@ public class MongoContactCategoryDAO extends MongoDAO implements ContactCategory
     @Override
     public List<ContactCategory> getContactCategoriesByContact(String contactID) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<ContactCategory> contactCategories = new ArrayList<>();
 
             // Find all documents matching the contactID
@@ -45,7 +45,7 @@ public class MongoContactCategoryDAO extends MongoDAO implements ContactCategory
     @Override
     public List<ContactCategory> getContactCategoriesByCategory(String categoryID) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<ContactCategory> contactCategories = new ArrayList<>();
 
             // Find all documents matching the categoryID
@@ -64,7 +64,7 @@ public class MongoContactCategoryDAO extends MongoDAO implements ContactCategory
     @Override
     public void addContactCategory(ContactCategory contactCategory) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Prepare the document to be inserted
             Document document = new Document("contactID", contactCategory.contactID())
@@ -81,7 +81,7 @@ public class MongoContactCategoryDAO extends MongoDAO implements ContactCategory
     @Override
     public void deleteContactCategory(ContactCategory contactCategory) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Delete the document matching the contactID and categoryID
             collection.deleteOne(Filters.and(
