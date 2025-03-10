@@ -1,6 +1,16 @@
 import { HarryPotter } from "./harrypotterimg";
 
-export const mockContacts = [
+export interface Contact {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  notes: string;
+  image?: string;
+  timeline: string[];
+}
+
+export const mockContacts: Contact[] = [
   {
     id: 1,
     name: "Harry Potter",

@@ -1,25 +1,20 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import ProfileIcon from "../components/profileIcon";
 import { useRouter } from "next/navigation";
 
 const AddContact = () => {
   const router = useRouter();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [company, setCompany] = useState<string>();
+  const [phone, setPhone] = useState<string>();
+  const [notes, setNotes] = useState<string>();
+  const [email, setEmail] = useState<string>();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted");
-    const firstName = (document.getElementById(
-      "first_name"
-    ) as HTMLInputElement).value;
-    const lastName = (document.getElementById("last_name") as HTMLInputElement)
-      .value;
-    const company = (document.getElementById("company") as HTMLInputElement)
-      .value;
-    const phone = (document.getElementById("phone") as HTMLInputElement).value;
-    const notes = (document.getElementById("notes") as HTMLInputElement).value;
-    const email = (document.getElementById("email") as HTMLInputElement).value;
-    // console.log(firstName, lastName, company, phone, notes, email);
     const user = {
       firstName,
       lastName,
@@ -43,94 +38,69 @@ const AddContact = () => {
         <form className="mt-5" onSubmit={(e) => handleSubmit(e)}>
           <div className="grid gap-6 mb-6 md:grid-cols-2">
             <div>
-              <label
-                htmlFor="first_name"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 First name
               </label>
               <input
                 type="text"
-                id="first_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="John"
-                required
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div>
-              <label
-                htmlFor="last_name"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Last name
               </label>
               <input
                 type="text"
-                id="last_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Doe"
-                required
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
             <div>
-              <label
-                htmlFor="company"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Company
               </label>
               <input
                 type="text"
-                id="company"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Flowbite"
-                required
+                onChange={(e) => setCompany(e.target.value)}
               />
             </div>
             <div>
-              <label
-                htmlFor="phone"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Phone number
               </label>
               <input
                 type="tel"
-                id="phone"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="123-45-678"
-                required
+                onChange={(e) => setPhone(e.target.value)}
               />
             </div>
           </div>
           <div className="mb-6">
-            <label
-              htmlFor="event"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Event Notes
             </label>
             <input
               type="text"
-              id="notes"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter Event Notes"
-              required
+              onChange={(e) => setNotes(e.target.value)}
             />
           </div>
           <div className="mb-6">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Email address
             </label>
             <input
-              type="email"
-              id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="john.doe@company.com"
-              required
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
