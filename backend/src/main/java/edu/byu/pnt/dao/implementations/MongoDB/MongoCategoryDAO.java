@@ -8,6 +8,8 @@ import edu.byu.pnt.model.Category;
 
 public class MongoCategoryDAO extends MongoDAO implements CategoryDAO {
 
+    private final String collectionName = "categories";
+
     MongoCategoryDAO(MongoDatabase database) {
         super(database);
     }
