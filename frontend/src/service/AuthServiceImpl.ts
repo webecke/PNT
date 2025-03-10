@@ -1,11 +1,14 @@
+import { ServerFacade } from "@/serverFacade/ServerFacade";
+
 export default class AuthServiceImpl {
+  constructor(private server: ServerFacade) {
+  };
+
   public async register(email: string, password: string) {
-    // TODO Contact server
-    return "FAKE-AUTH-TOKEN";
+    return this.server.register(email, password);
   }
 
   public async login(email: string, password: string) {
-    // TODO Contact server
-    return "FAKE-AUTH-TOKEN";
+    return this.server.login(email, password);
   }
 }
