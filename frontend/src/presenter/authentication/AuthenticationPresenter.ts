@@ -1,11 +1,11 @@
 import {Presenter, View} from "@/presenter/Presenter";
-import AuthenticationService from "@/service/AuthenticationService";
+import AuthServiceImpl from "@/service/AuthServiceImpl";
 
 export interface AuthenticationPresenterView extends View {
 }
 
 export class AuthenticationPresenter<V extends AuthenticationPresenterView> extends Presenter<V> {
-  protected _service: AuthenticationService;
+  protected _service: AuthServiceImpl;
 
   constructor(view: V) {
     super(view);
@@ -13,6 +13,6 @@ export class AuthenticationPresenter<V extends AuthenticationPresenterView> exte
   }
 
   private createService() {
-    return new AuthenticationService();
+    return new AuthServiceImpl();
   }
 }

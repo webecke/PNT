@@ -1,4 +1,4 @@
-export default class AuthenticationService {
+export default class AuthServiceImpl {
   public async register(email: string, password: string) {
     // TODO Contact server
     return "FAKE-AUTH-TOKEN";
