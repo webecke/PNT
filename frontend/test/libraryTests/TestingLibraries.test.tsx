@@ -120,6 +120,26 @@ describe("Our mockito setup", () => {
     verify(objMock.myFunc(anything())).once();
   });
 
+  it("can verify an async method was (awaited and) called", async () => {
+    type MyType = { myFunc: () => Promise<void> };
+    const objMock: MyType = mock<MyType>();
+    const obj: MyType = instance(objMock);
+
+    await obj.myFunc();
+
+    verify(objMock.myFunc()).once();
+  });
+
+  it("verifies an async method was called even if not awaited", async () => {
+    type MyType = { myFunc: () => Promise<void> };
+    const objMock: MyType = mock<MyType>();
+    const obj: MyType = instance(objMock);
+
+    obj.myFunc();
+
+    verify(objMock.myFunc()).once();
+  });
+
   it("can capture a method call's arguments", () => {
     type MyType = { myFunc: (x: number, y: number) => void };
     const objMock: MyType = mock<MyType>();
