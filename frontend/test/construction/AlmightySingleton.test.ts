@@ -1,9 +1,8 @@
 import { beforeEach, describe, it } from "@jest/globals";
 import { AlmightySingleton } from "@/construction/AlmightySingleton";
 import { ServiceFactory } from "@/construction/ServiceFactory";
+import { ServerFacade } from "@/serverFacade/ServerFacade";
 import { instance, mock } from "@typestrong/ts-mockito";
-import { ServerFactory } from "@/construction/ServerFactory";
-import { AuthService } from "@/service/AuthService";
 
 describe("The Almighty Singleton", () => {
   const singleton: AlmightySingleton = AlmightySingleton.getInstance();
@@ -14,16 +13,16 @@ describe("The Almighty Singleton", () => {
 });
 
 describe("ServiceFactory", () => {
-  let serverFactoryMock: ServerFactory;
-  let serviceFactory: ServiceFactory;
+  let serverMock: ServerFacade;
+  let factory: ServiceFactory;
 
   beforeEach(() => {
-    serverFactoryMock = mock<ServerFactory>();
-    const server = instance(serverFactoryMock);
-    serviceFactory = new ServiceFactory(server);
+    serverMock = mock<ServerFacade>();
+    const server = instance(serverMock);
+    factory = new ServiceFactory(server);
   });
 
   it("can create an AuthService", () => {
-    const authService: AuthService = serviceFactory.getAuthService();
+    factory.getAuthService();
   });
 });

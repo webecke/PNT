@@ -16,7 +16,7 @@ export class AlmightySingleton {
 
   private constructor() {
     const serverFactory = new ServerFactory();
-    this.serviceFactory = new ServiceFactory(serverFactory);
+    this.serviceFactory = new ServiceFactory(serverFactory.getServerFacade());
   }
 
   public static getInstance(): AlmightySingleton {

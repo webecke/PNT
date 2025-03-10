@@ -1,13 +1,13 @@
 import AuthServiceImpl from "@/service/AuthServiceImpl";
 import { AuthService } from "@/service/AuthService";
-import { ServerFactory } from "@/construction/ServerFactory";
+import { ServerFacade } from "@/serverFacade/ServerFacade";
 
 export interface AuthServiceFactory {
   getAuthService(): AuthService
 }
 
 export class ServiceFactory implements AuthServiceFactory {
-  constructor(private serverFactory: ServerFactory) {
+  constructor(private server: ServerFacade) {
   }
 
   public getAuthService(): AuthService {
