@@ -1,11 +1,12 @@
 import {AuthenticationPresenter, AuthenticationPresenterView} from "@/presenter/authentication/AuthenticationPresenter";
+import { AuthService } from "@/service/AuthService";
 
 export interface SignupPresenterView extends AuthenticationPresenterView {
 }
 
 export class SignupPresenter extends AuthenticationPresenter<SignupPresenterView> {
-  constructor(view: SignupPresenterView) {
-    super(view);
+  constructor(view: SignupPresenterView, service?: AuthService) {
+    super(view, service);
   }
 
   public async signup(email: string, password: string, confirmPassword: string) {
