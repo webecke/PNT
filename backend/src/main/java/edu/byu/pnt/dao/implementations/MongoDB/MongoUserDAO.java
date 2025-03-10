@@ -79,10 +79,10 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
 
             // Create the update query for the user
             Document updateFields = new Document();
-            if (firstName != null) updateFields.append("firstName", firstName);
-            if (lastName != null) updateFields.append("lastName", lastName);
-            if (username != null) updateFields.append("username", username);
-            if (password != null) updateFields.append("password", password);
+            updateFields.append("firstName", firstName);
+            updateFields.append("lastName", lastName);
+            updateFields.append("username", username);
+            updateFields.append("password", password);
 
             // Apply the update to the user
             usersCollection.updateOne(Filters.eq("_id", id), Updates.combine(
