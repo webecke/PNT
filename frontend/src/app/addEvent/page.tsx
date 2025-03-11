@@ -1,6 +1,6 @@
 "use client";
 
-import AddEvent from "@/app/addEvent/AddEvent";
+import AddEvent from "@/components/pages/event/AddEvent";
 
 const AddEventPage = () => {
   return <AddEvent />;

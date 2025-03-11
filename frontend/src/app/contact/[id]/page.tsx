@@ -1,6 +1,6 @@
 "use client";
 
-import Contact from "@/app/contact/[id]/Contact";
+import Contact from "@/components/pages/contact/Contact";
 
 const ContactPage = () => {
   return <Contact />;
