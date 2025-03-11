@@ -1,9 +1,9 @@
 "use client";
 
-import Contact from "@/components/pages/contact/Contact";
+import ContactDetail from "@/components/pages/contact/ContactDetail";
 
 const ContactPage = () => {
-  return <Contact />;
+  return <ContactDetail />;
 };
 
 export default ContactPage;
