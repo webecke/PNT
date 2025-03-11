@@ -1,3 +1,5 @@
+// noinspection HtmlUnknownTarget
+
 import Link from "next/link";
 import ContactList from "./components/contactList";
 
@@ -14,6 +16,14 @@ export default function Home() {
             className="px-6 py-3 rounded-lg shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
           >
             Add Contact
+          </Link>
+        </div>
+        <div className="flex justify-end p-4 ml-12">
+          <Link
+            href="addEvent"
+            className="px-6 py-3 rounded-lg shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
+          >
+            Add Event
           </Link>
         </div>
       </div>
