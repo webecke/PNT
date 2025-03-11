@@ -20,7 +20,7 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="/event/Schedule" className="hover:text-gray-300">
+                <Link href="/schedule" className="hover:text-gray-300">
                   Schedule
                 </Link>
               </li>
@@ -30,10 +30,10 @@ export default function Header() {
 
         {/* Right Section: Sign Up and Login */}
         <div className="flex space-x-6 mr-6">
-          <Link href="/auth/Signup" className="hover:text-gray-300">
+          <Link href="/signup" className="hover:text-gray-300">
             Signup
           </Link>
-          <Link href="/auth/Login" className="hover:text-gray-300">
+          <Link href="/login" className="hover:text-gray-300">
             Login
           </Link>
         </div>
