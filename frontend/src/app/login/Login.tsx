@@ -1,7 +1,4 @@
-"use client";
-
-// pages/login.tsx
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
