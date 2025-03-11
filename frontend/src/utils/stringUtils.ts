@@ -1,4 +1,4 @@
-import { concatWithSeparator } from "@/app/utils/arrayUtils";
+import { concatWithSeparator } from "@/utils/arrayUtils";
 
 export const formatStringList = strings => concatWithSeparator(strings, " | ", "");
 

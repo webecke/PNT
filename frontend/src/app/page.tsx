@@ -1,7 +1,7 @@
 // noinspection HtmlUnknownTarget
 
 import Link from "next/link";
-import ContactList from "./components/contactList";
+import ContactList from "@/components/contactList";
 
 export default function Home() {
   return (

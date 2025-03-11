@@ -1,7 +1,7 @@
 "use client";
 
-import { getMockTimeline } from "../utils/mockTimelineEvents";
-import Timeline from "@/app/components/timeline/timeline";
+import { getMockTimeline } from "@/utils/mockTimelineEvents";
+import Timeline from "@/components/timeline/timeline";
 
 const Schedule = () => {
   const timelineEvents = getMockTimeline();

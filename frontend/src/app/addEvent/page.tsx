@@ -2,8 +2,8 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { TimelineEvent } from "@/app/utils/mockTimelineEvents";
-import { getOnChangeFunc_ForStringListFormElement } from "@/app/utils/reactStateUtils";
+import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { getOnChangeFunc_ForStringListFormElement } from "@/utils/reactStateUtils";
 
 const AddEvent = () => {
   const router = useRouter();

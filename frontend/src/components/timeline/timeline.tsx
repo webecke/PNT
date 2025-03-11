@@ -1,5 +1,5 @@
-import { TimelineEvent } from "@/app/utils/mockTimelineEvents";
-import TimelineItem from "@/app/components/timeline/timelineItem";
+import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import TimelineItem from "@/components/timeline/timelineItem";
 
 interface TimelineProps {
   timelineEvents: TimelineEvent[];

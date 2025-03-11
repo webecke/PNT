@@ -1,10 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { mockContacts } from "../../utils/mockContacts";
-import { getMockTimeline } from "../../utils/mockTimelineEvents";
-import ProfileIcon from "../../components/profileIcon";
-import Timeline from "@/app/components/timeline/timeline";
+import { mockContacts } from "@/utils/mockContacts";
+import { getMockTimeline } from "@/utils/mockTimelineEvents";
+import ProfileIcon from "@/components/profileIcon";
+import Timeline from "@/components/timeline/timeline";
 
 const ContactDetail = () => {
   const { id } = useParams();
