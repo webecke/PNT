@@ -1,9 +1,12 @@
 "use client";
 
 import ContactDetail from "@/components/pages/contact/ContactDetail";
+import { useParams } from "next/navigation";
 
 const ContactPage = () => {
-  return <ContactDetail />;
+  const { id } = useParams();
+
+  return <ContactDetail userId={id} />;
 };
 
 export default ContactPage;
