@@ -1,6 +1,6 @@
 "use client";
 
-import Schedule from "@/app/schedule/Schedule";
+import Schedule from "@/components/pages/event/Schedule";
 
 const SchedulePage = () => {
   return <Schedule />;

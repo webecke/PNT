@@ -12,7 +12,7 @@ export default function Home() {
         <h2 className="text-5xl font-bold">Contacts</h2>
         <div className="flex justify-end p-4 ml-12">
           <Link
-            href="addContact"
+            href="../../app/addContact"
             className="px-6 py-3 rounded-lg shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
           >
             Add Contact
@@ -20,7 +20,7 @@ export default function Home() {
         </div>
         <div className="flex justify-end p-4 ml-12">
           <Link
-            href="addEvent"
+            href="../../app/addEvent"
             className="px-6 py-3 rounded-lg shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
           >
             Add Event

@@ -1,6 +1,6 @@
 "use client";
 
-import AddContact from "@/app/addContact/AddContact";
+import AddContact from "@/components/pages/contact/AddContact";
 
 const AddContactPage = () => {
   return <AddContact />;
