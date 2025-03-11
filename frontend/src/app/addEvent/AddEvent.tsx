@@ -1,5 +1,3 @@
-"use client";
-
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";

@@ -1,6 +1,3 @@
-"use client";
-
-// pages/login.tsx
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginPresenter } from "@/presenter/authentication/LoginPresenter";

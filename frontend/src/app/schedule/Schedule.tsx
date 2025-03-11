@@ -1,5 +1,3 @@
-"use client";
-
 import { getMockTimeline } from "@/utils/mockTimelineEvents";
 import Timeline from "@/components/timeline/timeline";
 

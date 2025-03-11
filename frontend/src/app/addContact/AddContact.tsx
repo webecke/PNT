@@ -1,5 +1,3 @@
-"use client";
-
 import { FormEvent, useState } from "react";
 import ProfileIcon from "@/components/profileIcon";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,3 @@
-"use client";
-
 import { useParams } from "next/navigation";
 import { mockContacts } from "@/utils/mockContacts";
 import { getMockTimeline } from "@/utils/mockTimelineEvents";

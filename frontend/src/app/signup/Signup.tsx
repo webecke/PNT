@@ -1,6 +1,3 @@
-"use client";
-
-// pages/signup.tsx
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SignupPresenter, SignupPresenterView } from "@/presenter/authentication/SignupPresenter";
