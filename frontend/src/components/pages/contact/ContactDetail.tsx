@@ -1,12 +1,14 @@
-import { useParams } from "next/navigation";
 import { mockContacts } from "@/utils/mockContacts";
 import { getMockTimeline } from "@/utils/mockTimelineEvents";
 import ProfileIcon from "@/components/profileIcon";
 import Timeline from "@/components/timeline/timeline";
 
-const ContactDetail = () => {
-  const { id } = useParams();
-  const contact = mockContacts.find((c) => c.id.toString() === id);
+interface Props {
+  userId: string | string[] | undefined;
+}
+
+const ContactDetail = ({ userId }: Props) => {
+  const contact = mockContacts.find((c) => c.id.toString() === userId);
 
   if (!contact) return <div>Contact not found.</div>;
 
