@@ -1,5 +1,5 @@
-import { TimelineEvent } from "@/app/utils/mockTimelineEvents";
-import { formatStringList } from "@/app/utils/stringUtils";
+import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { formatStringList } from "@/utils/stringUtils";
 
 interface Props {
   timelineEvent: TimelineEvent
