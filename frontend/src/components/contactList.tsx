@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { mockContacts } from "../utils/mockContacts";
+import { mockContacts } from "@/utils/mockContacts";
 
 const ContactList = () => {
   return (
