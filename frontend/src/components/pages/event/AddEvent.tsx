@@ -9,8 +9,8 @@ const AddEvent = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState<Date | null>();
-  const [contacts, setContacts] = useState<String[]>([]);
-  const [categories, setCategories] = useState<String[]>([]);
+  const [contacts, setContacts] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
 
   const onChangeDate = (e: ChangeEvent<HTMLInputElement>) => {
     const maybeDateString = e.target.value;
