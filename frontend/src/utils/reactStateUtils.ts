@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { parseCommaSeparatedStringToList } from "@/app/utils/stringUtils";
+import { parseCommaSeparatedStringToList } from "@/utils/stringUtils";
 
 export function getOnChangeFunc_ForStringListFormElement(setStateVariableFunction: (strList: string[]) => void) {
   return (e: ChangeEvent<HTMLInputElement>) => {
