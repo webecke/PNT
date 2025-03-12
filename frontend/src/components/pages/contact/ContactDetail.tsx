@@ -20,8 +20,6 @@ const ContactDetail = ({ userId }: Props) => {
 
   const contact = mockContacts.find((c) => c.id.toString() === userId);
 
-  if (!contact) return <div>Contact not found.</div>;
-
   const timelineEvents = getMockTimeline(contact);
 
   useEffect(() => {
@@ -32,6 +30,8 @@ const ContactDetail = ({ userId }: Props) => {
     setEmail(contact.email ? contact.email : "");
     setNotes(contact.notes ? contact.notes : "");
   }, [contact]);
+
+  if (!contact) return <div>Contact not found.</div>;
 
   return (
     <div className="m-12 p-6 shadow-lg rounded-lg bg-white">
