@@ -47,6 +47,7 @@ describe("Our Jest setup", () => {
 
   it("expects an object toBe() the same as another reference to it", () => {
     const objVar1 = { a: 1, b: 2 };
+    // noinspection UnnecessaryLocalVariableJS
     const objVar2 = objVar1;
     expect(objVar1).toBe(objVar2);
   });
