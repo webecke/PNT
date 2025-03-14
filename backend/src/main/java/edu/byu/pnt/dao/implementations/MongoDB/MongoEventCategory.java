@@ -22,7 +22,7 @@ public class MongoEventCategory extends MongoDAO implements EventCategoryDAO {
     @Override
     public List<EventCategory> getEventCategoriesByCategory(String categoryID) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<EventCategory> eventCategories = new ArrayList<>();
 
             // Find all documents matching the categoryID
@@ -40,7 +40,7 @@ public class MongoEventCategory extends MongoDAO implements EventCategoryDAO {
     @Override
     public List<EventCategory> getEventCategoriesByEvent(String eventID) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
             List<EventCategory> eventCategories = new ArrayList<>();
 
             // Find all documents matching the categoryID
@@ -59,7 +59,7 @@ public class MongoEventCategory extends MongoDAO implements EventCategoryDAO {
     @Override
     public void addEventCategory(EventCategory eventCategory) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Prepare the document to insert
             Document document = new Document("eventID", eventCategory.eventID())
@@ -75,7 +75,7 @@ public class MongoEventCategory extends MongoDAO implements EventCategoryDAO {
     @Override
     public void deleteEventCategory(EventCategory eventCategory) throws DataAccessException {
         try {
-            MongoCollection<Document> collection = database.getCollection(collectionName);
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Delete the document matching the contactID and categoryID
             collection.deleteOne(Filters.and(
