@@ -30,7 +30,7 @@ const AddEvent = () => {
     const event: TimelineEvent = {
       id: -1,
       name: name,
-      date: date.toDateString(),
+      date: date,
       desc: description,
       contacts: contacts,
       categories: categories

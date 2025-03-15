@@ -8,6 +8,7 @@ export interface Contact {
   notes: string;
   image?: string;
   timeline: string[];
+  category?: string[];
 }
 
 export const mockContacts: Contact[] = [
@@ -25,6 +26,7 @@ export const mockContacts: Contact[] = [
       "Band Concert",
       "Went to Park",
     ],
+    category: ["business"]
   },
   {
     id: 2,
@@ -33,5 +35,6 @@ export const mockContacts: Contact[] = [
     email: "hermione@mail.com",
     notes: "Brilliant mind, loves books.",
     timeline: ["Study Group", "Graduation Ceremony", "Book Club"],
+    category: ["school"]
   },
 ];
