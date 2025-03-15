@@ -43,8 +43,27 @@ export class ServerFacade {
       const response = await this.communicator.post('/categories', categoryData);
       return response;
     },
-    updateCategory: async (categoryId: string, categoryData: any) => {
-      const response = await this.communicator.post(`/categories/${categoryId}`, categoryData);
+    updateCategory: async (categoryData: any) => {
+      const response = await this.communicator.post(`/categories}`, categoryData);
+      return response;
+    }
+  }
+
+  contact = {
+    getContact: async (contactId: string) => {
+      const response = await this.communicator.get(`/contacts/${contactId}`);
+      return response;
+    },
+    deleteContact: async (contactId: string) => {
+      const response = await this.communicator.delete(`/contacts/${contactId}`);
+      return response;
+    },
+    addContact: async (contactData: any) => {
+      const response = await this.communicator.post('/contacts/add', contactData);
+      return response;
+    },
+    updateContact: async (contactData: any) => {
+      const response = await this.communicator.post(`/contacts}`, contactData);
       return response;
     }
   }
