@@ -38,4 +38,9 @@ describe("CategoryService", () => {
     service.getCategory(CATEGORY.id, TOKEN);
     verify(serverMock.getCategory(CATEGORY.id, TOKEN)).once();
   });
+
+  it("calls the server correctly when deleteCategory() is called", () => {
+    service.deleteCategory(CATEGORY.id, TOKEN);
+    verify(serverMock.deleteCategory(CATEGORY.id, TOKEN)).once();
+  });
 });
