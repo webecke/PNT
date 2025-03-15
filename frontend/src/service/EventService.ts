@@ -1,15 +1,16 @@
 import { AuthToken } from "@/model/model";
 import IServerFacade from "@/service/IServerFacade";
+import { TimelineEvent } from "@/utils/mockTimelineEvents";
 
 export default class EventService {
   constructor(private server: IServerFacade) {
   }
 
-  public async createEvent(event: Event, auth: AuthToken): Promise<void> {
+  public async createEvent(event: TimelineEvent, auth: AuthToken): Promise<void> {
     await this.server.createEvent(event, auth);
   }
 
-  public async getEvent(eventId: number, auth: AuthToken): Promise<Event> {
+  public async getEvent(eventId: number, auth: AuthToken): Promise<TimelineEvent> {
     return await this.server.getEvent(eventId, auth);
   }
 
@@ -17,15 +18,7 @@ export default class EventService {
     await this.server.deleteEvent(eventId, auth);
   }
 
-  public async setEventDetails(event: Event, auth: AuthToken): Promise<void> {
-    await this.server.updateEvent(event, auth); // FIXME
-  }
-
-  public async addEventParticipant(eventId: number, contactId: number, event: Event, auth: AuthToken): Promise<void> {
-    await this.server.updateEvent(event, auth); // FIXME
-  }
-
-  public async removeEventParticipant(eventId: number, contactId: number, event: Event, auth: AuthToken): Promise<void> {
-    await this.server.updateEvent(event, auth); // FIXME
+  public async updateEvent(event: TimelineEvent, auth: AuthToken): Promise<void> {
+    await this.server.updateEvent(event, auth); // TODO Split into multiple functions
   }
 }
