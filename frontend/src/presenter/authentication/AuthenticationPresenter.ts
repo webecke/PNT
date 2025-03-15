@@ -1,5 +1,6 @@
 import {Presenter, View} from "@/presenter/Presenter";
 import AuthenticationService from "@/service/AuthenticationService";
+import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 
 export interface AuthenticationPresenterView extends View {
 }
@@ -13,6 +14,6 @@ export class AuthenticationPresenter<V extends AuthenticationPresenterView> exte
   }
 
   private createService() {
-    return new AuthenticationService();
+    return new AuthenticationService(tempServerFacadeImpl);
   }
 }
