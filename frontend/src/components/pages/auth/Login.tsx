@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoginPresenter } from "@/presenter/authentication/LoginPresenter";
+import {View} from "@/presenter/Presenter";
 
-const Login = () => {
+interface Props {
+  presenter?: LoginPresenter;
+}
+
+const Login = (props: Props) => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const listener: View = {
+    navigateTo: url => router.push(url)
+  }
+
+  const presenter = useRef(props.presenter ? props.presenter : new LoginPresenter(listener));
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    // call the backend to see if authentication was successful
-    router.push("/"); // Redirect to main page is login was successful preferably with a userID in the cookie
+    await presenter.current.login(email, password);
   };
 
   return (
@@ -60,7 +70,7 @@ const Login = () => {
         <div className="mt-4 text-center">
           <p className="text-sm">
             Don&apos;t have an account?{" "}
-            <a href="/auth/Signup" className="text-blue-600 hover:underline">
+            <a href="/signup" className="text-blue-600 hover:underline">
               Sign up
             </a>
           </p>
