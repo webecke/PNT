@@ -29,7 +29,7 @@ export default interface IServerFacade {
 
     updateEvent(event: TimelineEvent, auth: AuthToken): Promise<void>;
 
-    createCategory(category: Category, auth: AuthToken): Promise<void>;
+    createCategory(categoryName: string, auth: AuthToken): Promise<void>;
 
     setCategoryText(category: Category, auth: AuthToken): Promise<void>;
 

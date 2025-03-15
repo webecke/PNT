@@ -2,11 +2,23 @@ import { AuthToken } from "@/model/model";
 import IServerFacade from "@/service/IServerFacade";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 
+export interface NewEventData {
+  name: string;
+  date: string;
+  desc: string;
+  contacts: string[];
+  categories: string[];
+}
+
 export default class EventService {
   constructor(private server: IServerFacade) {
   }
 
-  public async createEvent(event: TimelineEvent, auth: AuthToken): Promise<void> {
+  public async createEvent(newEventData: NewEventData, auth: AuthToken): Promise<void> {
+    const event: TimelineEvent = {
+      ...newEventData,
+      id: -1
+    }
     await this.server.createEvent(event, auth);
   }
 

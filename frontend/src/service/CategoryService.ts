@@ -5,8 +5,8 @@ export default class CategoryService {
   constructor(private server: IServerFacade) {
   }
 
-  public async createCategory(category: Category, auth: AuthToken): Promise<void> {
-    await this.server.createCategory(category, auth);
+  public async createCategory(name: string, auth: AuthToken): Promise<void> {
+    await this.server.createCategory(name, auth);
   }
 
   public async setCategoryText(category: Category, auth: AuthToken): Promise<void> {

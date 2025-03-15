@@ -24,8 +24,8 @@ describe("CategoryService", () => {
   });
 
   it("calls the server correctly when createCategory() is called", () => {
-    service.createCategory(CATEGORY, TOKEN);
-    verify(serverMock.createCategory(CATEGORY, TOKEN)).once();
+    service.createCategory(CATEGORY.name, TOKEN);
+    verify(serverMock.createCategory(CATEGORY.name, TOKEN)).once();
   });
 
   it("calls the server correctly when setCategoryText() is called", () => {

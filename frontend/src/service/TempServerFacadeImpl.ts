@@ -23,7 +23,7 @@ async function und(): Promise<any> {
 }
 
 const tempServerFacadeImpl: IServerFacade = {
-  createCategory(category: Category, auth: AuthToken): Promise<void> {
+  createCategory(categoryName: string, auth: AuthToken): Promise<void> {
     return und();
   },
   createContact(contact: Contact, auth: AuthToken): Promise<void> {
