@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import EditForm from "@/components/editForm";
 
 interface Props {
-  userId: string | string[] | undefined;
+  userId: number;
 }
 
 const ContactDetail = ({ userId }: Props) => {
@@ -18,7 +18,7 @@ const ContactDetail = ({ userId }: Props) => {
 
   const [editing, setEditing] = useState<boolean>(false);
 
-  const contact = mockContacts.find((c) => c.id.toString() === userId);
+  const contact = mockContacts.find((c) => c.id === userId);
 
   const timelineEvents = getMockTimeline(contact);
 

@@ -7,6 +7,12 @@ import EventList from "../eventList";
 
 export default function Home() {
   const [content, setContent] = useState<"contacts" | "events">("contacts");
+  const [category, setCategory] = useState<string>(""); 
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(category);
+  };
 
   return (
     <div className="flex h-screen">
@@ -40,6 +46,15 @@ export default function Home() {
           <div className="text-5xl font-bold">
             {content === "contacts" ? "Contacts" : "Events"}
           </div>
+          <form className="relative" onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Filter by category..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              onChange = {e => setCategory(e.target.value)}
+            />
+          </form>
+
           {content === "contacts" && (
             <Link
               href="/addContact"
@@ -59,8 +74,8 @@ export default function Home() {
         </div>
 
         {/* Conditional Rendering of Lists */}
-        <div className="flex-1 truncate">
-          {content === "contacts" ? <ContactList /> : <EventList />}
+        <div className="flex-1 overflow-x-hidden">
+          {content === "contacts" ? <ContactList category={category}  /> : <EventList category={category}/>}
         </div>
       </div>
     </div>
