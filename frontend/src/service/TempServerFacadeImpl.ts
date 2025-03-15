@@ -1,7 +1,8 @@
 import IServerFacade from "@/service/IServerFacade";
 import { AuthToken, Category } from "@/model/model";
 import { Contact } from "@/utils/mockContacts";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { mockTimelineEvents, TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineQuery, TimelineQueryResult } from "@/service/TimelineService";
 
 const CATEGORY: Category = { id: 0, name: "CATEGORY-NAME" };
 
@@ -15,6 +16,10 @@ const EVENT: TimelineEvent = {
   id: 0,
   name: "EVENT-NAME"
 };
+
+const TIMELINE_QUERY_RESULT: TimelineQueryResult = {
+  events: mockTimelineEvents
+}
 
 const TOKEN: AuthToken = { token: "FAKE-AUTH-TOKEN" };
 
@@ -78,7 +83,9 @@ const tempServerFacadeImpl: IServerFacade = {
   login(email: string, password: string): Promise<AuthToken> {
     return Promise.resolve(TOKEN);
   },
-
+  queryTimeline(timelineQuery: TimelineQuery, auth: AuthToken): Promise<TimelineQueryResult> {
+    return Promise.resolve(TIMELINE_QUERY_RESULT);
+  },
 };
 
 export default tempServerFacadeImpl;
