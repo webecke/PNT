@@ -10,7 +10,7 @@ const CONTACT: Contact = { email: "EMAIL", id: 0, name: "CONTACT-NAME", notes: "
 const EVENT: TimelineEvent = {
   categories: [],
   contacts: [],
-  date: "EVENT-DATE",
+  date: new Date("01-01-1900"),
   desc: "EVENT-DESC",
   id: 0,
   name: "EVENT-NAME"
