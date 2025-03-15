@@ -18,7 +18,7 @@ export default class ContactService {
     await this.server.deleteContact(contactId, auth);
   }
 
-  public async updateContact(contactId: number, contact: Contact, auth: AuthToken): Promise<void> {
+  public async updateContact(contact: Contact, auth: AuthToken): Promise<void> {
     await this.server.updateContact(contact, auth);
   }
 }
