@@ -145,7 +145,8 @@ export class ServerCommunicator {
     const options: RequestInit = {
       method,
       headers: requestHeaders,
-      credentials: 'same-origin',
+      mode: 'cors',
+      credentials: 'omit', //TODO: update CORS correctly
     };
 
     if (body !== null) {

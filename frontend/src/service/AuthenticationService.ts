@@ -1,5 +1,4 @@
 import { ServerFacade } from "@/service/server";
-import { AuthResponse } from "@/service/server/response/AuthResponse";
 
 export default class AuthenticationService {
   private server = new ServerFacade();

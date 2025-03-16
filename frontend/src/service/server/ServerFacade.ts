@@ -108,7 +108,7 @@ export class ServerFacade {
     },
 
     updateUser: async (firstName: string, lastName: string, username: string, password: string): Promise<void> => {
-      const response = await this.communicator.post<UserResponse>('/user/update', {
+      const response = await this.communicator.post<BasicResponse>('/user/update', {
         firstName: firstName,
         lastName: lastName,
         username: username,
