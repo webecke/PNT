@@ -16,7 +16,7 @@ public abstract class MongoDAO {
     protected void deleteDocument(String collection, String id) throws DataAccessException {
         try {
             // Access the collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection(collection);
+            MongoCollection<Document> usersCollection = this.getCollection(collection);
 
             // Delete the document with the given id
             usersCollection.deleteOne(Filters.eq("_id", id));

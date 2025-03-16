@@ -4,7 +4,8 @@ import edu.byu.pnt.dao.DataAccessException;
 import edu.byu.pnt.model.Authtoken;
 
 public interface AuthtokenDAO {
-    Authtoken getAuthtoken(String userID) throws DataAccessException;
+    Authtoken getAuthtokenByUserID(String userID) throws DataAccessException;
+    Authtoken getAuthtokenByToken(String token) throws DataAccessException;
     void addAuthtoken(Authtoken authtoken) throws DataAccessException;
-    void deleteAuthtoken(String userID) throws DataAccessException; // TODO what should be the unique id of authtokens?
+    void deleteAuthtoken(Authtoken authtoken) throws DataAccessException;
 }

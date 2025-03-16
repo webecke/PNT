@@ -14,6 +14,8 @@ import org.bson.Document;
 
 public class MongoEventDAO extends MongoDAO implements EventDAO{
 
+    private final String collectionName = "events";
+
     MongoEventDAO(MongoDatabase database) {
         super(database);
     }
@@ -21,7 +23,7 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
     public EventFragment getEventFragment(String id) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
-            MongoCollection<Document> collection = this.database.getCollection("events");
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Create a query filter to search for the event by its _id field
             Document eventQuery = new Document("_id", id);
@@ -48,7 +50,7 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
     public void addEventFragment(EventFragment event) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
-            MongoCollection<Document> eventsCollection = this.database.getCollection("events");
+            MongoCollection<Document> eventsCollection = this.getCollection(collectionName);
 
             // Create an event document
             Document newEvent = new Document("_id", event.id())
@@ -66,13 +68,13 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
     }
 
     public void deleteEventFragment(String id) throws DataAccessException {
-        this.deleteDocument("events", id);
+        this.deleteDocument(collectionName, id);
     }
 
     public void updateEventFragment(String id, String title, String date, String description) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
-            MongoCollection<Document> eventsCollection = this.database.getCollection("events");
+            MongoCollection<Document> eventsCollection = this.getCollection(collectionName);
 
             // Create the update query for the event fragment
             Document updateFields = new Document();
