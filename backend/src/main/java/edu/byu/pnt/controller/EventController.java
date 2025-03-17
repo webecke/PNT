@@ -23,9 +23,11 @@ import java.util.List;
 public class EventController extends Controller {
 
     @GetMapping("/{id}")
-    public GetEventResponse getEvent(@PathVariable String id) {
-        // TODO authenticate
+    public GetEventResponse getEvent(@RequestHeader("Authorization") String token, @PathVariable String id) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             EventDAO eventDAO = factory.createEventDAO();
@@ -41,9 +43,11 @@ public class EventController extends Controller {
     }
 
     @DeleteMapping("/{id}")
-    public DeleteEventResponse deleteEvent(@PathVariable String id) {
-        // TODO authenticate
+    public DeleteEventResponse deleteEvent(@RequestHeader("Authorization") String token, @PathVariable String id) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             EventDAO eventDAO = factory.createEventDAO();
@@ -72,9 +76,11 @@ public class EventController extends Controller {
     }
 
     @PostMapping("/add")
-    public AddEventResponse addEvent(@Valid @RequestBody AddEventRequest request) {
-        // TODO authenticate
+    public AddEventResponse addEvent(@RequestHeader("Authorization") String token, @Valid @RequestBody AddEventRequest request) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             EventDAO eventDAO = factory.createEventDAO();
@@ -104,9 +110,11 @@ public class EventController extends Controller {
     }
 
     @PostMapping("/update")
-    public UpdateEventResponse updateEvent(@Valid @RequestBody UpdateEventRequest request) {
-        // TODO authenticate
+    public UpdateEventResponse updateEvent(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateEventRequest request) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             EventDAO eventDAO = factory.createEventDAO();

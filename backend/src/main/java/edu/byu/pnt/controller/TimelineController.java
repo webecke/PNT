@@ -23,8 +23,11 @@ import java.util.Set;
 public class TimelineController extends Controller {
 
     @PostMapping("/")
-    public TimelineResponse getTimeline(@Valid @RequestBody TimelineRequest request) {
+    public TimelineResponse getTimeline(@RequestHeader("Authorization") String token, @Valid @RequestBody TimelineRequest request) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Factory and DAOs
             DAOFactory factory = new FactoryProvider().getFactory();
             EventCategoryDAO eventCategoryDAO = factory.createEventCategoryDAO();
@@ -70,7 +73,7 @@ public class TimelineController extends Controller {
             // TODO verify timeline events are sorted by datetime
 
             // Build timeline and return
-            Timeline timeline = new Timeline(request.usersID(), timelineEvents);
+            Timeline timeline = new Timeline(request.userID(), timelineEvents);
             return new TimelineResponse(true, null, timeline);
         }
         catch (DataAccessException e) {

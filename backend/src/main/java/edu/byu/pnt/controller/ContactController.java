@@ -28,9 +28,11 @@ import java.util.UUID;
 public class ContactController extends Controller {
 
     @GetMapping("/{id}")
-    public GetContactResponse getContact(@PathVariable String id) {
-        // TODO authenticate
+    public GetContactResponse getContact(@RequestHeader("Authorization") String token, @PathVariable String id) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             ContactDAO contactDAO = factory.createContactDAO();
@@ -51,9 +53,11 @@ public class ContactController extends Controller {
     }
 
     @DeleteMapping("/{id}")
-    public DeleteContactResponse deleteContact(@PathVariable String id) {
-        // TODO authenticate
+    public DeleteContactResponse deleteContact(@RequestHeader("Authorization") String token, @PathVariable String id) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO class
             DAOFactory factory = new FactoryProvider().getFactory();
             ContactDAO contactDAO = factory.createContactDAO();
@@ -68,9 +72,11 @@ public class ContactController extends Controller {
     }
 
     @PostMapping("/add")
-    public AddContactResponse addContact(@Valid @RequestBody AddContactRequest request) {
-        // TODO authenticate
+    public AddContactResponse addContact(@RequestHeader("Authorization") String token, @Valid @RequestBody AddContactRequest request) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO class
             DAOFactory factory = new FactoryProvider().getFactory();
             ContactDAO contactDAO = factory.createContactDAO();
@@ -87,9 +93,11 @@ public class ContactController extends Controller {
     }
 
     @PostMapping("/update")
-    public UpdateContactResponse updateContact(@Valid @RequestBody UpdateContactRequest request) {
-        // TODO authenticate
+    public UpdateContactResponse updateContact(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateContactRequest request) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO class
             DAOFactory factory = new FactoryProvider().getFactory();
             ContactDAO contactDAO = factory.createContactDAO();

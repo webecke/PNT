@@ -29,9 +29,11 @@ import java.util.UUID;
 public class CategoryController extends Controller {
 
     @GetMapping("/{id}")
-    public GetCategoryResponse getCategory(@PathVariable String id) {
-        // TODO authenticate
+    public GetCategoryResponse getCategory(@RequestHeader("Authorization") String token, @PathVariable String id) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             CategoryDAO categoryDAO = factory.createCategoryDAO();
@@ -46,9 +48,11 @@ public class CategoryController extends Controller {
     }
 
     @DeleteMapping("/{id}")
-    public DeleteCategoryResponse deleteCategory(@PathVariable String id) {
-        // TODO authenticate
+    public DeleteCategoryResponse deleteCategory(@RequestHeader("Authorization") String token, @PathVariable String id) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             CategoryDAO categoryDAO = factory.createCategoryDAO();
@@ -63,9 +67,11 @@ public class CategoryController extends Controller {
     }
 
     @PostMapping("/add")
-    public AddCategoryResponse addCategory(@Valid @RequestBody AddCategoryRequest request) {
-        // TODO authenticate
+    public AddCategoryResponse addCategory(@RequestHeader("Authorization") String token, @Valid @RequestBody AddCategoryRequest request) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             CategoryDAO categoryDAO = factory.createCategoryDAO();
@@ -82,9 +88,11 @@ public class CategoryController extends Controller {
     }
 
     @PostMapping("/update")
-    public UpdateCategoryResponse updateCategory(@Valid @RequestBody UpdateCategoryRequest request) {
-        // TODO authenticate
+    public UpdateCategoryResponse updateCategory(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateCategoryRequest request) {
         try {
+            // Authenticate token
+            this.authenticate(token);
+
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             CategoryDAO categoryDAO = factory.createCategoryDAO();

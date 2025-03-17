@@ -8,6 +8,7 @@ import edu.byu.pnt.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Controller {
 
@@ -69,5 +70,10 @@ public abstract class Controller {
         } catch (DataAccessException e) {
             throw new DataAccessException(errorMessage);
         }
+    }
+
+    protected Authtoken buildAuthtoken(String userID) {
+        String token = UUID.randomUUID().toString();
+        return new Authtoken(token, userID);
     }
 }
