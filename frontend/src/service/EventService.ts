@@ -4,7 +4,7 @@ import { TimelineEvent } from "@/utils/mockTimelineEvents";
 
 export interface NewEventData {
   name: string;
-  date: string;
+  date: Date;
   desc: string;
   contacts: string[];
   categories: string[];
