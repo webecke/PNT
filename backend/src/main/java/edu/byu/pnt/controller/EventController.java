@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/event")
-public class EventController {
+public class EventController extends Controller {
 
     @GetMapping("/{id}")
     public GetEventResponse getEvent(@PathVariable String id) {

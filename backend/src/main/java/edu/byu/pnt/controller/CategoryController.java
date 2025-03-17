@@ -26,7 +26,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/category")
-public class CategoryController {
+public class CategoryController extends Controller {
 
     @GetMapping("/{id}")
     public GetCategoryResponse getCategory(@PathVariable String id) {

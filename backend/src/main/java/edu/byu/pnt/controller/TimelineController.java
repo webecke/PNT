@@ -20,7 +20,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/timeline")
-public class TimelineController {
+public class TimelineController extends Controller {
 
     @PostMapping("/")
     public TimelineResponse getTimeline(@Valid @RequestBody TimelineRequest request) {

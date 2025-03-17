@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/contact")
-public class ContactController {
+public class ContactController extends Controller {
 
     @GetMapping("/{id}")
     public GetContactResponse getContact(@PathVariable String id) {
@@ -38,12 +38,7 @@ public class ContactController {
             CategoryDAO categoryDAO = factory.createCategoryDAO();
 
             // Extract categories for contact
-            List<Category> categories = new ArrayList<>();
-            List<ContactCategory> contactCategories = contactCategoryDAO.getContactCategoriesByContact(id);
-            for (ContactCategory contactCategory : contactCategories) {
-                Category category = categoryDAO.getCategory(contactCategory.categoryID());
-                categories.add(category);
-            }
+            List<Category> categories = getAllCategoriesByContactID(id);
 
             // Assemble the contact and return
             ContactFragment fragment = contactDAO.getContactFragment(id);

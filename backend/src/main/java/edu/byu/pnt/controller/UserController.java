@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends Controller {
     @PostMapping("/add")
     public AddUserResponse addUser(@Valid @RequestBody AddUserRequest request) {
         // Generate id and create the User object

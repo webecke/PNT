@@ -6,7 +6,7 @@ import edu.byu.pnt.response.Response;
 
 public class GetCategoryResponse extends Response {
 
-    private Category category;
+    private final Category category;
     public GetCategoryResponse(boolean success, String message, Category category) {
         super(success, message);
         this.category = category;
