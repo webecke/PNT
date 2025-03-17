@@ -21,7 +21,7 @@ public class UserController extends Controller {
     public AddUserResponse addUser(@Valid @RequestBody AddUserRequest request) {
         // Generate id and create the User object
         String id = UUID.randomUUID().toString();
-        User newUser = new User(id, request.firstName(), request.lastName(), request.username(), request.password());
+        User newUser = new User(request.firstName(), request.lastName(), request.username(), request.password());
 
         try {
             // Create the factory and DAO
@@ -45,7 +45,7 @@ public class UserController extends Controller {
             UserDAO userDAO = factory.createUserDAO();
 
             // Update the user
-            userDAO.updateUser(request.id(), request.firstName(), request.lastName(), request.username(), request.password());
+            userDAO.updateUser(request.firstName(), request.lastName(), request.username(), request.password());
 
             return new UpdateUserResponse(true, null);
         } catch (DataAccessException e) {

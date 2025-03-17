@@ -3,10 +3,7 @@ package edu.byu.pnt.controller;
 import edu.byu.pnt.dao.DataAccessException;
 import edu.byu.pnt.dao.factory.DAOFactory;
 import edu.byu.pnt.dao.factory.FactoryProvider;
-import edu.byu.pnt.dao.provider.CategoryDAO;
-import edu.byu.pnt.dao.provider.ContactCategoryDAO;
-import edu.byu.pnt.dao.provider.EventCategoryDAO;
-import edu.byu.pnt.dao.provider.EventContactDAO;
+import edu.byu.pnt.dao.provider.*;
 import edu.byu.pnt.model.*;
 
 import java.util.ArrayList;
@@ -52,5 +49,25 @@ public abstract class Controller {
 
         // Create event
         return new Event(fragment.id(), fragment.title(), fragment.date(), fragment.description(), contactIDs, categoryIDs);
+    }
+
+    protected Authtoken authenticate(String token) throws DataAccessException {
+        String errorMessage = "Invalid authtoken";
+
+        // Check for null token
+        if (token == null) {
+            throw new DataAccessException(errorMessage);
+        }
+
+        // Factory and DAO
+        DAOFactory factory = new FactoryProvider().getFactory();
+        AuthtokenDAO authtokenDAO = factory.createAuthtokenDAO();
+
+        // Check if authtoken is found
+        try {
+            return authtokenDAO.getAuthtokenByToken(token);
+        } catch (DataAccessException e) {
+            throw new DataAccessException(errorMessage);
+        }
     }
 }
