@@ -1,3 +1,5 @@
 package edu.byu.pnt.model;
 
-public record Timeline(String id, String ownerID, Event[] events) { };
+import java.util.List;
+
+public record Timeline(String ownerID, List<Event> events) { };
