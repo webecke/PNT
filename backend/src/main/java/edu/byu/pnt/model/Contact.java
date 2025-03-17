@@ -8,7 +8,7 @@ public class Contact extends Person {
     private final String phone;
     private final String note;
 
-    Contact(String id, String firstName, String lastName, List<Category> categories, String email, String phone, String note) {
+    public Contact(String id, String firstName, String lastName, List<Category> categories, String email, String phone, String note) {
         super(id, firstName, lastName);
         this.categories = categories;
         this.email = email;
