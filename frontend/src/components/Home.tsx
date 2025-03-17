@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import ContactList from "@/components/contact/contactList";
-import { useState } from "react";
+import React, { useState } from "react";
 import EventList from "@/components/event/eventList";
 
 export default function Home() {
