@@ -1,13 +1,13 @@
 'use client';
 
 import Link from "next/link";
-import ContactList from "@/components/contactList";
+import ContactList from "@/components/contact/contactList";
 import { useState } from "react";
-import EventList from "../eventList";
+import EventList from "@/components/event/eventList";
 
 export default function Home() {
   const [content, setContent] = useState<"contacts" | "events">("contacts");
-  const [category, setCategory] = useState<string>(""); 
+  const [category, setCategory] = useState<string>("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

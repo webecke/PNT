@@ -86,7 +86,7 @@ const Signup = (props: Props) => {
         <div className="mt-4 text-center">
           <p className="text-sm">
             Already have an account?{" "}
-            <a href="/login" className="text-blue-600 hover:underline">
+            <a href="/frontend/src/components/auth/Login" className="text-blue-600 hover:underline">
               Login
             </a>
           </p>

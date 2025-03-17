@@ -1,6 +1,6 @@
 import { mockContacts } from "@/utils/mockContacts";
 import { useEffect, useState } from "react";
-import ContactDetail from "./pages/contact/ContactDetail";
+import ContactDetail from "./ContactDetail";
 import { IoArrowBackSharp } from "react-icons/io5";
 
 interface ContactListProps {
@@ -11,7 +11,7 @@ const ContactList = ({ category }: ContactListProps) => {
   const [contacts] = useState(mockContacts);
   const [filteredContacts, setFilteredContacts] = useState(mockContacts);
   const [selectedContactID, setSelectedContactID] = useState<number | undefined>(undefined);
-  
+
   useEffect(() => {
     if (category) {
       setFilteredContacts(contacts.filter((contact) => contact.category?.includes(category)));
@@ -29,7 +29,7 @@ const ContactList = ({ category }: ContactListProps) => {
         </div>
         <ContactDetail userId={selectedContactID} />
       </div>
-        : 
+      :
       <div className="w-1/2 mx-auto">
         <ul className="border rounded-lg p-4 bg-white shadow">
           {filteredContacts.map((contact) => (
