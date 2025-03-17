@@ -23,19 +23,33 @@ public class UserController extends Controller {
         String id = UUID.randomUUID().toString();
         User newUser = new User(id, request.firstName(), request.lastName(), request.username(), request.password());
 
-        // Add the user to the database
         try {
+            // Create the factory and DAO
             DAOFactory factory = new FactoryProvider().getFactory();
             UserDAO userDAO = factory.createUserDAO();
+
+            // Add the user to the database
             userDAO.addUser(newUser);
+
+            return new AddUserResponse(true, null, newUser);
         } catch (DataAccessException e) {
             return new AddUserResponse(false, e.getMessage(), null);
         }
-        return new AddUserResponse(true, null, newUser);
     }
 
     @PostMapping("/update")
     public UpdateUserResponse updateUser(@Valid @RequestBody UpdateUserRequest request) {
-        return new UpdateUserResponse(false, "Not implemented yet");
+        try {
+            // Create the factory and DAO
+            DAOFactory factory = new FactoryProvider().getFactory();
+            UserDAO userDAO = factory.createUserDAO();
+
+            // Update the user
+            userDAO.updateUser(request.id(), request.firstName(), request.lastName(), request.username(), request.password());
+
+            return new UpdateUserResponse(true, null);
+        } catch (DataAccessException e) {
+            return new UpdateUserResponse(false, e.getMessage());
+        }
     }
 }
