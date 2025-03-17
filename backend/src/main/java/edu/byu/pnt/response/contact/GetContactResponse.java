@@ -13,7 +13,6 @@ public class GetContactResponse extends Response {
     }
 
     @JsonProperty("contact")
-
     public Contact getContact() {
         return contact;
     }
