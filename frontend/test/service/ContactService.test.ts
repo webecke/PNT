@@ -2,7 +2,7 @@ import { beforeEach, describe, it } from "@jest/globals";
 import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
 import { AuthToken } from "@/model/model";
-import ContactService from "@/service/ContactService";
+import ContactService, { NewContactData } from "@/service/ContactService";
 import { Contact } from "@/utils/mockContacts";
 
 const CONTACT: Contact = {
@@ -13,6 +13,14 @@ const CONTACT: Contact = {
   phone: "CONTACT-PHONE",
   timeline: []
 }
+
+const NEW_CONTACT: NewContactData = {
+  email: "CONTACT-EMAIL",
+  firstName: "FIRST-NAME",
+  lastName: "LAST-NAME",
+  notes: "CONTACT-NOTES",
+  phone: "CONTACT-PHONE",
+};
 
 const TOKEN: AuthToken = {
   token: "TEST-AUTH-TOKEN"
@@ -29,8 +37,8 @@ describe("ContactService", () => {
   });
 
   it("calls the server correctly when createContact() is called", () => {
-    service.createContact(CONTACT, TOKEN);
-    verify(serverMock.createContact(CONTACT, TOKEN)).once();
+    service.createContact(NEW_CONTACT, TOKEN);
+    verify(serverMock.createContact(NEW_CONTACT, TOKEN)).once();
   });
 
   it("calls the server correctly when getContact() is called", () => {

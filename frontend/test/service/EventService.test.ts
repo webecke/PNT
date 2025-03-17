@@ -3,20 +3,24 @@ import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
 import { AuthToken } from "@/model/model";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
-import EventService from "@/service/EventService";
+import EventService, { NewEventData } from "@/service/EventService";
 
-const EVENT: TimelineEvent = {
-  id: 0,
+const NEW_EVENT_DATA: NewEventData = {
   name: "EVENT-NAME",
-  date: "EVENT-DATE",
   desc: "EVENT-DESCRIPTION",
+  date: new Date(),
   categories: [],
   contacts: [],
-}
+};
+
+const EVENT: TimelineEvent = {
+  ...NEW_EVENT_DATA,
+  id: 0,
+};
 
 const TOKEN: AuthToken = {
   token: "TEST-AUTH-TOKEN"
-}
+};
 
 describe("EventService", () => {
   let serverMock: IServerFacade;
@@ -29,8 +33,8 @@ describe("EventService", () => {
   });
 
   it("calls the server correctly when createEvent() is called", () => {
-    service.createEvent(EVENT, TOKEN);
-    verify(serverMock.createEvent(EVENT, TOKEN)).once();
+    service.createEvent(NEW_EVENT_DATA, TOKEN);
+    verify(serverMock.createEvent(NEW_EVENT_DATA, TOKEN)).once();
   });
 
   it("calls the server correctly when getEvent() is called", () => {
