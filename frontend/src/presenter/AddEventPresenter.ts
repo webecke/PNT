@@ -1,10 +1,10 @@
-import { Presenter, View } from "@/presenter/Presenter";
+import { NavigableView, Presenter } from "@/presenter/Presenter";
 import EventService, { NewEventData } from "@/service/EventService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import { mockAuthToken } from "@/utils/mockAuthToken";
 import { parseDate } from "@/utils/dateUtils";
 
-export interface AddEventView extends View {
+export interface AddEventView extends NavigableView {
 }
 
 export interface RawTimelineEvent {

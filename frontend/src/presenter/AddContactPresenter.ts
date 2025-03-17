@@ -1,9 +1,9 @@
-import { Presenter, View } from "@/presenter/Presenter";
+import { NavigableView, Presenter } from "@/presenter/Presenter";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import ContactService, { NewContactData } from "@/service/ContactService";
 import { mockAuthToken } from "@/utils/mockAuthToken";
 
-export interface AddContactView extends View {
+export interface AddContactView extends NavigableView {
 }
 
 export class AddContactPresenter extends Presenter<AddContactView> {

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginPresenter } from "@/presenter/authentication/LoginPresenter";
-import {View} from "@/presenter/Presenter";
+import { NavigableView } from "@/presenter/Presenter";
 
 interface Props {
   presenter?: LoginPresenter;
@@ -12,7 +12,7 @@ const Login = (props: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const listener: View = {
+  const listener: NavigableView = {
     navigateTo: url => router.push(url)
   }
 
