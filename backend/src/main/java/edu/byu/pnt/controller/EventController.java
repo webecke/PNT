@@ -29,26 +29,11 @@ public class EventController extends Controller {
             // Create factory and DAO classes
             DAOFactory factory = new FactoryProvider().getFactory();
             EventDAO eventDAO = factory.createEventDAO();
-            EventCategoryDAO eventCategoryDAO = factory.createEventCategoryDAO();
-            EventContactDAO eventContactDAO = factory.createEventContactDAO();
 
-            // Get event categories
-            List<EventCategory> eventCategories = eventCategoryDAO.getEventCategoriesByEvent(id);
-            List<String> categoryIDs = new ArrayList<>();
-            for (EventCategory eventCategory : eventCategories) {
-                categoryIDs.add(eventCategory.categoryID());
-            }
-
-            // Get event contacts
-            List<EventContact> eventContacts = eventContactDAO.getEventContactsByEventID(id);
-            List<String> contactIDs = new ArrayList<>();
-            for (EventContact eventContact : eventContacts) {
-                contactIDs.add(eventContact.contactID());
-            }
-
-            // Assemble the event and return
+            // Build EventFragment into Event
             EventFragment fragment = eventDAO.getEventFragment(id);
-            Event event = new Event(fragment.id(), fragment.title(), fragment.date(), fragment.description(), contactIDs, categoryIDs);
+            Event event = this.buildEvent(fragment);
+
             return new GetEventResponse(true, null, event);
         } catch (DataAccessException e) {
             return new GetEventResponse(false, e.getMessage(), null);

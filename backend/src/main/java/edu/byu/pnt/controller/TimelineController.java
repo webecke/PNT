@@ -25,11 +25,13 @@ public class TimelineController extends Controller {
     @PostMapping("/")
     public TimelineResponse getTimeline(@Valid @RequestBody TimelineRequest request) {
         try {
-            // Factory
+            // Factory and DAOs
             DAOFactory factory = new FactoryProvider().getFactory();
+            EventCategoryDAO eventCategoryDAO = factory.createEventCategoryDAO();
+            EventContactDAO eventContactDAO = factory.createEventContactDAO();
+            EventDAO eventDAO = factory.createEventDAO();
 
             // Get list of all events with category id
-            EventCategoryDAO eventCategoryDAO = factory.createEventCategoryDAO();
             Set<String> eventIDsByCategory = new HashSet<>();
             for (String categoryID : request.categoryIDs()) {
                 List<EventCategory> eventCategories = eventCategoryDAO.getEventCategoriesByCategory(categoryID);
@@ -41,7 +43,6 @@ public class TimelineController extends Controller {
             }
 
             // Get list of all events with contact id
-            EventContactDAO eventContactDAO = factory.createEventContactDAO();
             Set<String> eventIDsByContact = new HashSet<>();
             for (String contactID : request.contactIDs()) {
                 List<EventContact> eventContacts = eventContactDAO.getEventContactsByContactID(contactID);
@@ -55,21 +56,20 @@ public class TimelineController extends Controller {
             // Filter for events that match both criteria
             eventIDsByCategory.retainAll(eventIDsByContact);
 
-            // Assemble the timeline and return
-            EventDAO eventDAO = factory.createEventDAO();
+            // Fetch timeline events
             List<Event> timelineEvents = new ArrayList<>();
             for (String eventID : eventIDsByCategory) {
+                // Get the EventFragment and build into Event
                 EventFragment fragment = eventDAO.getEventFragment(eventID);
-                List<String> contacts = new ArrayList<>();
-                List<String> categories = new ArrayList<>();
+                Event event = this.buildEvent(fragment);
 
-                // TODO should timeline return references to contacts and categories or the objects themselves?
-                // FIXME all events returned with blank contacts and categories
-
-                // Create event and add to timeline
-                Event event = new Event(fragment.id(), fragment.title(), fragment.date(), fragment.description(), contacts, categories);
+                // Add event to timeline
                 timelineEvents.add(event);
             }
+
+            // TODO verify timeline events are sorted by datetime
+
+            // Build timeline and return
             Timeline timeline = new Timeline(request.usersID(), timelineEvents);
             return new TimelineResponse(true, null, timeline);
         }
