@@ -1,5 +1,4 @@
-import { AuthToken, Category } from "@/model/model";
-import { Contact } from "@/utils/mockContacts";
+import { AuthToken } from "@/model/model";
 import IServerFacade from "@/service/IServerFacade";
 
 export default class UserService {
