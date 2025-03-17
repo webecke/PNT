@@ -12,7 +12,7 @@ export interface TimelineQueryResult {
   events: TimelineEvent[];
 }
 
-export default class UserService {
+export default class TimelineService {
   constructor(private server: IServerFacade) {
   }
 
