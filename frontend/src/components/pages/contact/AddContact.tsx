@@ -1,30 +1,36 @@
-import { FormEvent, useState } from "react";
+import React, { useRef, useState } from "react";
 import ProfileIcon from "@/components/profileIcon";
 import { useRouter } from "next/navigation";
+import { AddContactPresenter, AddContactView } from "@/presenter/AddContactPresenter";
 
-const AddContact = () => {
+interface Props {
+  presenter?: AddContactPresenter;
+}
+
+const AddContact = (props: Props) => {
   const router = useRouter();
-  const [firstName, setFirstName] = useState<string>();
-  const [lastName, setLastName] = useState<string>();
-  const [company, setCompany] = useState<string>();
-  const [phone, setPhone] = useState<string>();
-  const [notes, setNotes] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [company, setCompany] = useState<string>("");  // TODO remove company from component
+  const [phone, setPhone] = useState<string>("");
+  const [notes, setNotes] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  const listener: AddContactView = {
+    navigateTo: url => router.push(url)
+  }
+
+  const presenter = useRef(props.presenter ?? new AddContactPresenter(listener));
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted");
-    const user = {
-      firstName,
-      lastName,
-      company,
-      phone,
-      notes,
-      email,
-    };
-    // use axios to send user data to backend
-    console.log("user: ", user);
-    // Navigate to home page
-    router.push("/");
+    await presenter.current.submit({
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      email: email,
+      notes: notes,
+    });
   };
 
   return (
