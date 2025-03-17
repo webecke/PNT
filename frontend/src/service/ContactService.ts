@@ -15,15 +15,7 @@ export default class ContactService {
   }
 
   public async createContact(newContactData: NewContactData, auth: AuthToken): Promise<void> {
-    const contact: Contact = {
-      id: -1,
-      email: newContactData.email,
-      name: newContactData.firstName + " " + newContactData.lastName,
-      notes: newContactData.notes,
-      phone: newContactData.phone,
-      timeline: []
-    }
-    await this.server.createContact(contact, auth);
+    await this.server.createContact(newContactData, auth);
   }
 
   public async getContact(contactId: number, auth: AuthToken): Promise<Contact> {

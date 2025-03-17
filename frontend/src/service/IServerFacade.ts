@@ -2,6 +2,8 @@ import { Contact } from "@/utils/mockContacts";
 import { AuthToken, Category } from "@/model/model";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import { TimelineQuery, TimelineQueryResult } from "@/service/TimelineService";
+import { NewEventData } from "@/service/EventService";
+import { NewContactData } from "@/service/ContactService";
 
 export default interface IServerFacade {
     login(email: string, password: string): Promise<AuthToken>;
@@ -14,7 +16,7 @@ export default interface IServerFacade {
 
     setUserPassword(password: string, auth: AuthToken): Promise<void>;
 
-    createContact(contact: Contact, auth: AuthToken): Promise<void>;
+    createContact(contact: NewContactData, auth: AuthToken): Promise<void>;
 
     getContact(contactId: number, auth: AuthToken): Promise<Contact>;
 
@@ -22,7 +24,7 @@ export default interface IServerFacade {
 
     updateContact(contact: Contact, auth: AuthToken): Promise<void>;
 
-    createEvent(event: TimelineEvent, auth: AuthToken): Promise<void>;
+    createEvent(event: NewEventData, auth: AuthToken): Promise<void>;
 
     getEvent(eventId: number, auth: AuthToken): Promise<TimelineEvent>;
 

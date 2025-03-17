@@ -15,11 +15,7 @@ export default class EventService {
   }
 
   public async createEvent(newEventData: NewEventData, auth: AuthToken): Promise<void> {
-    const event: TimelineEvent = {
-      ...newEventData,
-      id: -1
-    }
-    await this.server.createEvent(event, auth);
+    await this.server.createEvent(newEventData, auth);
   }
 
   public async getEvent(eventId: number, auth: AuthToken): Promise<TimelineEvent> {

@@ -3,6 +3,8 @@ import { AuthToken, Category } from "@/model/model";
 import { Contact } from "@/utils/mockContacts";
 import { mockTimelineEvents, TimelineEvent } from "@/utils/mockTimelineEvents";
 import { TimelineQuery, TimelineQueryResult } from "@/service/TimelineService";
+import { NewContactData } from "@/service/ContactService";
+import { NewEventData } from "@/service/EventService";
 
 const CATEGORY: Category = { id: 0, name: "CATEGORY-NAME" };
 
@@ -31,10 +33,10 @@ const tempServerFacadeImpl: IServerFacade = {
   createCategory(categoryName: string, auth: AuthToken): Promise<void> {
     return und();
   },
-  createContact(contact: Contact, auth: AuthToken): Promise<void> {
+  createContact(contact: NewContactData, auth: AuthToken): Promise<void> {
     return und();
   },
-  createEvent(event: TimelineEvent, auth: AuthToken): Promise<void> {
+  createEvent(event: NewEventData, auth: AuthToken): Promise<void> {
     return und();
   },
   deleteCategory(categoryId: number, auth: AuthToken): Promise<void> {
