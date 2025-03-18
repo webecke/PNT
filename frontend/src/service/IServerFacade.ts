@@ -1,8 +1,7 @@
 import { Contact } from "@/utils/mockContacts";
 import { AuthToken, Category } from "@/model/model";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
-import { TimelineQuery, TimelineQueryResult } from "@/service/TimelineService";
-import { NewEventData } from "@/service/EventService";
+import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
 import { NewContactData } from "@/service/ContactService";
 
 export default interface IServerFacade {

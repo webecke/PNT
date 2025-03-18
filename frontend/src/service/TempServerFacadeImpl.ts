@@ -2,9 +2,8 @@ import IServerFacade from "@/service/IServerFacade";
 import { AuthToken, Category } from "@/model/model";
 import { Contact } from "@/utils/mockContacts";
 import { mockTimelineEvents, TimelineEvent } from "@/utils/mockTimelineEvents";
-import { TimelineQuery, TimelineQueryResult } from "@/service/TimelineService";
 import { NewContactData } from "@/service/ContactService";
-import { NewEventData } from "@/service/EventService";
+import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
 
 const CATEGORY: Category = { id: 0, name: "CATEGORY-NAME" };
 

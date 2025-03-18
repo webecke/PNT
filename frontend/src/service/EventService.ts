@@ -10,6 +10,16 @@ export interface NewEventData {
   categories: string[];
 }
 
+export interface TimelineQuery {
+  // TODO
+  requiredAttendees: number[];
+}
+
+export interface TimelineQueryResult {
+  // TODO
+  events: TimelineEvent[];
+}
+
 export default class EventService {
   constructor(private server: IServerFacade) {
   }
@@ -28,5 +38,10 @@ export default class EventService {
 
   public async updateEvent(event: TimelineEvent, auth: AuthToken): Promise<void> {
     await this.server.updateEvent(event, auth); // TODO Split into multiple functions
+  }
+
+  public async queryTimeline(query: TimelineQuery, auth: AuthToken): Promise<TimelineEvent[]> {
+    const result = await this.server.queryTimeline(query, auth);
+    return result.events;
   }
 }

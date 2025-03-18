@@ -4,14 +4,14 @@ import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import ContactService from "@/service/ContactService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import { mockAuthToken } from "@/utils/mockAuthToken";
-import TimelineService, { TimelineQuery } from "@/service/TimelineService";
+import EventService, { TimelineQuery } from "@/service/EventService";
 
 export interface ContactDetailView extends View {
 }
 
 export class ContactDetailPresenter extends Presenter<ContactDetailView> {
   private contactService: ContactService = new ContactService(tempServerFacadeImpl);
-  private timelineService: TimelineService = new TimelineService(tempServerFacadeImpl);
+  private eventService: EventService = new EventService(tempServerFacadeImpl);
 
   constructor(protected view: ContactDetailView) {
     super(view);
@@ -28,7 +28,7 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
   public async getContactTimeline(userId: number): Promise<TimelineEvent[]> {
     const query: TimelineQuery = { requiredAttendees: [userId] };
     try {
-      return await this.timelineService.queryTimeline(query, mockAuthToken);
+      return await this.eventService.queryTimeline(query, mockAuthToken);
     } catch {
       return [];
     }
