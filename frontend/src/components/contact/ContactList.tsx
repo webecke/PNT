@@ -1,24 +1,46 @@
-import { mockContacts } from "@/utils/mockContacts";
-import { useEffect, useState } from "react";
+import { Contact } from "@/utils/mockContacts";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ContactDetail from "./ContactDetail";
 import { IoArrowBackSharp } from "react-icons/io5";
+import { ContactListPresenter, ContactListView } from "@/presenter/ContactListPresenter";
+import { QueryState } from "@/utils/QueryState";
 
-interface ContactListProps {
+interface Props {
   category?: string;
+  presenter?: ContactListPresenter;
 }
 
-const ContactList = ({ category }: ContactListProps) => {
-  const [contacts] = useState(mockContacts);
-  const [filteredContacts, setFilteredContacts] = useState(mockContacts);
+const ContactList = (props: Props) => {
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedContactID, setSelectedContactID] = useState<number | undefined>(undefined);
+  const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
+
+  const listener: ContactListView = {};
+  const presenter = useRef(props.presenter ?? new ContactListPresenter(listener));
 
   useEffect(() => {
-    if (category) {
-      setFilteredContacts(contacts.filter((contact) => contact.category?.includes(category)));
-    } else {
-      setFilteredContacts(contacts);
-    }
-  }, [contacts, category])
+    // See comment from ContactDetail.tsx about async useEffect()
+    const asyncFunction = async () => {
+      const contactList = await presenter.current.getContacts();
+      setQueryState(contactList ? QueryState.SUCCESS : QueryState.FAILURE);
+      setContacts(contactList);
+    };
+    asyncFunction();
+  }, []);
+
+  const filteredContacts: Contact[] = useMemo(() => {
+    return props.category
+      ? contacts.filter((contact) => contact.category?.includes(props.category!))
+      : contacts;
+  }, [contacts, props.category]);
+
+  switch (queryState) {
+    // TODO Move the queryState variable (and logic) into the presenter
+    case QueryState.IN_PROCESS:
+      return <div>Loading contacts...</div>;
+    case QueryState.FAILURE:
+      return <div>Looks like you don't have any contacts yet. Let's add a few!</div>;
+  }
 
   return (
     <>
