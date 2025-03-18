@@ -1,37 +1,71 @@
-import { mockContacts } from "@/utils/mockContacts";
-import { getMockTimeline } from "@/utils/mockTimelineEvents";
 import ProfileIcon from "@/components/profileIcon";
 import Timeline from "@/components/timeline/timeline";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EditForm from "@/components/editForm";
+import { ContactDetailPresenter, ContactDetailView } from "@/presenter/ContactDetailPresenter";
+import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { Contact } from "@/utils/mockContacts";
+import { QueryState } from "@/utils/QueryState";
 
 interface Props {
+  presenter?: ContactDetailPresenter;
   userId: number;
 }
 
-const ContactDetail = ({ userId }: Props) => {
+const ContactDetail = (props: Props) => {
   const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([]);
 
   const [editing, setEditing] = useState<boolean>(false);
 
-  const contact = mockContacts.find((c) => c.id === userId);
+  const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
-  const timelineEvents = getMockTimeline(contact);
+  const listener: ContactDetailView = {};
+  const presenter = useRef(props.presenter ?? new ContactDetailPresenter(listener));
+
+  const loadContactData = (contact: Contact, timelineEvents: TimelineEvent[]) => {
+    setName(contact.name);
+    setPhone(contact.phone);
+    setEmail(contact.email);
+    setNotes(contact.notes);
+    setImage(contact.image ?? "");
+    setTimelineEvents(timelineEvents);
+  }
 
   useEffect(() => {
-    if (!contact) return;
-    setImage(contact.image ? contact.image : "");
-    setName(contact.name ? contact.name : "");
-    setPhone(contact.phone ? contact.phone : "");
-    setEmail(contact.email ? contact.email : "");
-    setNotes(contact.notes ? contact.notes : "");
-  }, [contact]);
+    // An async lambda is created and called as a workaround to safely make
+    // async calls in a useEffect. One concern is that Promise rejections are
+    // unhandled; that will need to be taken care of in the Service layer.
+    // See this Stack Overflow:
+    // https://stackoverflow.com/questions/56838392/how-to-call-an-async-function-inside-useeffect-in-react
+    const asyncFunction = async () => {
+      const contact = await presenter.current.getContact(props.userId);
+      if (contact) {
+        const timelineEvents = await presenter.current.getContactTimeline(props.userId);
+        setQueryState(QueryState.SUCCESS);
+        loadContactData(contact, timelineEvents);
+      } else {
+        setQueryState(QueryState.FAILURE);
+      }
+    };
+    asyncFunction();
+  }, [props.userId]);
 
-  if (!contact) return <div>Contact not found.</div>;
+  // TODO Not super happy about this switch statement; it feels like something
+  //  the Presenter should control directly. But short of making a dedicated
+  //  "Contact not found" page the Presenter can navigate to, or creating a
+  //  MaybeContactDetail component, I can't think of a good way to do it.
+
+  switch (queryState) {
+    case QueryState.IN_PROCESS:
+      return <div>Loading...</div>;
+    case QueryState.FAILURE:
+      return <div>Contact not found.</div>;
+  }
 
   return (
     <div className="m-12 p-6 shadow-lg rounded-lg bg-white">
