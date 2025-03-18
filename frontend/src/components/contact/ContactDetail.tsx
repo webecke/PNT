@@ -55,12 +55,10 @@ const ContactDetail = (props: Props) => {
     asyncFunction();
   }, [props.userId]);
 
-  // TODO Not super happy about this switch statement; it feels like something
-  //  the Presenter should control directly. But short of making a dedicated
-  //  "Contact not found" page the Presenter can navigate to, or creating a
-  //  MaybeContactDetail component, I can't think of a good way to do it.
-
   switch (queryState) {
+    // TODO Move the queryState variable (and logic) into the presenter
+    //  This will probably require adding loadContactData to the view
+    //  and giving presenter.getContact() significantly more control.
     case QueryState.IN_PROCESS:
       return <div>Loading...</div>;
     case QueryState.FAILURE:
