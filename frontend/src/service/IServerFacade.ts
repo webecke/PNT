@@ -2,7 +2,7 @@ import { Contact } from "@/utils/mockContacts";
 import { AuthToken, Category } from "@/model/model";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
-import { NewContactData } from "@/service/ContactService";
+import { ContactListQuery, ContactListQueryResult, NewContactData } from "@/service/ContactService";
 
 export default interface IServerFacade {
     login(email: string, password: string): Promise<AuthToken>;
@@ -40,4 +40,6 @@ export default interface IServerFacade {
     deleteCategory(categoryId: number, auth: AuthToken): Promise<void>;
 
     queryTimeline(timelineQuery: TimelineQuery, auth: AuthToken): Promise<TimelineQueryResult>;
+
+    queryContactList(contactListQuery: ContactListQuery, auth: AuthToken): Promise<ContactListQueryResult>;
 }

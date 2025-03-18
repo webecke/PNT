@@ -2,6 +2,16 @@ import { AuthToken } from "@/model/model";
 import { Contact } from "@/utils/mockContacts";
 import IServerFacade from "@/service/IServerFacade";
 
+export interface ContactListQuery {
+  // TODO
+  requiredCategories: number[];
+}
+
+export interface ContactListQueryResult {
+  // TODO
+  contacts: Contact[];
+}
+
 export interface NewContactData {
   firstName: string;
   lastName: string;
@@ -20,6 +30,11 @@ export default class ContactService {
 
   public async getContact(contactId: number, auth: AuthToken): Promise<Contact> {
     return await this.server.getContact(contactId, auth);
+  }
+
+  public async queryContactList(query: ContactListQuery, auth: AuthToken): Promise<Contact[]> {
+    const result = await this.server.queryContactList(query, auth);
+    return result.contacts;
   }
 
   public async deleteContact(contactId: number, auth: AuthToken): Promise<void> {

@@ -1,8 +1,8 @@
 import IServerFacade from "@/service/IServerFacade";
 import { AuthToken, Category } from "@/model/model";
-import { Contact } from "@/utils/mockContacts";
+import { Contact, mockContacts } from "@/utils/mockContacts";
 import { mockTimelineEvents, TimelineEvent } from "@/utils/mockTimelineEvents";
-import { NewContactData } from "@/service/ContactService";
+import { ContactListQuery, ContactListQueryResult, NewContactData } from "@/service/ContactService";
 import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
 
 const CATEGORY: Category = { id: 0, name: "CATEGORY-NAME" };
@@ -20,6 +20,10 @@ const EVENT: TimelineEvent = {
 
 const TIMELINE_QUERY_RESULT: TimelineQueryResult = {
   events: mockTimelineEvents
+}
+
+const CONTACT_LIST_QUERY_RESULT: ContactListQueryResult = {
+  contacts: mockContacts
 }
 
 const TOKEN: AuthToken = { token: "FAKE-AUTH-TOKEN" };
@@ -86,6 +90,9 @@ const tempServerFacadeImpl: IServerFacade = {
   },
   queryTimeline(timelineQuery: TimelineQuery, auth: AuthToken): Promise<TimelineQueryResult> {
     return Promise.resolve(TIMELINE_QUERY_RESULT);
+  },
+  queryContactList(timelineQuery: ContactListQuery, auth: AuthToken): Promise<ContactListQueryResult> {
+    return Promise.resolve(CONTACT_LIST_QUERY_RESULT);
   },
 };
 
