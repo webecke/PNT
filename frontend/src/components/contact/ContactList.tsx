@@ -44,32 +44,32 @@ const ContactList = (props: Props) => {
 
   return (
     <>
-    { selectedContactID ?
-      <div>
-        <div onClick={() => setSelectedContactID(undefined)}>
-          <IoArrowBackSharp className="text-4xl cursor-pointer"/>
+      {selectedContactID ?
+        <div>
+          <div onClick={() => setSelectedContactID(undefined)}>
+            <IoArrowBackSharp className="text-4xl cursor-pointer" />
+          </div>
+          <ContactDetail userId={selectedContactID} />
         </div>
-        <ContactDetail userId={selectedContactID} />
-      </div>
-      :
-      <div className="w-1/2 mx-auto">
-        <ul className="border rounded-lg p-4 bg-white shadow">
-          {filteredContacts.map((contact) => (
-            <li
-              key={contact.id}
-              className="p-2 border-b hover:bg-gray-100 transition"
-            >
-              <div onClick={() => setSelectedContactID(contact.id)}>
-                <div className="cursor-pointer flex justify-between items-center">
-                  <span className="font-semibold">{contact.name}</span>
-                  <span className="text-gray-500">{contact.phone}</span>
+        :
+        <div className="w-1/2 mx-auto">
+          <ul className="border rounded-lg p-4 bg-white shadow">
+            {filteredContacts.map((contact) => (
+              <li
+                key={contact.id}
+                className="p-2 border-b hover:bg-gray-100 transition"
+              >
+                <div onClick={() => setSelectedContactID(contact.id)}>
+                  <div className="cursor-pointer flex justify-between items-center">
+                    <span className="font-semibold">{contact.name}</span>
+                    <span className="text-gray-500">{contact.phone}</span>
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-  }
+              </li>
+            ))}
+          </ul>
+        </div>
+      }
     </>
   );
 };

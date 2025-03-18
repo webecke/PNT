@@ -46,36 +46,36 @@ const EventList = (props: Props) => {
   return (
     <>
       {selectedEventID ?
-      <div>
-        <div onClick={() => setSelectedEventID(undefined)}>
-          <IoArrowBackSharp className="text-4xl cursor-pointer"/>
-        </div>
-        <EventDetail eventID={selectedEventID} />
-      </div> :
-      <div className="mx-auto">
-      <ul className="border rounded-lg p-4 bg-white shadow">
-        {filteredEvents.map((event) => (
-          <li
-            key={event.id}
-            className="p-2 border-b hover:bg-gray-100 transition"
-          >
-            <div onClick={() => setSelectedEventID(event.id)}>
-              <div className="cursor-pointer flex gap-6">
-                {/* Title: Fixed width so it doesn't expand too much */}
-                <span className="font-semibold min-w-[150px] max-w-[200px] truncate">
+        <div>
+          <div onClick={() => setSelectedEventID(undefined)}>
+            <IoArrowBackSharp className="text-4xl cursor-pointer" />
+          </div>
+          <EventDetail eventID={selectedEventID} />
+        </div> :
+        <div className="mx-auto">
+          <ul className="border rounded-lg p-4 bg-white shadow">
+            {filteredEvents.map((event) => (
+              <li
+                key={event.id}
+                className="p-2 border-b hover:bg-gray-100 transition"
+              >
+                <div onClick={() => setSelectedEventID(event.id)}>
+                  <div className="cursor-pointer flex gap-6">
+                    {/* Title: Fixed width so it doesn't expand too much */}
+                    <span className="font-semibold min-w-[150px] max-w-[200px] truncate">
                   {event.name}
                 </span>
 
-                {/* Description: Ensure ellipsis shows */}
-                <span className="text-gray-500 flex-1 truncate">
+                    {/* Description: Ensure ellipsis shows */}
+                    <span className="text-gray-500 flex-1 truncate">
                   {event.desc}
                 </span>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       }
 
     </>
