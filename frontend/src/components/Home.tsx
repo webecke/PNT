@@ -1,9 +1,9 @@
 'use client';
 
 import Link from "next/link";
-import ContactList from "@/components/contact/contactList";
+import ContactList from "@/components/contact/ContactList";
 import React, { useState } from "react";
-import EventList from "@/components/event/eventList";
+import EventList from "@/components/event/EventList";
 
 export default function Home() {
   const [content, setContent] = useState<"contacts" | "events">("contacts");

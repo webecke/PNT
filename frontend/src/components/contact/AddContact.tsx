@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import ProfileIcon from "@/components/profileIcon";
+import ProfileIcon from "@/components/ProfileIcon";
 import { useRouter } from "next/navigation";
 import { AddContactPresenter, AddContactView } from "@/presenter/AddContactPresenter";
 

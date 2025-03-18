@@ -2,7 +2,7 @@
 import { mockTimelineEvents } from "@/utils/mockTimelineEvents";
 import { useEffect, useState } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
-import EventDetail from "./eventDetail";
+import EventDetail from "./EventDetail";
 
 const EventList = ({ category }: { category?: string}) => {
     const [events] = useState(mockTimelineEvents);
@@ -51,7 +51,7 @@ const EventList = ({ category }: { category?: string}) => {
       </ul>
     </div>
       }
-    
+
     </>
   );
 };

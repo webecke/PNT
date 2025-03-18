@@ -1,5 +1,5 @@
 import { getMockTimeline } from "@/utils/mockTimelineEvents";
-import Timeline from "@/components/timeline/timeline";
+import Timeline from "@/components/timeline/Timeline";
 
 const Schedule = () => {
   const timelineEvents = getMockTimeline();

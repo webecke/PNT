@@ -1,7 +1,7 @@
-import ProfileIcon from "@/components/profileIcon";
-import Timeline from "@/components/timeline/timeline";
+import ProfileIcon from "@/components/ProfileIcon";
+import Timeline from "@/components/timeline/Timeline";
 import { useEffect, useRef, useState } from "react";
-import EditForm from "@/components/editForm";
+import EditForm from "@/components/EditForm";
 import { ContactDetailPresenter, ContactDetailView } from "@/presenter/ContactDetailPresenter";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import { Contact } from "@/utils/mockContacts";
