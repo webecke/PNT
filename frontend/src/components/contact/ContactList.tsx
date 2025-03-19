@@ -12,7 +12,7 @@ interface Props {
 
 const ContactList = (props: Props) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [selectedContactID, setSelectedContactID] = useState<number | undefined>(undefined);
+  const [selectedContactId, setSelectedContactId] = useState<number | undefined>(undefined);
   const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: ContactListView = {};
@@ -44,12 +44,12 @@ const ContactList = (props: Props) => {
 
   return (
     <>
-      {selectedContactID ?
+      {selectedContactId ?
         <div>
-          <div onClick={() => setSelectedContactID(undefined)}>
+          <div onClick={() => setSelectedContactId(undefined)}>
             <IoArrowBackSharp className="text-4xl cursor-pointer" />
           </div>
-          <ContactDetail userId={selectedContactID} />
+          <ContactDetail userId={selectedContactId} />
         </div>
         :
         <div className="w-1/2 mx-auto">
@@ -59,7 +59,7 @@ const ContactList = (props: Props) => {
                 key={contact.id}
                 className="p-2 border-b hover:bg-gray-100 transition"
               >
-                <div onClick={() => setSelectedContactID(contact.id)}>
+                <div onClick={() => setSelectedContactId(contact.id)}>
                   <div className="cursor-pointer flex justify-between items-center">
                     <span className="font-semibold">{contact.name}</span>
                     <span className="text-gray-500">{contact.phone}</span>

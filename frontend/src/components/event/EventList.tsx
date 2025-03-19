@@ -12,8 +12,9 @@ interface Props {
 
 const EventList = (props: Props) => {
   // TODO Combine EventList and ContactList
+  // TODO? Change EventList and ContactList to use selected Event/Contact instead of their IDs
   const [events, setEvents] = useState<TimelineEvent[]>([]);
-  const [selectedEventID, setSelectedEventID] = useState<number | undefined>(undefined);
+  const [selectedEventId, setSelectedEventId] = useState<number | undefined>(undefined);
   const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: EventListView = {};
@@ -45,12 +46,12 @@ const EventList = (props: Props) => {
 
   return (
     <>
-      {selectedEventID ?
+      {selectedEventId ?
         <div>
-          <div onClick={() => setSelectedEventID(undefined)}>
+          <div onClick={() => setSelectedEventId(undefined)}>
             <IoArrowBackSharp className="text-4xl cursor-pointer" />
           </div>
-          <EventDetail eventID={selectedEventID} />
+          <EventDetail eventID={selectedEventId} />
         </div> :
         <div className="mx-auto">
           <ul className="border rounded-lg p-4 bg-white shadow">
@@ -59,7 +60,7 @@ const EventList = (props: Props) => {
                 key={event.id}
                 className="p-2 border-b hover:bg-gray-100 transition"
               >
-                <div onClick={() => setSelectedEventID(event.id)}>
+                <div onClick={() => setSelectedEventId(event.id)}>
                   <div className="cursor-pointer flex gap-6">
                     {/* Title: Fixed width so it doesn't expand too much */}
                     <span className="font-semibold min-w-[150px] max-w-[200px] truncate">
