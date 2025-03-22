@@ -19,6 +19,7 @@ const ContactDetail = (props: Props) => {
   const [email, setEmail] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([]);
+  // TODO Add categories
 
   const [editing, setEditing] = useState<boolean>(false);
 
