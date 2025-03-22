@@ -1,7 +1,7 @@
 import { mockTimelineEvents } from "@/utils/mockTimelineEvents";
 
 interface Props {
-  eventID: number;
+  eventId: number;
 }
 
 const EventDetail = ({ eventID }: Props) => {

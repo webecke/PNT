@@ -51,7 +51,7 @@ const EventList = (props: Props) => {
           <div onClick={() => setSelectedEventId(undefined)}>
             <IoArrowBackSharp className="text-4xl cursor-pointer" />
           </div>
-          <EventDetail eventID={selectedEventId} />
+          <EventDetail eventId={selectedEventId} />
         </div> :
         <div className="mx-auto">
           <ul className="border rounded-lg p-4 bg-white shadow">
