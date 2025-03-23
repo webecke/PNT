@@ -37,11 +37,13 @@ public class AuthController extends Controller {
                 return new LoginResponse(false, "Password incorrect", null);
             }
 
-            // Issue new authtoken
-            String token = UUID.randomUUID().toString();
-            Authtoken authtoken = new Authtoken(token, request.username());
+            // Build new authtoken
+            Authtoken authtoken = this.buildAuthtoken(request.username());
 
-            return new LoginResponse(true, null, authtoken);
+            // Add authtoken to database
+            authtokenDAO.addAuthtoken(authtoken);
+
+            return new LoginResponse(true, null, authtoken.token());
         } catch (DataAccessException e) {
             return new LoginResponse(false, e.getMessage(), null);
         }

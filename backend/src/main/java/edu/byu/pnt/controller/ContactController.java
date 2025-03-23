@@ -40,7 +40,12 @@ public class ContactController extends Controller {
             CategoryDAO categoryDAO = factory.createCategoryDAO();
 
             // Extract categories for contact
-            List<Category> categories = getAllCategoriesByContactID(id);
+            List<Category> categories = new ArrayList<>();
+            List<ContactCategory> contactCategories = contactCategoryDAO.getContactCategoriesByContact(id);
+            for (ContactCategory contactCategory : contactCategories) {
+                Category category = categoryDAO.getCategory(contactCategory.categoryID());
+                categories.add(category);
+            }
 
             // Assemble the contact and return
             ContactFragment fragment = contactDAO.getContactFragment(id);

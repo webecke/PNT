@@ -12,22 +12,6 @@ import java.util.UUID;
 
 public abstract class Controller {
 
-    protected List<Category> getAllCategoriesByContactID(String id) throws DataAccessException {
-        // Factory and DAOs
-        DAOFactory factory = new FactoryProvider().getFactory();
-        ContactCategoryDAO contactCategoryDAO = factory.createContactCategoryDAO();
-        CategoryDAO categoryDAO = factory.createCategoryDAO();
-
-        // Get the categories
-        List<Category> categories = new ArrayList<>();
-        List<ContactCategory> contactCategories = contactCategoryDAO.getContactCategoriesByContact(id);
-        for (ContactCategory contactCategory : contactCategories) {
-            Category category = categoryDAO.getCategory(contactCategory.categoryID());
-            categories.add(category);
-        }
-        return categories;
-    }
-
     protected Event buildEvent(EventFragment fragment) throws DataAccessException {
         // Factory and DAOs
         DAOFactory factory = new FactoryProvider().getFactory();

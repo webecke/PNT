@@ -6,14 +6,14 @@ import edu.byu.pnt.response.Response;
 
 public class LoginResponse extends Response {
 
-    private final Authtoken authtoken;
-    public LoginResponse(boolean success, String message, Authtoken authtoken) {
+    private final String token;
+    public LoginResponse(boolean success, String message, String token) {
         super(success, message);
-        this.authtoken = authtoken;
+        this.token = token;
     }
 
     @JsonProperty("authtoken")
-    public Authtoken getAuthtoken() {
-        return authtoken;
+    public String getToken() {
+        return token;
     }
 }
