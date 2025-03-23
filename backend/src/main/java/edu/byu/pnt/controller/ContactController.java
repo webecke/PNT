@@ -28,7 +28,9 @@ import java.util.UUID;
 public class ContactController extends Controller {
 
     @GetMapping("/{id}")
-    public GetContactResponse getContact(@RequestHeader("Authorization") String token, @PathVariable String id) {
+    public GetContactResponse getContact(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String id) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -58,7 +60,9 @@ public class ContactController extends Controller {
     }
 
     @DeleteMapping("/{id}")
-    public DeleteContactResponse deleteContact(@RequestHeader("Authorization") String token, @PathVariable String id) {
+    public DeleteContactResponse deleteContact(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String id) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -77,7 +81,9 @@ public class ContactController extends Controller {
     }
 
     @PostMapping("/add")
-    public AddContactResponse addContact(@RequestHeader("Authorization") String token, @Valid @RequestBody AddContactRequest request) {
+    public AddContactResponse addContact(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody AddContactRequest request) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -98,7 +104,9 @@ public class ContactController extends Controller {
     }
 
     @PostMapping("/update")
-    public UpdateContactResponse updateContact(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateContactRequest request) {
+    public UpdateContactResponse updateContact(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody UpdateContactRequest request) {
         try {
             // Authenticate token
             this.authenticate(token);

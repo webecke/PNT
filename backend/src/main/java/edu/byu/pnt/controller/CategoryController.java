@@ -29,7 +29,9 @@ import java.util.UUID;
 public class CategoryController extends Controller {
 
     @GetMapping("/{id}")
-    public GetCategoryResponse getCategory(@RequestHeader("Authorization") String token, @PathVariable String id) {
+    public GetCategoryResponse getCategory(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String id) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -48,7 +50,9 @@ public class CategoryController extends Controller {
     }
 
     @DeleteMapping("/{id}")
-    public DeleteCategoryResponse deleteCategory(@RequestHeader("Authorization") String token, @PathVariable String id) {
+    public DeleteCategoryResponse deleteCategory(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String id) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -67,7 +71,9 @@ public class CategoryController extends Controller {
     }
 
     @PostMapping("/add")
-    public AddCategoryResponse addCategory(@RequestHeader("Authorization") String token, @Valid @RequestBody AddCategoryRequest request) {
+    public AddCategoryResponse addCategory(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody AddCategoryRequest request) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -88,7 +94,9 @@ public class CategoryController extends Controller {
     }
 
     @PostMapping("/update")
-    public UpdateCategoryResponse updateCategory(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateCategoryRequest request) {
+    public UpdateCategoryResponse updateCategory(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody UpdateCategoryRequest request) {
         try {
             // Authenticate token
             this.authenticate(token);

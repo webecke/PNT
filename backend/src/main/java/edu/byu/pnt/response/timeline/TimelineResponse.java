@@ -6,7 +6,7 @@ import edu.byu.pnt.response.Response;
 
 public class TimelineResponse extends Response {
 
-    private Timeline timeline;
+    private final Timeline timeline;
 
     public TimelineResponse(boolean success, String message, Timeline timeline) {
 

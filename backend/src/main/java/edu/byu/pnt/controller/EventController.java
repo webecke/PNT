@@ -17,13 +17,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/event")
 public class EventController extends Controller {
 
     @GetMapping("/{id}")
-    public GetEventResponse getEvent(@RequestHeader("Authorization") String token, @PathVariable String id) {
+    public GetEventResponse getEvent(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String id) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -43,7 +46,9 @@ public class EventController extends Controller {
     }
 
     @DeleteMapping("/{id}")
-    public DeleteEventResponse deleteEvent(@RequestHeader("Authorization") String token, @PathVariable String id) {
+    public DeleteEventResponse deleteEvent(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String id) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -76,7 +81,9 @@ public class EventController extends Controller {
     }
 
     @PostMapping("/add")
-    public AddEventResponse addEvent(@RequestHeader("Authorization") String token, @Valid @RequestBody AddEventRequest request) {
+    public AddEventResponse addEvent(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody AddEventRequest request) {
         try {
             // Authenticate token
             this.authenticate(token);
@@ -87,20 +94,23 @@ public class EventController extends Controller {
             EventCategoryDAO eventCategoryDAO = factory.createEventCategoryDAO();
             EventContactDAO eventContactDAO = factory.createEventContactDAO();
 
+            // Generate ID
+            String id = UUID.randomUUID().toString();
+
             // Add the event-categories
             for (String categoryID : request.categories()) {
-                EventCategory eventCategory = new EventCategory(request.id(), categoryID);
+                EventCategory eventCategory = new EventCategory(id, categoryID);
                 eventCategoryDAO.addEventCategory(eventCategory);
             }
 
             // Add the event-contacts
             for (String contactID : request.contacts()) {
-                EventContact eventContact = new EventContact(request.id(), contactID);
+                EventContact eventContact = new EventContact(id, contactID);
                 eventContactDAO.addEventContact(eventContact);
             }
 
             // Add the event fragment
-            EventFragment eventFragment = new EventFragment(request.id(), request.title(), request.date(), request.description());
+            EventFragment eventFragment = new EventFragment(id, request.title(), request.date(), request.description());
             eventDAO.addEventFragment(eventFragment);
 
             return new AddEventResponse(true, null);
@@ -110,7 +120,9 @@ public class EventController extends Controller {
     }
 
     @PostMapping("/update")
-    public UpdateEventResponse updateEvent(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateEventRequest request) {
+    public UpdateEventResponse updateEvent(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody UpdateEventRequest request) {
         try {
             // Authenticate token
             this.authenticate(token);

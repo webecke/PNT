@@ -42,7 +42,9 @@ public class UserController extends Controller {
     }
 
     @PostMapping("/update")
-    public UpdateUserResponse updateUser(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateUserRequest request) {
+    public UpdateUserResponse updateUser(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody UpdateUserRequest request) {
         try {
             // Authenticate token
             Authtoken authtoken = this.authenticate(token);

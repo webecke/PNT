@@ -12,6 +12,25 @@ import java.util.UUID;
 
 public abstract class Controller {
 
+    protected Authtoken authenticate(String token) throws DataAccessException {
+        String errorMessage = "Invalid authtoken";
+
+        // Check for null token
+        if (token == null) {
+            throw new DataAccessException(errorMessage);
+        }
+
+        // Factory and DAO
+        DAOFactory factory = new FactoryProvider().getFactory();
+        AuthtokenDAO authtokenDAO = factory.createAuthtokenDAO();
+
+        // Check if authtoken is found
+        try {
+            return authtokenDAO.getAuthtokenByToken(token);
+        } catch (DataAccessException e) {
+            throw new DataAccessException(errorMessage);
+        }
+    }
     protected Event buildEvent(EventFragment fragment) throws DataAccessException {
         // Factory and DAOs
         DAOFactory factory = new FactoryProvider().getFactory();
@@ -36,25 +55,6 @@ public abstract class Controller {
         return new Event(fragment.id(), fragment.title(), fragment.date(), fragment.description(), contactIDs, categoryIDs);
     }
 
-    protected Authtoken authenticate(String token) throws DataAccessException {
-        String errorMessage = "Invalid authtoken";
-
-        // Check for null token
-        if (token == null) {
-            throw new DataAccessException(errorMessage);
-        }
-
-        // Factory and DAO
-        DAOFactory factory = new FactoryProvider().getFactory();
-        AuthtokenDAO authtokenDAO = factory.createAuthtokenDAO();
-
-        // Check if authtoken is found
-        try {
-            return authtokenDAO.getAuthtokenByToken(token);
-        } catch (DataAccessException e) {
-            throw new DataAccessException(errorMessage);
-        }
-    }
 
     protected Authtoken buildAuthtoken(String userID) {
         String token = UUID.randomUUID().toString();

@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 public record AddEventRequest(
-        @NotBlank(message = "id must not be empty")
-        String id,
         @NotBlank(message = "title must not be empty")
         String title,
         @NotBlank(message = "date must not be empty")

@@ -23,7 +23,9 @@ import java.util.Set;
 public class TimelineController extends Controller {
 
     @PostMapping("/")
-    public TimelineResponse getTimeline(@RequestHeader("Authorization") String token, @Valid @RequestBody TimelineRequest request) {
+    public TimelineResponse getTimeline(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody TimelineRequest request) {
         try {
             // Authenticate token
             this.authenticate(token);

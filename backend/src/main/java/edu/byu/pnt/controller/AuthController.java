@@ -50,7 +50,9 @@ public class AuthController extends Controller {
     }
 
     @PostMapping("/logout")
-    public LogoutResponse logout(@RequestHeader("Authorization") String token, @Valid @RequestBody LogoutRequest request) {
+    public LogoutResponse logout(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody LogoutRequest request) {
         try {
             // Authenticate token
             Authtoken authtoken = this.authenticate(token);
