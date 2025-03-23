@@ -94,7 +94,7 @@ public class ContactController extends Controller {
 
             // Generate id and add the contact
             String id = UUID.randomUUID().toString();
-            ContactFragment contactFragment = new ContactFragment(id, request.firstName(), request.lastName(), request.email(), request.phone(), request.note());  // FIXME
+            ContactFragment contactFragment = new ContactFragment(id, request.firstName(), request.lastName(), request.email(), request.phone(), request.note());
             contactDAO.addContactFragment(contactFragment);
 
             return new AddContactResponse(true, null);
