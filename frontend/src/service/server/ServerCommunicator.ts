@@ -24,8 +24,6 @@ export class ServerCommunicator {
     }
   ) {
     if (!baseUrl) {
-      // For Next.js, we use environment variables that are exposed to the browser
-      // NEXT_PUBLIC_* variables are available in both server and client contexts
       baseUrl = this.getApiBaseUrl();
     }
 
@@ -38,7 +36,6 @@ export class ServerCommunicator {
    * This handles both server-side and client-side rendering in Next.js
    */
   private getApiBaseUrl(): string {
-    // Check for Next.js environment variables
     if (typeof window !== 'undefined') {
       // Client-side
       if (window.location.hostname === 'localhost' ||
@@ -61,16 +58,14 @@ export class ServerCommunicator {
    * Makes a GET request to the specified endpoint.
    *
    * @param endpoint - The API endpoint to request
-   * @param params - Query parameters to include
    * @param headers - Additional headers to include
    * @returns A promise with the response data
    */
   async get<T>(
     endpoint: string,
-    params?: Record<string, string>,
     headers?: Record<string, string>
   ): Promise<T> {
-    const url = this.buildUrl(endpoint, params);
+    const url = this.buildUrl(endpoint);
     return this.request<T>('GET', url, null, headers);
   }
 
@@ -112,16 +107,14 @@ export class ServerCommunicator {
    * Makes a DELETE request to the specified endpoint.
    *
    * @param endpoint - The API endpoint to request
-   * @param params - Query parameters to include
    * @param headers - Additional headers to include
    * @returns A promise with the response data
    */
   async delete<T>(
     endpoint: string,
-    params?: Record<string, string>,
     headers?: Record<string, string>
   ): Promise<T> {
-    const url = this.buildUrl(endpoint, params);
+    const url = this.buildUrl(endpoint);
     return this.request<T>('DELETE', url, null, headers);
   }
 
@@ -150,12 +143,10 @@ export class ServerCommunicator {
     };
 
     if (body !== null) {
-      // Simply take the object and serialize it
       options.body = JSON.stringify(body);
     }
 
     try {
-      // Log the request (helpful for debugging)
       console.log(`API Request: ${method} ${url}`, {
         headers: requestHeaders,
         body: body ? body : undefined
@@ -164,7 +155,7 @@ export class ServerCommunicator {
       const response = await fetch(url, options);
       return this.handleResponse<T>(response);
     } catch (error) {
-      return this.handleError<T>(error);
+      throw this.translateToServerError(error);
     }
   }
 
@@ -176,7 +167,6 @@ export class ServerCommunicator {
    */
   private async handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
-      // Get error details from response body
       let errorData;
       try {
         errorData = await this.parseResponseData(response);
@@ -184,7 +174,6 @@ export class ServerCommunicator {
         errorData = { message: 'Could not parse error response' };
       }
 
-      // Create a detailed error message
       const requestUrl = response.url;
       const errorInfo = {
         url: requestUrl,
@@ -193,10 +182,8 @@ export class ServerCommunicator {
         errorData
       };
 
-      // Log the error details
       console.error('Server Response Error:', errorInfo);
 
-      // Throw a detailed ServerError
       throw new ServerError(
         response.status,
         response.statusText,
@@ -234,23 +221,19 @@ export class ServerCommunicator {
    * @param error - The error object
    * @throws The processed error
    */
-  private handleError<T>(error: any): Promise<T> {
-    // Create a detailed error message
+  private translateToServerError(error: any) {
     const errorInfo = {
       message: error.message || 'Unknown error',
       type: error.constructor.name,
       stack: error.stack
     };
 
-    // Log the error for debugging purposes
     console.error('API Request Error:', errorInfo);
 
-    // If the error is already a ServerError, just throw it
     if (error instanceof ServerError) {
       throw error;
     }
 
-    // Network errors or other fetch-related errors
     throw new ServerError(
       0,
       'Network Error',
@@ -259,26 +242,13 @@ export class ServerCommunicator {
   }
 
   /**
-   * Builds the full URL with query parameters.
+   * Builds the full URL.
    *
    * @param endpoint - The API endpoint
-   * @param params - Query parameters to include
    * @returns The full URL string
    */
-  private buildUrl(endpoint: string, params?: Record<string, string>): string {
-    // Ensure endpoint starts with a slash
+  private buildUrl(endpoint: string): string {
     const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-    let url = `${this.baseUrl}${normalizedEndpoint}`;
-
-    // Add query parameters if provided
-    if (params && Object.keys(params).length > 0) {
-      const queryString = Object.entries(params)
-        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-        .join('&');
-
-      url = `${url}?${queryString}`;
-    }
-
-    return url;
+    return `${this.baseUrl}${normalizedEndpoint}`;
   }
 }

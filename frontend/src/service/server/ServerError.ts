@@ -8,7 +8,6 @@ export class ServerError extends Error {
   url?: string;
 
   constructor(status: number, statusText: string, data: any, url?: string) {
-    // Create a detailed error message
     const errorMessage = data?.message || statusText || 'Server Error';
     const fullMessage = `Server Error (${status}): ${errorMessage}${url ? ` - ${url}` : ''}`;
 
@@ -20,7 +19,7 @@ export class ServerError extends Error {
     this.data = data;
     this.url = url;
 
-    // Maintains proper stack trace for where the error was thrown (only in V8)
+    // Maintains proper stack trace for where the error was thrown
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, ServerError);
     }

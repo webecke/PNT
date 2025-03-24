@@ -15,7 +15,6 @@ export class ServerFacade {
   private token: AuthToken | null = null;
 
   constructor() {
-    // Initialize the communicator with environment-specific settings
     this.communicator = new ServerCommunicator();
   }
 
