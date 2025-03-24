@@ -171,7 +171,7 @@ export class ServerCommunicator {
       try {
         errorData = await this.parseResponseData(response);
       } catch (e) {
-        errorData = { message: 'Could not parse error response' };
+        errorData = { message: 'Could not parse error response', origin: e };
       }
 
       const requestUrl = response.url;
