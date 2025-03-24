@@ -1,4 +1,6 @@
 package edu.byu.pnt.request;
 
-public record AddCategoryRequest() {
+import jakarta.validation.constraints.NotBlank;
+
+public record AddCategoryRequest(@NotBlank(message = "label must not be empty") String label) {
 }

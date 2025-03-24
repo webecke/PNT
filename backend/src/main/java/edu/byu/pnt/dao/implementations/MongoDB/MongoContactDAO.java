@@ -13,6 +13,8 @@ import org.bson.Document;
 
 public class MongoContactDAO extends MongoDAO implements ContactDAO {
 
+    private final String collectionName = "contacts";
+
     MongoContactDAO(MongoDatabase database) {
         super(database);
     }
@@ -21,7 +23,7 @@ public class MongoContactDAO extends MongoDAO implements ContactDAO {
     public ContactFragment getContactFragment(String id) throws DataAccessException {
         try {
             // Access the 'events' collection in the database
-            MongoCollection<Document> collection = this.database.getCollection("contacts");
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Create a query filter to search for the event by its _id field
             Document query = new Document("_id", id);
@@ -51,7 +53,7 @@ public class MongoContactDAO extends MongoDAO implements ContactDAO {
     public void addContactFragment(ContactFragment contactFragment) throws DataAccessException {
         try {
             // Access the collection in the database
-            MongoCollection<Document> collection = this.database.getCollection("contacts");
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Create a new document
             Document newContact = new Document("_id", contactFragment.getID())
@@ -73,14 +75,14 @@ public class MongoContactDAO extends MongoDAO implements ContactDAO {
 
     @Override
     public void deleteContactFragment(String id) throws DataAccessException {
-        this.deleteDocument("contacts", id);
+        this.deleteDocument(collectionName, id);
     }
 
     @Override
     public void updateContactFragment(String id, String firstName, String lastName, String email, String phone, String note) throws DataAccessException {
         try {
             // Access the collection in the database
-            MongoCollection<Document> collection = this.database.getCollection("contacts");
+            MongoCollection<Document> collection = this.getCollection(collectionName);
 
             // Create the query
             Document updateFields = new Document();
