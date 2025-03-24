@@ -14,11 +14,13 @@ const ContactList = ({ category }: ContactListProps) => {
   
   useEffect(() => {
     if (category) {
-      setFilteredContacts(contacts.filter((contact) => contact.category?.includes(category)));
+      setFilteredContacts(contacts.filter((contact) => 
+        contact.category?.some((cat) => cat.includes(category))
+      ));
     } else {
       setFilteredContacts(contacts);
     }
-  }, [contacts, category])
+  }, [contacts, category]);
 
   return (
     <>

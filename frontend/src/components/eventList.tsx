@@ -5,17 +5,20 @@ import { IoArrowBackSharp } from "react-icons/io5";
 import EventDetail from "./eventDetail";
 
 const EventList = ({ category }: { category?: string}) => {
-    const [events] = useState(mockTimelineEvents);
-    const [selectedEvent, setSelectedEvent] = useState<number | undefined>(undefined);
-    const [filteredEvents, setFilteredEvents] = useState(mockTimelineEvents);
+  const [events] = useState(mockTimelineEvents);
+  const [selectedEvent, setSelectedEvent] = useState<number | undefined>(undefined);
+  const [filteredEvents, setFilteredEvents] = useState(mockTimelineEvents);
 
-    useEffect(() => {
-        if (category) {
-          setFilteredEvents(events.filter((event) => event.categories?.includes(category)));
-        } else {
-          setFilteredEvents(events);
-        }
-    }, [events, category]);
+  useEffect(() => {
+    if (category) {
+      setFilteredEvents(events.filter((event) => 
+        event.categories?.some((cat) => cat.includes(category))
+      ));
+    } else {
+      setFilteredEvents(events);
+    }
+  }, [events, category]);
+
 
   return (
     <>
