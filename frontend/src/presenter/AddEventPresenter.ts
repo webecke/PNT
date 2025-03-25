@@ -1,8 +1,9 @@
 import { NavigableView, Presenter } from "@/presenter/Presenter";
-import EventService, { NewEventData } from "@/service/EventService";
+import EventService from "@/service/EventService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import { mockAuthToken } from "@/utils/mockAuthToken";
 import { parseDate } from "@/utils/dateUtils";
+import { NewEventData } from "@/model/TimelineEvent";
 
 export interface AddEventView extends NavigableView {
 }

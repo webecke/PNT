@@ -6,3 +6,11 @@ export interface TimelineEvent {
   contacts: string[];
   categories: string[];
 }
+
+export interface NewEventData {
+  name: string;
+  date: Date;
+  desc: string;
+  contacts: string[];
+  categories: string[];
+}

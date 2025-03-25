@@ -1,6 +1,6 @@
 import { Contact } from "@/model/Contact";
-import { TimelineEvent } from "@/model/TimelineEvent";
-import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
+import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
+import { TimelineQuery, TimelineQueryResult } from "@/service/EventService";
 import { ContactListQuery, ContactListQueryResult, NewContactData } from "@/service/ContactService";
 import { AuthToken } from "@/model/AuthToken";
 import { Category } from "@/model/Category";

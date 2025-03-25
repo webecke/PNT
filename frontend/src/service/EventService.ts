@@ -1,14 +1,6 @@
 import { AuthToken } from "@/model/AuthToken";
 import IServerFacade from "@/service/IServerFacade";
-import { TimelineEvent } from "@/model/TimelineEvent";
-
-export interface NewEventData {
-  name: string;
-  date: Date;
-  desc: string;
-  contacts: string[];
-  categories: string[];
-}
+import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
 
 export interface TimelineQuery {
   // TODO
