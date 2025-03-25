@@ -17,7 +17,8 @@ const CATEGORY: Category = {
 const CONTACT: Contact = {
   email: "EMAIL",
   id: "FAKE-CONTACT-ID",
-  name: "CONTACT-NAME",
+  firstName: "CONTACT-FIRST-NAME",
+  lastName: "CONTACT-LAST-NAME",
   notes: "NOTES",
   phone: "PHONE",
   timeline: [],

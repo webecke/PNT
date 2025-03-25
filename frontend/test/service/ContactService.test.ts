@@ -8,7 +8,8 @@ import { Contact } from "@/model/Contact";
 const CONTACT: Contact = {
   id: "FAKE-CONTACT-ID",
   email: "CONTACT-EMAIL",
-  name: "CONTACT-NAME",
+  firstName: "CONTACT-FIRST-NAME",
+  lastName: "CONTACT-LAST-NAME",
   notes: "CONTACT-NOTES",
   phone: "CONTACT-PHONE",
   timeline: []

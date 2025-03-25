@@ -61,7 +61,7 @@ const ContactList = (props: Props) => {
               >
                 <div onClick={() => setSelectedContactId(contact.id)}>
                   <div className="cursor-pointer flex justify-between items-center">
-                    <span className="font-semibold">{contact.name}</span>
+                    <span className="font-semibold">{contact.firstName + " " + contact.lastName}</span>
                     <span className="text-gray-500">{contact.phone}</span>
                   </div>
                 </div>

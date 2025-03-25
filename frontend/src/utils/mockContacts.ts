@@ -4,7 +4,8 @@ import { Contact } from "@/model/Contact";
 export const mockContacts: Contact[] = [
   {
     id: "HarryPotterContactId",
-    name: "Harry Potter",
+    firstName: "Harry",
+    lastName: "Potter",
     phone: "123-456-7890",
     email: "fake@gmail.com",
     notes:
@@ -20,7 +21,8 @@ export const mockContacts: Contact[] = [
   },
   {
     id: "HermioneGrangerContactId",
-    name: "Hermione Granger",
+    firstName: "Hermione",
+    lastName: "Granger",
     phone: "987-654-3210",
     email: "hermione@mail.com",
     notes: "Brilliant mind, loves books.",
