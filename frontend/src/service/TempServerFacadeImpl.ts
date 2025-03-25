@@ -7,6 +7,7 @@ import { Category } from "@/model/Category";
 import { AuthToken } from "@/model/AuthToken";
 import { Contact } from "@/model/Contact";
 import { TimelineEvent } from "@/model/TimelineEvent";
+import { mockAuthToken } from "@/utils/mockAuthToken";
 
 const CATEGORY: Category = { id: 0, name: "CATEGORY-NAME" };
 
@@ -29,7 +30,7 @@ const CONTACT_LIST_QUERY_RESULT: ContactListQueryResult = {
   contacts: mockContacts
 }
 
-const TOKEN: AuthToken = { token: "FAKE-AUTH-TOKEN" };
+const TOKEN: AuthToken = mockAuthToken;
 
 async function und(): Promise<any> {
   return Promise.resolve(undefined);

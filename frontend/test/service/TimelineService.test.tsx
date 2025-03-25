@@ -9,7 +9,8 @@ const QUERY_W_NO_REQUIREMENTS: TimelineQuery = {
 };
 
 const TOKEN: AuthToken = {
-  token: "TEST-AUTH-TOKEN"
+  token: "TEST-AUTH-TOKEN",
+  userId: "TEST-USER-ID",
 }
 
 describe("TimelineService", () => {

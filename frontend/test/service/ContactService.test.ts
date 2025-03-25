@@ -23,7 +23,8 @@ const NEW_CONTACT: NewContactData = {
 };
 
 const TOKEN: AuthToken = {
-  token: "TEST-AUTH-TOKEN"
+  token: "TEST-AUTH-TOKEN",
+  userId: "TEST-USER-ID",
 }
 
 describe("ContactService", () => {

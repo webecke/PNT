@@ -19,7 +19,8 @@ const EVENT: TimelineEvent = {
 };
 
 const TOKEN: AuthToken = {
-  token: "TEST-AUTH-TOKEN"
+  token: "TEST-AUTH-TOKEN",
+  userId: "TEST-USER-ID",
 };
 
 describe("EventService", () => {
