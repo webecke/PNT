@@ -11,7 +11,7 @@ import { mockAuthToken } from "@/utils/mockAuthToken";
 
 const CATEGORY: Category = {
   id: "FAKE-CATEGORY-ID",
-  name: "CATEGORY-NAME",
+  label: "CATEGORY-NAME",
 };
 
 const CONTACT: Contact = {

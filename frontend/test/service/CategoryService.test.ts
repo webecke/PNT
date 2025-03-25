@@ -7,7 +7,7 @@ import { Category } from "@/model/Category";
 
 const CATEGORY: Category = {
   id: "TEST-CATEGORY-ID",
-  name: "TEST-CATEGORY"
+  label: "TEST-CATEGORY"
 }
 
 const TOKEN: AuthToken = {
@@ -26,8 +26,8 @@ describe("CategoryService", () => {
   });
 
   it("calls the server correctly when createCategory() is called", () => {
-    service.createCategory(CATEGORY.name, TOKEN);
-    verify(serverMock.createCategory(CATEGORY.name, TOKEN)).once();
+    service.createCategory(CATEGORY.label, TOKEN);
+    verify(serverMock.createCategory(CATEGORY.label, TOKEN)).once();
   });
 
   it("calls the server correctly when setCategoryText() is called", () => {
