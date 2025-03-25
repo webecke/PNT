@@ -1,8 +1,9 @@
 import { beforeEach, describe, it } from "@jest/globals";
 import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
-import { AuthToken, Category } from "@/model/model";
 import CategoryService from "@/service/CategoryService";
+import { AuthToken } from "@/model/AuthToken";
+import { Category } from "@/model/Category";
 
 const CATEGORY: Category = {
   id: 0,

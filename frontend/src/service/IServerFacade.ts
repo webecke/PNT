@@ -1,8 +1,9 @@
 import { Contact } from "@/utils/mockContacts";
-import { AuthToken, Category } from "@/model/model";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
 import { ContactListQuery, ContactListQueryResult, NewContactData } from "@/service/ContactService";
+import { AuthToken } from "@/model/AuthToken";
+import { Category } from "@/model/Category";
 
 export default interface IServerFacade {
     login(email: string, password: string): Promise<AuthToken>;

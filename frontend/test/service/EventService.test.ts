@@ -1,7 +1,7 @@
 import { beforeEach, describe, it } from "@jest/globals";
 import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
-import { AuthToken } from "@/model/model";
+import { AuthToken } from "@/model/AuthToken";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import EventService, { NewEventData } from "@/service/EventService";
 

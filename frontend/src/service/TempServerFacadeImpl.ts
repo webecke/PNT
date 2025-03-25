@@ -1,9 +1,10 @@
 import IServerFacade from "@/service/IServerFacade";
-import { AuthToken, Category } from "@/model/model";
 import { Contact, mockContacts } from "@/utils/mockContacts";
 import { mockTimelineEvents, TimelineEvent } from "@/utils/mockTimelineEvents";
 import { ContactListQuery, ContactListQueryResult, NewContactData } from "@/service/ContactService";
 import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
+import { Category } from "@/model/Category";
+import { AuthToken } from "@/model/AuthToken";
 
 const CATEGORY: Category = { id: 0, name: "CATEGORY-NAME" };
 

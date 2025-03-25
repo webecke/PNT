@@ -1,5 +1,6 @@
-import { AuthToken, Category } from "@/model/model";
 import IServerFacade from "@/service/IServerFacade";
+import { AuthToken } from "@/model/AuthToken";
+import { Category } from "@/model/Category";
 
 export default class CategoryService {
   constructor(private server: IServerFacade) {
