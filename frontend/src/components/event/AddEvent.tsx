@@ -26,9 +26,9 @@ const AddEvent = (props: Props) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await presenter.current.submit({
-      name: name,
+      title: name,
       date: date,
-      desc: description,
+      description: description,
       categories: categories,
       contacts: contacts,
     });

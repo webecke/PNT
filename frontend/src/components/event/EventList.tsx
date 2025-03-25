@@ -64,12 +64,12 @@ const EventList = (props: Props) => {
                   <div className="cursor-pointer flex gap-6">
                     {/* Title: Fixed width so it doesn't expand too much */}
                     <span className="font-semibold min-w-[150px] max-w-[200px] truncate">
-                  {event.name}
+                  {event.title}
                 </span>
 
                     {/* Description: Ensure ellipsis shows */}
                     <span className="text-gray-500 flex-1 truncate">
-                  {event.desc}
+                  {event.description}
                 </span>
                   </div>
                 </div>

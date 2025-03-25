@@ -28,9 +28,9 @@ const EVENT: TimelineEvent = {
   categories: [],
   contacts: [],
   date: "01-01-1900",
-  desc: "EVENT-DESC",
+  description: "EVENT-DESC",
   id: "FAKE-EVENT-ID",
-  name: "EVENT-NAME",
+  title: "EVENT-NAME",
 };
 
 const TIMELINE_QUERY_RESULT: TimelineQueryResult = {

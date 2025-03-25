@@ -24,9 +24,9 @@ const EventDetail = (props: Props) => {
   const presenter = useRef(props.presenter ?? new EventDetailPresenter(listener));
 
   const loadEventData = (event: TimelineEvent) => {
-    setName(event.name);
+    setName(event.title);
     setDate(event.date);
-    setDescription(event.desc);
+    setDescription(event.description);
     setContacts(event.contacts);
     setCategories(event.categories);
   };
