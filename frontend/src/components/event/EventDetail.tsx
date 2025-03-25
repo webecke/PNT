@@ -61,7 +61,7 @@ const EventDetail = (props: Props) => {
       <p className="text-gray-700 mb-4">{description}</p>
       <div className="border-t pt-4">
         <h3 className="text-lg font-semibold text-gray-800">Contacts</h3>
-        <p className="text-gray-600">{contacts}</p>
+        <p className="text-gray-600">{contacts /* TODO Retrieve & display names rather than IDs */}</p>
       </div>
       <div className="border-t pt-4 mt-4">
         <h3 className="text-lg font-semibold text-gray-800">Categories</h3>
