@@ -1,15 +1,5 @@
 import { HarryPotter } from "./harrypotterimg";
-
-export interface Contact {
-  id: number;
-  name: string;
-  phone: string;
-  email: string;
-  notes: string;
-  image?: string;
-  timeline: string[];
-  category?: string[];
-}
+import { Contact } from "@/model/Contact";
 
 export const mockContacts: Contact[] = [
   {

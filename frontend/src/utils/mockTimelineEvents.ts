@@ -1,4 +1,4 @@
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 
 export interface TimelineEvent {
   id: number;

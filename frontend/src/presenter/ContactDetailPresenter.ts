@@ -1,5 +1,5 @@
 import { Presenter, View } from "@/presenter/Presenter";
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import ContactService from "@/service/ContactService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";

@@ -1,4 +1,4 @@
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ContactDetail from "./ContactDetail";
 import { IoArrowBackSharp } from "react-icons/io5";

@@ -1,5 +1,5 @@
 import { AuthToken } from "@/model/AuthToken";
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 import IServerFacade from "@/service/IServerFacade";
 
 export interface ContactListQuery {

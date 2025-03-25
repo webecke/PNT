@@ -1,4 +1,4 @@
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
 import { ContactListQuery, ContactListQueryResult, NewContactData } from "@/service/ContactService";

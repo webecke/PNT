@@ -3,7 +3,7 @@ import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
 import { AuthToken } from "@/model/AuthToken";
 import ContactService, { NewContactData } from "@/service/ContactService";
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 
 const CONTACT: Contact = {
   id: 0,
