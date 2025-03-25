@@ -39,7 +39,7 @@ const ContactList = (props: Props) => {
     case QueryState.IN_PROCESS:
       return <div>Loading contacts...</div>;
     case QueryState.FAILURE:
-      return <div>Looks like you don't have any contacts yet. Let's add a few!</div>;
+      return <div>It looks like there are no contacts yet. Go ahead and add a few!</div>;
   }
 
   return (

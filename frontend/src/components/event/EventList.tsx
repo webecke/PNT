@@ -41,7 +41,7 @@ const EventList = (props: Props) => {
     case QueryState.IN_PROCESS:
       return <div>Loading timeline...</div>;
     case QueryState.FAILURE:
-      return <div>Looks like you don't have any events yet. Let's add a few!</div>;
+      return <div>It looks like there are no events yet. Go ahead and add a few!</div>;
   }
 
   return (
