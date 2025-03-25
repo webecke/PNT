@@ -25,7 +25,7 @@ const EventDetail = (props: Props) => {
 
   const loadEventData = (event: TimelineEvent) => {
     setName(event.name);
-    setDate(event.date.toDateString());
+    setDate(event.date);
     setDescription(event.desc);
     setContacts(event.contacts);
     setCategories(event.categories);

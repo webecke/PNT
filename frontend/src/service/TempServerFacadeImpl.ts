@@ -27,7 +27,7 @@ const CONTACT: Contact = {
 const EVENT: TimelineEvent = {
   categories: [],
   contacts: [],
-  date: new Date("01-01-1900"),
+  date: "01-01-1900",
   desc: "EVENT-DESC",
   id: "FAKE-EVENT-ID",
   name: "EVENT-NAME",

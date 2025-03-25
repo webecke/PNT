@@ -6,9 +6,9 @@ import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
 import EventService from "@/service/EventService";
 
 const NEW_EVENT_DATA: NewEventData = {
-  name: "EVENT-NAME",
-  desc: "EVENT-DESCRIPTION",
-  date: new Date(),
+  title: "EVENT-NAME",
+  description: "EVENT-DESCRIPTION",
+  date: '2000-01-01',
   categories: [],
   contacts: [],
 };

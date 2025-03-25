@@ -5,7 +5,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
   {
     id: "EventIdOne",
     name: "B-day Celebration",
-    date: new Date('2024-03-23'),
+    date: '2024-03-23',
     desc: "Harry's bday. It was mildly explosive.",
     contacts: ["HarryPotterContactId"],
     categories: ["party", "memories"]
@@ -13,7 +13,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
   {
     id: "EventIdTwo",
     name: "HS Graduation",
-    date: new Date('2024-03-23'),
+    date: '2024-03-23',
     desc: "Really long and boring, me and Harry just played cards. Hermione had a blast tho",
     contacts: ["HarryPotterContactId", "HermioneGrangerContactId"],
     categories: ["school"]
@@ -21,7 +21,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
   {
     id: "EventIdThree",
     name: "Band Concert",
-    date: new Date('2024-03-23'),
+    date: '2024-03-23',
     desc: "Harry dragged me along to see the Diagon Digons. Weirdly sketchy; surprising amount of maths.",
     contacts: ["HarryPotterContactId"],
     categories: ["memories"]
@@ -29,7 +29,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
   {
     id: "EventIdFour",
     name: "Went to park",
-    date: new Date('2024-03-23'),
+    date: '2024-03-23',
     desc: "Pretty chill.",
     contacts: ["HermioneGrangerContactId"],
     categories: []
@@ -37,7 +37,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
   {
     id: "EventIdFive",
     name: "Study group",
-    date: new Date('2024-03-23'),
+    date: '2024-03-23',
     desc: "I swear herbology will be the death of me.",
     contacts: ["HermioneGrangerContactId"],
     categories: ["school"]
@@ -45,7 +45,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
   {
     id: "EventIdSix",
     name: "Book club",
-    date: new Date('2024-03-23'),
+    date: '2024-03-23',
     desc: "Beasts were less fantastic than advertised",
     contacts: ["HermioneGrangerContactId"],
     categories: ["school"]
@@ -53,7 +53,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     {
       id: "EventIdSeven",
     name: "Meeting Harry Potter",
-    date: new Date('2024-03-23'),
+      date: '2024-03-23',
     desc: "Harry is a nice guy. I met him when I was running cross country in 9th grade. He is so cool. I wish I could be just like him. Just a magical experience. This could not have gone any better.",
       contacts: ["HarryPotterContactId"],
       categories: ["person", "school", "running", "business"]
@@ -61,7 +61,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
   {
     id: "EventIdEight",
     name: "Meeting Hermione Granger",
-    date: new Date('2024-03-23'),
+    date: '2024-03-23',
     desc: "Brilliant mind, loves books.",
     contacts: ["HermioneGrangerContactId"],
     categories: ["person", "books", "business"]

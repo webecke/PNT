@@ -4,7 +4,7 @@ export interface TimelineEvent extends NewEventData {
 
 export interface NewEventData {
   name: string;
-  date: Date;
+  date: string;
   desc: string;
   contacts: string[];
   categories: string[];
