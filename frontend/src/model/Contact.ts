@@ -1,7 +1,7 @@
-export interface Contact {
+import { Person } from "@/model/Person";
+
+export interface Contact extends Person {
   id: string;
-  firstName: string;
-  lastName: string;
   phone: string;
   email: string;
   notes: string;
