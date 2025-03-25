@@ -1,6 +1,6 @@
 import { EventDetailPresenter, EventDetailView } from "@/presenter/EventDetailPresenter";
 import { useEffect, useRef, useState } from "react";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import { QueryState } from "@/utils/QueryState";
 
 interface Props {

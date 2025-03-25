@@ -1,6 +1,6 @@
 import { AuthToken } from "@/model/AuthToken";
 import IServerFacade from "@/service/IServerFacade";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 
 export interface NewEventData {
   name: string;

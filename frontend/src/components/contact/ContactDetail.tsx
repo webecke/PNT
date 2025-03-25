@@ -3,7 +3,7 @@ import Timeline from "@/components/timeline/Timeline";
 import { useEffect, useRef, useState } from "react";
 import EditForm from "@/components/EditForm";
 import { ContactDetailPresenter, ContactDetailView } from "@/presenter/ContactDetailPresenter";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import { Contact } from "@/model/Contact";
 import { QueryState } from "@/utils/QueryState";
 

@@ -1,5 +1,5 @@
 import { Presenter, View } from "@/presenter/Presenter";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import EventService from "@/service/EventService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import { mockAuthToken } from "@/utils/mockAuthToken";

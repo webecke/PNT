@@ -1,5 +1,5 @@
 import { Contact } from "@/model/Contact";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import { NewEventData, TimelineQuery, TimelineQueryResult } from "@/service/EventService";
 import { ContactListQuery, ContactListQueryResult, NewContactData } from "@/service/ContactService";
 import { AuthToken } from "@/model/AuthToken";

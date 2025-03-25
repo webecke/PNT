@@ -1,4 +1,4 @@
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
 import EventDetail from "./EventDetail";

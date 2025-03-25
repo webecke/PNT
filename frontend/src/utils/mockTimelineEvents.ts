@@ -1,13 +1,5 @@
 import { Contact } from "@/model/Contact";
-
-export interface TimelineEvent {
-  id: number;
-  name: string;
-  date: Date;
-  desc: string | null;
-  contacts: string[];
-  categories: string[];
-}
+import { TimelineEvent } from "@/model/TimelineEvent";
 
 export const mockTimelineEvents: TimelineEvent[] = [
   {
