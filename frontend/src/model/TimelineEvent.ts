@@ -1,10 +1,5 @@
-export interface TimelineEvent {
+export interface TimelineEvent extends NewEventData {
   id: string;
-  name: string;
-  date: Date;
-  desc: string | null;
-  contacts: string[];
-  categories: string[];
 }
 
 export interface NewEventData {
