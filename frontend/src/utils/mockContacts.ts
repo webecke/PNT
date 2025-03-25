@@ -17,7 +17,7 @@ export const mockContacts: Contact[] = [
       "Band Concert",
       "Went to Park",
     ],
-    category: ["business"]
+    categories: ["business"]
   },
   {
     id: "HermioneGrangerContactId",
@@ -27,6 +27,6 @@ export const mockContacts: Contact[] = [
     email: "hermione@mail.com",
     notes: "Brilliant mind, loves books.",
     timeline: ["Study Group", "Graduation Ceremony", "Book Club"],
-    category: ["school"]
+    categories: ["school"]
   },
 ];

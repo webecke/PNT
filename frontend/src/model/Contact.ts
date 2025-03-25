@@ -7,5 +7,5 @@ export interface Contact {
   notes: string;
   image?: string;
   timeline: string[];
-  category?: string[];
+  categories?: string[];
 }

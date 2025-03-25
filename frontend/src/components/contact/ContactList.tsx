@@ -30,7 +30,7 @@ const ContactList = (props: Props) => {
 
   const filteredContacts: Contact[] = useMemo(() => {
     return props.category
-      ? contacts.filter((contact) => contact.category?.includes(props.category!))
+      ? contacts.filter((contact) => contact.categories?.includes(props.category!))
       : contacts;
   }, [contacts, props.category]);
 
