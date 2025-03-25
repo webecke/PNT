@@ -4,7 +4,7 @@ import { TimelineEvent } from "@/model/TimelineEvent";
 import { QueryState } from "@/utils/QueryState";
 
 interface Props {
-  eventId: number;
+  eventId: string;
   presenter?: EventDetailPresenter;
 }
 

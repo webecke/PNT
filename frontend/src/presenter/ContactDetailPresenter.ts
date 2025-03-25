@@ -17,7 +17,7 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
     super(view);
   }
 
-  public async getContact(userId: number): Promise<Contact | undefined> {
+  public async getContact(userId: string): Promise<Contact | undefined> {
     try {
       return await this.contactService.getContact(userId, mockAuthToken);
     } catch {
@@ -25,7 +25,7 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
     }
   }
 
-  public async getContactTimeline(userId: number): Promise<TimelineEvent[]> {
+  public async getContactTimeline(userId: string): Promise<TimelineEvent[]> {
     const query: TimelineQuery = { requiredAttendees: [userId] };
     try {
       return await this.eventService.queryTimeline(query, mockAuthToken);

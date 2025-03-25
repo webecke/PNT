@@ -12,7 +12,7 @@ interface Props {
 
 const ContactList = (props: Props) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [selectedContactId, setSelectedContactId] = useState<number | undefined>(undefined);
+  const [selectedContactId, setSelectedContactId] = useState<string | undefined>(undefined);
   const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: ContactListView = {};

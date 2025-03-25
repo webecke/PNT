@@ -14,7 +14,7 @@ export class EventDetailPresenter extends Presenter<EventDetailView> {
     super(view);
   }
 
-  public async getEvent(eventId: number): Promise<TimelineEvent | undefined> {
+  public async getEvent(eventId: string): Promise<TimelineEvent | undefined> {
     return await this.service.getEvent(eventId, mockAuthToken);
   }
 }

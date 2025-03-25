@@ -15,7 +15,7 @@ const NEW_EVENT_DATA: NewEventData = {
 
 const EVENT: TimelineEvent = {
   ...NEW_EVENT_DATA,
-  id: 0,
+  id: "FAKE-EVENT-ID",
 };
 
 const TOKEN: AuthToken = {

@@ -1,5 +1,5 @@
 export interface TimelineEvent {
-  id: number;
+  id: string;
   name: string;
   date: Date;
   desc: string | null;

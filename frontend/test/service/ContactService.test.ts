@@ -6,7 +6,7 @@ import ContactService, { NewContactData } from "@/service/ContactService";
 import { Contact } from "@/model/Contact";
 
 const CONTACT: Contact = {
-  id: 0,
+  id: "FAKE-CONTACT-ID",
   email: "CONTACT-EMAIL",
   name: "CONTACT-NAME",
   notes: "CONTACT-NOTES",

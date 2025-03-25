@@ -3,7 +3,7 @@ import { TimelineEvent } from "@/model/TimelineEvent";
 
 export const mockTimelineEvents: TimelineEvent[] = [
   {
-    id: 1,
+    id: "EventIdOne",
     name: "B-day Celebration",
     date: new Date('2024-03-23'),
     desc: "Harry's bday. It was mildly explosive.",
@@ -11,7 +11,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     categories: ["party", "memories"]
   },
   {
-    id: 2,
+    id: "EventIdTwo",
     name: "HS Graduation",
     date: new Date('2024-03-23'),
     desc: "Really long and boring, me and Harry just played cards. Hermione had a blast tho",
@@ -19,7 +19,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     categories: ["school"]
   },
   {
-    id: 3,
+    id: "EventIdThree",
     name: "Band Concert",
     date: new Date('2024-03-23'),
     desc: "Harry dragged me along to see the Diagon Digons. Weirdly sketchy; surprising amount of maths.",
@@ -27,7 +27,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     categories: ["memories"]
   },
   {
-    id: 4,
+    id: "EventIdFour",
     name: "Went to park",
     date: new Date('2024-03-23'),
     desc: "Pretty chill.",
@@ -35,7 +35,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     categories: []
   },
   {
-    id: 5,
+    id: "EventIdFive",
     name: "Study group",
     date: new Date('2024-03-23'),
     desc: "I swear herbology will be the death of me.",
@@ -43,7 +43,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     categories: ["school"]
   },
   {
-    id: 6,
+    id: "EventIdSix",
     name: "Book club",
     date: new Date('2024-03-23'),
     desc: "Beasts were less fantastic than advertised",
@@ -51,7 +51,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     categories: ["school"]
   },
     {
-    id: 7,
+      id: "EventIdSeven",
     name: "Meeting Harry Potter",
     date: new Date('2024-03-23'),
     desc: "Harry is a nice guy. I met him when I was running cross country in 9th grade. He is so cool. I wish I could be just like him. Just a magical experience. This could not have gone any better.",
@@ -59,7 +59,7 @@ export const mockTimelineEvents: TimelineEvent[] = [
     categories: ["person", "school", "running", "buisness"]
   },
   {
-    id: 8,
+    id: "EventIdEight",
     name: "Meeting Hermione Granger",
     date: new Date('2024-03-23'),
     desc: "Brilliant mind, loves books.",

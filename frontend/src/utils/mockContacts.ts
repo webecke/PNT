@@ -3,7 +3,7 @@ import { Contact } from "@/model/Contact";
 
 export const mockContacts: Contact[] = [
   {
-    id: 1,
+    id: "HarryPotterContactId",
     name: "Harry Potter",
     phone: "123-456-7890",
     email: "fake@gmail.com",
@@ -19,7 +19,7 @@ export const mockContacts: Contact[] = [
     category: ["business"]
   },
   {
-    id: 2,
+    id: "HermioneGrangerContactId",
     name: "Hermione Granger",
     phone: "987-654-3210",
     email: "hermione@mail.com",

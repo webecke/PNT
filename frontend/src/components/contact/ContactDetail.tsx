@@ -9,7 +9,7 @@ import { QueryState } from "@/utils/QueryState";
 
 interface Props {
   presenter?: ContactDetailPresenter;
-  userId: number;
+  userId: string;
 }
 
 const ContactDetail = (props: Props) => {

@@ -28,7 +28,7 @@ export default class ContactService {
     await this.server.createContact(newContactData, auth);
   }
 
-  public async getContact(contactId: number, auth: AuthToken): Promise<Contact> {
+  public async getContact(contactId: string, auth: AuthToken): Promise<Contact> {
     return await this.server.getContact(contactId, auth);
   }
 
@@ -37,7 +37,7 @@ export default class ContactService {
     return result.contacts;
   }
 
-  public async deleteContact(contactId: number, auth: AuthToken): Promise<void> {
+  public async deleteContact(contactId: string, auth: AuthToken): Promise<void> {
     await this.server.deleteContact(contactId, auth);
   }
 

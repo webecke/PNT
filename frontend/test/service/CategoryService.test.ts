@@ -6,7 +6,7 @@ import { AuthToken } from "@/model/AuthToken";
 import { Category } from "@/model/Category";
 
 const CATEGORY: Category = {
-  id: 0,
+  id: "TEST-CATEGORY-ID",
   name: "TEST-CATEGORY"
 }
 

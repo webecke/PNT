@@ -14,7 +14,7 @@ const EventList = (props: Props) => {
   // TODO Combine EventList and ContactList
   // TODO? Change EventList and ContactList to use selected Event/Contact instead of their IDs
   const [events, setEvents] = useState<TimelineEvent[]>([]);
-  const [selectedEventId, setSelectedEventId] = useState<number | undefined>(undefined);
+  const [selectedEventId, setSelectedEventId] = useState<string | undefined>(undefined);
   const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: EventListView = {};

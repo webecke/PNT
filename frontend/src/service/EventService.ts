@@ -12,7 +12,7 @@ export interface NewEventData {
 
 export interface TimelineQuery {
   // TODO
-  requiredAttendees: number[];
+  requiredAttendees: string[];
 }
 
 export interface TimelineQueryResult {
@@ -28,11 +28,11 @@ export default class EventService {
     await this.server.createEvent(newEventData, auth);
   }
 
-  public async getEvent(eventId: number, auth: AuthToken): Promise<TimelineEvent> {
+  public async getEvent(eventId: string, auth: AuthToken): Promise<TimelineEvent> {
     return await this.server.getEvent(eventId, auth);
   }
 
-  public async deleteEvent(eventId: number, auth: AuthToken): Promise<void> {
+  public async deleteEvent(eventId: string, auth: AuthToken): Promise<void> {
     await this.server.deleteEvent(eventId, auth);
   }
 
