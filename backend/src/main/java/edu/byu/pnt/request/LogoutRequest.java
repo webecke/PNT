@@ -1,4 +1,8 @@
 package edu.byu.pnt.request;
 
-public record LogoutRequest() {
-}
+import jakarta.validation.constraints.NotBlank;
+
+public record LogoutRequest(
+        @NotBlank(message = "username cannot be blank")
+        String username
+) {}

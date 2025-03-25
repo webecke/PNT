@@ -5,8 +5,8 @@ public class User extends Person {
     private final String username;
     private final String password;
 
-    public User(String id, String firstName, String lastName, String username, String password) {
-        super(id, firstName, lastName);
+    public User(String firstName, String lastName, String username, String password) {
+        super(firstName, lastName);
         this.username = username;
         this.password = password;    // TODO hash password
     }

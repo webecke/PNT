@@ -12,6 +12,8 @@ import edu.byu.pnt.dao.provider.UserDAO;
 
 public class MongoUserDAO extends MongoDAO implements UserDAO {
 
+    private final String collectionName = "users";
+
     MongoUserDAO(MongoDatabase database) {
         super(database);
     }
@@ -19,7 +21,7 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
     public User getUser(String id) throws DataAccessException{
         try {
             // Access the 'users' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("users");
+            MongoCollection<Document> usersCollection = this.getCollection(collectionName);
 
             // Create a query filter to search for the user by their _id field
             Document query = new Document("_id", id);
@@ -34,11 +36,10 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
                 // Extract fields from the document and create a User object
                 String firstName = userDocument.getString("firstName");
                 String lastName = userDocument.getString("lastName");
-                String username = userDocument.getString("username");
                 String password = userDocument.getString("password");
 
                 // Create and return the User object
-                return new User(id, firstName, lastName, username, password);
+                return new User(firstName, lastName, id, password);
             } else {
                 throw new DataAccessException("User not found in database.");
             }
@@ -50,13 +51,12 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
     public void addUser(User user) throws DataAccessException {
         try {
             // Access the 'users' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("users");
+            MongoCollection<Document> usersCollection = this.getCollection(collectionName);
 
             // Create a new user document
-            Document newUser = new Document("_id", user.getID())
+            Document newUser = new Document("_id", user.getUsername())
                     .append("firstName", user.getFirstName())
                     .append("lastName", user.getLastName())
-                    .append("username", user.getUsername())
                     .append("password", user.getPassword());
 
             // Insert the new user document into the 'users' collection
@@ -65,34 +65,33 @@ public class MongoUserDAO extends MongoDAO implements UserDAO {
         catch (Exception e) {
             throw new DataAccessException(e.getMessage());
         }
-        System.out.println("User added with id: " + user.getID() + "(" + user.getUsername() + ")");
+        System.out.println("User added with username: " + user.getUsername());
     }
 
     public void deleteUser(String id) throws DataAccessException {
-        this.deleteDocument("users", id);
+        this.deleteDocument(collectionName, id);
     }
 
-    public void updateUser(String id, String firstName, String lastName, String username, String password) throws DataAccessException {
+    public void updateUser(String firstName, String lastName, String username, String password) throws DataAccessException {
         try {
             // Access the 'users' collection in the database
-            MongoCollection<Document> usersCollection = this.database.getCollection("users");
+            MongoCollection<Document> usersCollection = this.getCollection(collectionName);
 
             // Create the update query for the user
             Document updateFields = new Document();
-            if (firstName != null) updateFields.append("firstName", firstName);
-            if (lastName != null) updateFields.append("lastName", lastName);
-            if (username != null) updateFields.append("username", username);
-            if (password != null) updateFields.append("password", password);
+            updateFields.append("_id", username);
+            updateFields.append("firstName", firstName);
+            updateFields.append("lastName", lastName);
+            updateFields.append("password", password);
 
             // Apply the update to the user
-            usersCollection.updateOne(Filters.eq("_id", id), Updates.combine(
+            usersCollection.updateOne(Filters.eq("_id", username), Updates.combine(
                     Updates.set("firstName", firstName),
                     Updates.set("lastName", lastName),
-                    Updates.set("username", username),
                     Updates.set("password", password)
             ));
 
-            System.out.println("User updated with id: " + id + "(" + username + ")");
+            System.out.println("User updated with username: " + username);
         } catch (Exception e) {
             throw new DataAccessException(e.getMessage());
         }

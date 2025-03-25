@@ -7,5 +7,5 @@ public interface CategoryDAO {
     Category getCategory(String id) throws DataAccessException;
     void addCategory(Category category) throws DataAccessException;
     void deleteCategory(String id) throws DataAccessException;
-    void updateCategory() throws DataAccessException;
+    void updateCategory(String id, String newLabel) throws DataAccessException;
 }

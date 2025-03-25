@@ -83,10 +83,10 @@ describe("Our React Testing Library setup", () => {
     expect(linkElement).toBeTruthy();
   });
 
-  it("can expect a button toBeEnabled()", async () => {
+  it("can expect a button to be enabled", async () => {
     render(<button />);
     const elem = await screen.findByRole("button", {});
-    expect(elem).toBeEnabled();
+    expect(elem.hasAttribute('disabled')).toBe(false);
   });
 });
 

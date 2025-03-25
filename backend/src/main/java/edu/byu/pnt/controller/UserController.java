@@ -1,5 +1,7 @@
 package edu.byu.pnt.controller;
 
+import edu.byu.pnt.dao.provider.AuthtokenDAO;
+import edu.byu.pnt.model.Authtoken;
 import edu.byu.pnt.request.AddUserRequest;
 import edu.byu.pnt.dao.DataAccessException;
 import edu.byu.pnt.dao.factory.DAOFactory;
@@ -16,26 +18,47 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends Controller {
     @PostMapping("/add")
     public AddUserResponse addUser(@Valid @RequestBody AddUserRequest request) {
-        // Generate id and create the User object
-        String id = UUID.randomUUID().toString();
-        User newUser = new User(id, request.firstName(), request.lastName(), request.username(), request.password());
-
-        // Add the user to the database
         try {
+            // Create the factory and DAO
             DAOFactory factory = new FactoryProvider().getFactory();
             UserDAO userDAO = factory.createUserDAO();
+            AuthtokenDAO authtokenDAO = factory.createAuthtokenDAO();
+
+            // Add the new user to the database
+            User newUser = new User(request.firstName(), request.lastName(), request.username(), request.password());
             userDAO.addUser(newUser);
+
+            // Generate authtoken and add it to the database
+            Authtoken authtoken = this.buildAuthtoken(request.username());
+            authtokenDAO.addAuthtoken(authtoken);
+
+            return new AddUserResponse(true, null, newUser, authtoken.token());
         } catch (DataAccessException e) {
-            return new AddUserResponse(false, e.getMessage(), null);
+            return new AddUserResponse(false, e.getMessage(), null, null);
         }
-        return new AddUserResponse(true, null, newUser);
     }
 
     @PostMapping("/update")
-    public UpdateUserResponse updateUser(@Valid @RequestBody UpdateUserRequest request) {
-        return new UpdateUserResponse(false, "Not implemented yet");
+    public UpdateUserResponse updateUser(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody UpdateUserRequest request) {
+        try {
+            // Authenticate token
+            Authtoken authtoken = this.authenticate(token);
+
+            // Create the factory and DAO
+            DAOFactory factory = new FactoryProvider().getFactory();
+            UserDAO userDAO = factory.createUserDAO();
+
+            // Update the user
+            userDAO.updateUser(request.firstName(), request.lastName(), authtoken.userID(), request.password());
+
+            return new UpdateUserResponse(true, null);
+        } catch (DataAccessException e) {
+            return new UpdateUserResponse(false, e.getMessage());
+        }
     }
 }
