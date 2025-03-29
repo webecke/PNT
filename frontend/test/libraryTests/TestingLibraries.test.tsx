@@ -136,6 +136,7 @@ describe("Our mockito setup", () => {
     const objMock: MyType = mock<MyType>();
     const obj: MyType = instance(objMock);
 
+    // noinspection ES6MissingAwait
     obj.myFunc();
 
     verify(objMock.myFunc()).once();

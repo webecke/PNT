@@ -1,46 +1,37 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
 import { getOnChangeFunc_ForStringListFormElement } from "@/utils/reactStateUtils";
+import { AddEventPresenter } from "@/presenter/AddEventPresenter";
+import { AddContactView } from "@/presenter/AddContactPresenter";
 
-const AddEvent = () => {
+interface Props {
+  presenter?: AddEventPresenter;
+}
+
+const AddEvent = (props: Props) => {
   const router = useRouter();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState<Date | null>();
+  const [date, setDate] = useState("");
   const [contacts, setContacts] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
-  const onChangeDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const maybeDateString = e.target.value;
-    console.log(maybeDateString);
-    setDate(maybeDateString ? new Date(maybeDateString) : null);
-  };
+  const listener: AddContactView = {
+    navigateTo: url => router.push(url)
+  }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const presenter = useRef(props.presenter ?? new AddEventPresenter(listener));
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
-
-    if (!date) {
-      console.log(`No date! Date was: '${date}'`)
-      throw new Error("No date");
-    }
-
-    const event: TimelineEvent = {
-      id: -1,
+    await presenter.current.submit({
       name: name,
       date: date,
       desc: description,
+      categories: categories,
       contacts: contacts,
-      categories: categories
-    };
-
-    // use axios to send data to backend
-    console.log("event: ", event);
-
-    // Navigate to home page
-    router.push("/");
+    });
   };
 
   return (
@@ -92,7 +83,7 @@ const AddEvent = () => {
                 id="event_date"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
-                onChange={onChangeDate}
+                onChange={(e) => setDate(e.target.value)}
               />
             </div>
           </div>

@@ -1,13 +1,13 @@
 'use client';
 
 import Link from "next/link";
-import ContactList from "@/components/contactList";
-import { useState } from "react";
-import EventList from "../eventList";
+import ContactList from "@/components/contact/ContactList";
+import React, { useState } from "react";
+import EventList from "@/components/event/EventList";
 
 export default function Home() {
   const [content, setContent] = useState<"contacts" | "events">("contacts");
-  const [category, setCategory] = useState<string>(""); 
+  const [category, setCategory] = useState<string>("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ export default function Home() {
               type="text"
               placeholder="Filter by category..."
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              onChange = {e => setCategory(e.target.value)}
+              onChange={e => setCategory(e.target.value)}
             />
           </form>
 
@@ -75,7 +75,7 @@ export default function Home() {
 
         {/* Conditional Rendering of Lists */}
         <div className="flex-1 overflow-x-hidden">
-          {content === "contacts" ? <ContactList category={category}  /> : <EventList category={category}/>}
+          {content === "contacts" ? <ContactList category={category} /> : <EventList category={category} />}
         </div>
       </div>
     </div>
