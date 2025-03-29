@@ -14,21 +14,17 @@ export class ServerCommunicator {
    * Creates a new ServerCommunicator instance.
    *
    * @param baseUrl - The base URL for all API requests (if not provided, will be determined by environment)
-   * @param defaultHeaders - Default headers to include with all requests
    */
-  constructor(
-    baseUrl?: string,
-    defaultHeaders: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  ) {
+  constructor(baseUrl?: string) {
     if (!baseUrl) {
       baseUrl = this.getApiBaseUrl();
     }
 
     this.baseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-    this.defaultHeaders = defaultHeaders;
+    this.defaultHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
   }
 
   /**
@@ -58,15 +54,12 @@ export class ServerCommunicator {
    * Makes a GET request to the specified endpoint.
    *
    * @param endpoint - The API endpoint to request
-   * @param headers - Additional headers to include
+   * @param authToken - Optional authentication token
    * @returns A promise with the response data
    */
-  async get<T>(
-    endpoint: string,
-    headers?: Record<string, string>
-  ): Promise<T> {
+  async get<T>(endpoint: string, authToken?: string): Promise<T> {
     const url = this.buildUrl(endpoint);
-    return this.request<T>('GET', url, null, headers);
+    return this.request<T>('GET', url, null, authToken);
   }
 
   /**
@@ -74,16 +67,12 @@ export class ServerCommunicator {
    *
    * @param endpoint - The API endpoint to request
    * @param body - Object to serialize as JSON in the request body
-   * @param headers - Additional headers to include
+   * @param authToken - Optional authentication token
    * @returns A promise with the response data
    */
-  async post<T, U = any>(
-    endpoint: string,
-    body: U,
-    headers?: Record<string, string>
-  ): Promise<T> {
+  async post<T, U = any>(endpoint: string, body: U, authToken?: string): Promise<T> {
     const url = this.buildUrl(endpoint);
-    return this.request<T>('POST', url, body, headers);
+    return this.request<T>('POST', url, body, authToken);
   }
 
   /**
@@ -91,31 +80,24 @@ export class ServerCommunicator {
    *
    * @param endpoint - The API endpoint to request
    * @param body - Object to serialize as JSON in the request body
-   * @param headers - Additional headers to include
+   * @param authToken - Optional authentication token
    * @returns A promise with the response data
    */
-  async put<T, U = any>(
-    endpoint: string,
-    body: U,
-    headers?: Record<string, string>
-  ): Promise<T> {
+  async put<T, U = any>(endpoint: string, body: U, authToken?: string): Promise<T> {
     const url = this.buildUrl(endpoint);
-    return this.request<T>('PUT', url, body, headers);
+    return this.request<T>('PUT', url, body, authToken);
   }
 
   /**
    * Makes a DELETE request to the specified endpoint.
    *
    * @param endpoint - The API endpoint to request
-   * @param headers - Additional headers to include
+   * @param authToken - Optional authentication token
    * @returns A promise with the response data
    */
-  async delete<T>(
-    endpoint: string,
-    headers?: Record<string, string>
-  ): Promise<T> {
+  async delete<T>(endpoint: string, authToken?: string): Promise<T> {
     const url = this.buildUrl(endpoint);
-    return this.request<T>('DELETE', url, null, headers);
+    return this.request<T>('DELETE', url, null, authToken);
   }
 
   /**
@@ -124,16 +106,20 @@ export class ServerCommunicator {
    * @param method - The HTTP method
    * @param url - The full URL
    * @param body - Object to serialize as JSON in the request body
-   * @param headers - Additional headers to include
+   * @param authToken - Optional authentication token
    * @returns A promise with the response data
    */
   private async request<T>(
     method: string,
     url: string,
     body: any = null,
-    headers: Record<string, string> = {}
+    authToken?: string
   ): Promise<T> {
-    const requestHeaders = { ...this.defaultHeaders, ...headers };
+    const requestHeaders = { ...this.defaultHeaders };
+
+    if (authToken) {
+      requestHeaders['Authorization'] = `Bearer ${authToken}`;
+    }
 
     const options: RequestInit = {
       method,
