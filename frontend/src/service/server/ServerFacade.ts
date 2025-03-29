@@ -7,7 +7,7 @@
  */
 import { ServerCommunicator } from './ServerCommunicator';
 import { UserResponse } from "@/service/server/message/User";
-import { User } from "@/model/user";
+import { User } from "@/model/User";
 import { BasicResponse } from "@/service/server/message/BasicResponse";
 
 export class ServerFacade {

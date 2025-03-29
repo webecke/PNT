@@ -1,18 +1,10 @@
-import { AuthToken } from "@/model/model";
+import { AuthToken } from "@/model/AuthToken";
 import IServerFacade from "@/service/IServerFacade";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
-
-export interface NewEventData {
-  name: string;
-  date: Date;
-  desc: string;
-  contacts: string[];
-  categories: string[];
-}
+import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
 
 export interface TimelineQuery {
   // TODO
-  requiredAttendees: number[];
+  requiredAttendees: string[];
 }
 
 export interface TimelineQueryResult {
@@ -28,11 +20,11 @@ export default class EventService {
     await this.server.createEvent(newEventData, auth);
   }
 
-  public async getEvent(eventId: number, auth: AuthToken): Promise<TimelineEvent> {
+  public async getEvent(eventId: string, auth: AuthToken): Promise<TimelineEvent> {
     return await this.server.getEvent(eventId, auth);
   }
 
-  public async deleteEvent(eventId: number, auth: AuthToken): Promise<void> {
+  public async deleteEvent(eventId: string, auth: AuthToken): Promise<void> {
     await this.server.deleteEvent(eventId, auth);
   }
 

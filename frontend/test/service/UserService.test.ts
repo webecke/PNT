@@ -1,13 +1,14 @@
 import { beforeEach, describe, it } from "@jest/globals";
 import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
-import { AuthToken } from "@/model/model";
+import { AuthToken } from "@/model/AuthToken";
 import UserService from "@/service/UserService";
 
 const EMAIL = "test.email@email.com";
 const PASS = "test-password";
 const TOKEN: AuthToken = {
-  token: "TEST-AUTH-TOKEN"
+  token: "TEST-AUTH-TOKEN",
+  userId: "TEST-USER-ID",
 }
 
 describe("UserService", () => {

@@ -1,18 +1,10 @@
 import { NavigableView, Presenter } from "@/presenter/Presenter";
-import EventService, { NewEventData } from "@/service/EventService";
+import EventService from "@/service/EventService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import { mockAuthToken } from "@/utils/mockAuthToken";
-import { parseDate } from "@/utils/dateUtils";
+import { NewEventData } from "@/model/TimelineEvent";
 
 export interface AddEventView extends NavigableView {
-}
-
-export interface RawTimelineEvent {
-  name: string;
-  date: string;
-  desc: string;
-  contacts: string[];
-  categories: string[];
 }
 
 export class AddEventPresenter extends Presenter<AddEventView> {
@@ -22,13 +14,9 @@ export class AddEventPresenter extends Presenter<AddEventView> {
     super(view);
   }
 
-  public async submit(rawTimelineEvent: RawTimelineEvent) {
-    const newEventData: NewEventData = {
-      ...rawTimelineEvent,
-      date: parseDate(rawTimelineEvent.date),
-    };
+  public async submit(newEventData: NewEventData) {
     await this.service.createEvent(newEventData, mockAuthToken);
-    console.log("Form submitted. Adding event: ", rawTimelineEvent);
+    console.log("Form submitted. Adding event: ", newEventData);
     this.view.navigateTo("/");
   }
 }

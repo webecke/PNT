@@ -1,10 +1,10 @@
 import { EventDetailPresenter, EventDetailView } from "@/presenter/EventDetailPresenter";
 import { useEffect, useRef, useState } from "react";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import { QueryState } from "@/utils/QueryState";
 
 interface Props {
-  eventId: number;
+  eventId: string;
   presenter?: EventDetailPresenter;
 }
 
@@ -24,9 +24,9 @@ const EventDetail = (props: Props) => {
   const presenter = useRef(props.presenter ?? new EventDetailPresenter(listener));
 
   const loadEventData = (event: TimelineEvent) => {
-    setName(event.name);
-    setDate(event.date.toDateString());
-    setDescription(event.desc ?? "");
+    setName(event.title);
+    setDate(event.date);
+    setDescription(event.description);
     setContacts(event.contacts);
     setCategories(event.categories);
   };
@@ -61,7 +61,7 @@ const EventDetail = (props: Props) => {
       <p className="text-gray-700 mb-4">{description}</p>
       <div className="border-t pt-4">
         <h3 className="text-lg font-semibold text-gray-800">Contacts</h3>
-        <p className="text-gray-600">{contacts}</p>
+        <p className="text-gray-600">{contacts /* TODO Retrieve & display names rather than IDs */}</p>
       </div>
       <div className="border-t pt-4 mt-4">
         <h3 className="text-lg font-semibold text-gray-800">Categories</h3>

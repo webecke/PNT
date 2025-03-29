@@ -3,18 +3,19 @@ import Timeline from "@/components/timeline/Timeline";
 import { useEffect, useRef, useState } from "react";
 import EditForm from "@/components/EditForm";
 import { ContactDetailPresenter, ContactDetailView } from "@/presenter/ContactDetailPresenter";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
-import { Contact } from "@/utils/mockContacts";
+import { TimelineEvent } from "@/model/TimelineEvent";
+import { Contact } from "@/model/Contact";
 import { QueryState } from "@/utils/QueryState";
 
 interface Props {
   presenter?: ContactDetailPresenter;
-  userId: number;
+  userId: string;
 }
 
 const ContactDetail = (props: Props) => {
   const [image, setImage] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
@@ -29,7 +30,8 @@ const ContactDetail = (props: Props) => {
   const presenter = useRef(props.presenter ?? new ContactDetailPresenter(listener));
 
   const loadContactData = (contact: Contact, timelineEvents: TimelineEvent[]) => {
-    setName(contact.name);
+    setFirstName(contact.firstName);
+    setLastName(contact.lastName);
     setPhone(contact.phone);
     setEmail(contact.email);
     setNotes(contact.notes);
@@ -119,14 +121,26 @@ const ContactDetail = (props: Props) => {
 
         {editing ? (
           <EditForm
-            name="Name"
-            value={name}
-            setValue={setName}
+            name="First Name"
+            value={firstName}
+            setValue={setFirstName}
             setEditing={setEditing}
           />
         ) : (
           <div className="items-center mb-4">
-            <div className="text-3xl font-bold">{name}</div>
+            <div className="text-3xl font-bold">{firstName}</div>
+          </div>
+        )}
+        {editing ? (
+          <EditForm
+            name="Last Name"
+            value={lastName}
+            setValue={setLastName}
+            setEditing={setEditing}
+          />
+        ) : (
+          <div className="items-center mb-4">
+            <div className="text-3xl font-bold">{lastName}</div>
           </div>
         )}
         {editing ? (

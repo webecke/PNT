@@ -1,5 +1,6 @@
-import { AuthToken, Category } from "@/model/model";
 import IServerFacade from "@/service/IServerFacade";
+import { AuthToken } from "@/model/AuthToken";
+import { Category } from "@/model/Category";
 
 export default class CategoryService {
   constructor(private server: IServerFacade) {
@@ -13,11 +14,11 @@ export default class CategoryService {
     await this.server.setCategoryText(category, auth);
   }
 
-  public async getCategory(categoryId: number, auth: AuthToken): Promise<Category> {
+  public async getCategory(categoryId: string, auth: AuthToken): Promise<Category> {
     return await this.server.getCategory(categoryId, auth);
   }
 
-  public async deleteCategory(categoryId: number, auth: AuthToken): Promise<void> {
+  public async deleteCategory(categoryId: string, auth: AuthToken): Promise<void> {
     await this.server.deleteCategory(categoryId, auth);
   }
 }

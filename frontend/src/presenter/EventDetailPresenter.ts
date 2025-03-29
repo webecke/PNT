@@ -1,5 +1,5 @@
 import { Presenter, View } from "@/presenter/Presenter";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import EventService from "@/service/EventService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import { mockAuthToken } from "@/utils/mockAuthToken";
@@ -14,7 +14,7 @@ export class EventDetailPresenter extends Presenter<EventDetailView> {
     super(view);
   }
 
-  public async getEvent(eventId: number): Promise<TimelineEvent | undefined> {
+  public async getEvent(eventId: string): Promise<TimelineEvent | undefined> {
     return await this.service.getEvent(eventId, mockAuthToken);
   }
 }

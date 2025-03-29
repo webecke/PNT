@@ -1,20 +1,11 @@
 import { HarryPotter } from "./harrypotterimg";
-
-export interface Contact {
-  id: number;
-  name: string;
-  phone: string;
-  email: string;
-  notes: string;
-  image?: string;
-  timeline: string[];
-  category?: string[];
-}
+import { Contact } from "@/model/Contact";
 
 export const mockContacts: Contact[] = [
   {
-    id: 1,
-    name: "Harry Potter",
+    id: "HarryPotterContactId",
+    firstName: "Harry",
+    lastName: "Potter",
     phone: "123-456-7890",
     email: "fake@gmail.com",
     notes:
@@ -26,15 +17,16 @@ export const mockContacts: Contact[] = [
       "Band Concert",
       "Went to Park",
     ],
-    category: ["business"]
+    categories: ["business"]
   },
   {
-    id: 2,
-    name: "Hermione Granger",
+    id: "HermioneGrangerContactId",
+    firstName: "Hermione",
+    lastName: "Granger",
     phone: "987-654-3210",
     email: "hermione@mail.com",
     notes: "Brilliant mind, loves books.",
     timeline: ["Study Group", "Graduation Ceremony", "Book Club"],
-    category: ["school"]
+    categories: ["school"]
   },
 ];

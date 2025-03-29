@@ -1,4 +1,4 @@
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
 import EventDetail from "./EventDetail";
@@ -14,7 +14,7 @@ const EventList = (props: Props) => {
   // TODO Combine EventList and ContactList
   // TODO? Change EventList and ContactList to use selected Event/Contact instead of their IDs
   const [events, setEvents] = useState<TimelineEvent[]>([]);
-  const [selectedEventId, setSelectedEventId] = useState<number | undefined>(undefined);
+  const [selectedEventId, setSelectedEventId] = useState<string | undefined>(undefined);
   const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: EventListView = {};
@@ -64,12 +64,12 @@ const EventList = (props: Props) => {
                   <div className="cursor-pointer flex gap-6">
                     {/* Title: Fixed width so it doesn't expand too much */}
                     <span className="font-semibold min-w-[150px] max-w-[200px] truncate">
-                  {event.name}
+                  {event.title}
                 </span>
 
                     {/* Description: Ensure ellipsis shows */}
                     <span className="text-gray-500 flex-1 truncate">
-                  {event.desc}
+                  {event.description}
                 </span>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { User } from "@/model/user";
+import { User } from "@/model/User";
 import { BasicResponse } from "@/service/server/message/BasicResponse";
 
 export type UserRequest = {

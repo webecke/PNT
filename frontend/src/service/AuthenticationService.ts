@@ -1,4 +1,4 @@
-import { AuthToken } from "@/model/model";
+import { AuthToken } from "@/model/AuthToken";
 import IServerFacade from "@/service/IServerFacade";
 
 export default class AuthenticationService {

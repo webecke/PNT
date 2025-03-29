@@ -1,6 +1,6 @@
 import { Presenter, View } from "@/presenter/Presenter";
-import { Contact } from "@/utils/mockContacts";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { Contact } from "@/model/Contact";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import ContactService from "@/service/ContactService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
 import { mockAuthToken } from "@/utils/mockAuthToken";
@@ -17,7 +17,7 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
     super(view);
   }
 
-  public async getContact(userId: number): Promise<Contact | undefined> {
+  public async getContact(userId: string): Promise<Contact | undefined> {
     try {
       return await this.contactService.getContact(userId, mockAuthToken);
     } catch {
@@ -25,7 +25,7 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
     }
   }
 
-  public async getContactTimeline(userId: number): Promise<TimelineEvent[]> {
+  public async getContactTimeline(userId: string): Promise<TimelineEvent[]> {
     const query: TimelineQuery = { requiredAttendees: [userId] };
     try {
       return await this.eventService.queryTimeline(query, mockAuthToken);

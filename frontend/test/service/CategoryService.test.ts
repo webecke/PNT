@@ -1,16 +1,18 @@
 import { beforeEach, describe, it } from "@jest/globals";
 import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
-import { AuthToken, Category } from "@/model/model";
 import CategoryService from "@/service/CategoryService";
+import { AuthToken } from "@/model/AuthToken";
+import { Category } from "@/model/Category";
 
 const CATEGORY: Category = {
-  id: 0,
-  name: "TEST-CATEGORY"
+  id: "TEST-CATEGORY-ID",
+  label: "TEST-CATEGORY"
 }
 
 const TOKEN: AuthToken = {
-  token: "TEST-AUTH-TOKEN"
+  token: "TEST-AUTH-TOKEN",
+  userId: "TEST-USER-ID",
 }
 
 describe("CategoryService", () => {
@@ -24,8 +26,8 @@ describe("CategoryService", () => {
   });
 
   it("calls the server correctly when createCategory() is called", () => {
-    service.createCategory(CATEGORY.name, TOKEN);
-    verify(serverMock.createCategory(CATEGORY.name, TOKEN)).once();
+    service.createCategory(CATEGORY.label, TOKEN);
+    verify(serverMock.createCategory(CATEGORY.label, TOKEN)).once();
   });
 
   it("calls the server correctly when setCategoryText() is called", () => {

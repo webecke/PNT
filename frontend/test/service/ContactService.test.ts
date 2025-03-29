@@ -1,14 +1,15 @@
 import { beforeEach, describe, it } from "@jest/globals";
 import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
-import { AuthToken } from "@/model/model";
+import { AuthToken } from "@/model/AuthToken";
 import ContactService, { NewContactData } from "@/service/ContactService";
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 
 const CONTACT: Contact = {
-  id: 0,
+  id: "FAKE-CONTACT-ID",
   email: "CONTACT-EMAIL",
-  name: "CONTACT-NAME",
+  firstName: "CONTACT-FIRST-NAME",
+  lastName: "CONTACT-LAST-NAME",
   notes: "CONTACT-NOTES",
   phone: "CONTACT-PHONE",
   timeline: []
@@ -23,7 +24,8 @@ const NEW_CONTACT: NewContactData = {
 };
 
 const TOKEN: AuthToken = {
-  token: "TEST-AUTH-TOKEN"
+  token: "TEST-AUTH-TOKEN",
+  userId: "TEST-USER-ID",
 }
 
 describe("ContactService", () => {

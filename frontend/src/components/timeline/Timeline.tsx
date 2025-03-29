@@ -1,4 +1,4 @@
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 import TimelineItem from "@/components/timeline/TimelineItem";
 
 interface TimelineProps {

@@ -2,7 +2,7 @@ import { Presenter, View } from "@/presenter/Presenter";
 import { mockAuthToken } from "@/utils/mockAuthToken";
 import EventService, { TimelineQuery } from "@/service/EventService";
 import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
-import { TimelineEvent } from "@/utils/mockTimelineEvents";
+import { TimelineEvent } from "@/model/TimelineEvent";
 
 export interface EventListView extends View {
 }

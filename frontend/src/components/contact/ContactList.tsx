@@ -1,4 +1,4 @@
-import { Contact } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ContactDetail from "./ContactDetail";
 import { IoArrowBackSharp } from "react-icons/io5";
@@ -12,7 +12,7 @@ interface Props {
 
 const ContactList = (props: Props) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [selectedContactId, setSelectedContactId] = useState<number | undefined>(undefined);
+  const [selectedContactId, setSelectedContactId] = useState<string | undefined>(undefined);
   const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: ContactListView = {};
@@ -30,7 +30,7 @@ const ContactList = (props: Props) => {
 
   const filteredContacts: Contact[] = useMemo(() => {
     return props.category
-      ? contacts.filter((contact) => contact.category?.includes(props.category!))
+      ? contacts.filter((contact) => contact.categories?.includes(props.category!))
       : contacts;
   }, [contacts, props.category]);
 
@@ -61,7 +61,7 @@ const ContactList = (props: Props) => {
               >
                 <div onClick={() => setSelectedContactId(contact.id)}>
                   <div className="cursor-pointer flex justify-between items-center">
-                    <span className="font-semibold">{contact.name}</span>
+                    <span className="font-semibold">{contact.firstName + " " + contact.lastName}</span>
                     <span className="text-gray-500">{contact.phone}</span>
                   </div>
                 </div>
