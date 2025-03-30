@@ -1,84 +1,76 @@
-import { Contact } from "@/utils/mockContacts";
-
-export interface TimelineEvent {
-  id: number;
-  name: string;
-  date: Date;
-  desc: string | null;
-  contacts: string[];
-  categories: string[];
-}
+import { Contact } from "@/model/Contact";
+import { TimelineEvent } from "@/model/TimelineEvent";
 
 export const mockTimelineEvents: TimelineEvent[] = [
   {
-    id: 1,
-    name: "B-day Celebration",
-    date: new Date('2024-03-23'),
-    desc: "Harry's bday. It was mildly explosive.",
-    contacts: ["Harry Potter"],
+    id: "EventIdOne",
+    title: "B-day Celebration",
+    date: '2024-03-23',
+    description: "Harry's bday. It was mildly explosive.",
+    contacts: ["HarryPotterContactId"],
     categories: ["party", "memories"]
   },
   {
-    id: 2,
-    name: "HS Graduation",
-    date: new Date('2024-03-23'),
-    desc: "Really long and boring, me and Harry just played cards. Hermione had a blast tho",
-    contacts: ["Harry Potter", "Hermione Granger"],
+    id: "EventIdTwo",
+    title: "HS Graduation",
+    date: '2024-03-23',
+    description: "Really long and boring, me and Harry just played cards. Hermione had a blast tho",
+    contacts: ["HarryPotterContactId", "HermioneGrangerContactId"],
     categories: ["school"]
   },
   {
-    id: 3,
-    name: "Band Concert",
-    date: new Date('2024-03-23'),
-    desc: "Harry dragged me along to see the Diagon Digons. Weirdly sketchy; surprising amount of maths.",
-    contacts: ["Harry Potter"],
+    id: "EventIdThree",
+    title: "Band Concert",
+    date: '2024-03-23',
+    description: "Harry dragged me along to see the Diagon Digons. Weirdly sketchy; surprising amount of maths.",
+    contacts: ["HarryPotterContactId"],
     categories: ["memories"]
   },
   {
-    id: 4,
-    name: "Went to park",
-    date: new Date('2024-03-23'),
-    desc: "Pretty chill.",
-    contacts: ["Hermione Granger"],
+    id: "EventIdFour",
+    title: "Went to park",
+    date: '2024-03-23',
+    description: "Pretty chill.",
+    contacts: ["HermioneGrangerContactId"],
     categories: []
   },
   {
-    id: 5,
-    name: "Study group",
-    date: new Date('2024-03-23'),
-    desc: "I swear herbology will be the death of me.",
-    contacts: ["Hermione Granger"],
+    id: "EventIdFive",
+    title: "Study group",
+    date: '2024-03-23',
+    description: "I swear herbology will be the death of me.",
+    contacts: ["HermioneGrangerContactId"],
     categories: ["school"]
   },
   {
-    id: 6,
-    name: "Book club",
-    date: new Date('2024-03-23'),
-    desc: "Beasts were less fantastic than advertised",
-    contacts: ["Hermione Granger"],
+    id: "EventIdSix",
+    title: "Book club",
+    date: '2024-03-23',
+    description: "Beasts were less fantastic than advertised",
+    contacts: ["HermioneGrangerContactId"],
     categories: ["school"]
   },
     {
-    id: 7,
-    name: "Meeting Harry Potter",
-    date: new Date('2024-03-23'),
-    desc: "Harry is a nice guy. I met him when I was running cross country in 9th grade. He is so cool. I wish I could be just like him. Just a magical experience. This could not have gone any better.",
-    contacts: ['Harry Potter'],
-    categories: ["person", "school", "running", "buisness"]
+      id: "EventIdSeven",
+      title: "Meeting Harry Potter",
+      date: '2024-03-23',
+      description: "Harry is a nice guy. I met him when I was running cross country in 9th grade. He is so cool. I wish I could be just like him. Just a magical experience. This could not have gone any better.",
+      contacts: ["HarryPotterContactId"],
+      categories: ["person", "school", "running", "business"]
   },
   {
-    id: 8,
-    name: "Meeting Hermione Granger",
-    date: new Date('2024-03-23'),
-    desc: "Brilliant mind, loves books.",
-    contacts: ["Hermione Granger"],
-    categories: ["person", "books", "buisness"]
+    id: "EventIdEight",
+    title: "Meeting Hermione Granger",
+    date: '2024-03-23',
+    description: "Brilliant mind, loves books.",
+    contacts: ["HermioneGrangerContactId"],
+    categories: ["person", "books", "business"]
   }
 ];
 
 export function getMockTimeline(contact?: Contact) {
   if (contact) {
-    return mockTimelineEvents.filter((event) => event.contacts.includes(contact.name));
+    return mockTimelineEvents.filter((event) => event.contacts.includes(contact.id));
   }
   return mockTimelineEvents;
 }

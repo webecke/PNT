@@ -6,8 +6,9 @@
  * and handling data transformation between API and application models.
  */
 import { ServerCommunicator } from './ServerCommunicator';
+import { UserResponse } from "@/service/server/message/User";
+import { User } from "@/model/User";
 import { AddUserRequest, AddUserResponse, UpdateUserRequest } from "@/service/server/message/UserMessage";
-import { User } from "@/model/user";
 import { BasicResponse } from "@/service/server/message/BasicResponse";
 import { AuthResponse, LoginRequest } from "@/service/server/message/AuthMessage";
 import {

@@ -1,4 +1,7 @@
 export interface View {
+}
+
+export interface NavigableView extends View {
   navigateTo: (url: string) => void;
 }
 
