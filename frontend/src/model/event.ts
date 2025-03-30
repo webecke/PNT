@@ -1,5 +1,5 @@
-import { Category } from "@/model/category";
-import { Contact } from "@/model/contact";
+import { Category } from "@/model/Category";
+import { Contact } from "@/model/Contact";
 
 export interface Event {
   id: string;

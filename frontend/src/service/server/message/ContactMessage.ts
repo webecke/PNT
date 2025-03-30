@@ -1,5 +1,5 @@
 import { BasicResponse } from "@/service/server/message/BasicResponse";
-import { Contact } from "@/model/contact";
+import { Contact } from "@/model/Contact";
 
 export interface AddContactRequest {
   firstName: string;

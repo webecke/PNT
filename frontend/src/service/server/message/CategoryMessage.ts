@@ -1,5 +1,5 @@
 import { BasicResponse } from "@/service/server/message/BasicResponse";
-import { Category } from "@/model/category";
+import { Category } from "@/model/Category";
 
 export interface AddCategoryRequest {
   label: string;
