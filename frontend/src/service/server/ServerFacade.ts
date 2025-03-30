@@ -6,8 +6,6 @@
  * and handling data transformation between API and application models.
  */
 import { ServerCommunicator } from './ServerCommunicator';
-import { UserResponse } from "@/service/server/message/User";
-import { User } from "@/model/User";
 import { AddUserRequest, AddUserResponse, UpdateUserRequest } from "@/service/server/message/UserMessage";
 import { BasicResponse } from "@/service/server/message/BasicResponse";
 import { AuthResponse, LoginRequest } from "@/service/server/message/AuthMessage";
@@ -22,78 +20,82 @@ import { TimelineRequest, TimelineResponse } from "@/service/server/message/Time
 
 export class ServerFacade {
   private communicator: ServerCommunicator;
-  private token: AuthToken | null = null;
+  private authToken: AuthToken | null = null;
 
   constructor() {
     this.communicator = new ServerCommunicator();
+  }
+
+  /**
+   * Helper function to ensure a token exists before making authenticated requests
+   * @throws Error if no token is available
+   * @returns The current authentication token
+   */
+  private requireToken(): string {
+    if (!this.authToken) {
+      throw new Error("Authentication required");
+    }
+    return this.authToken.token;
   }
 
   auth = {
     login: async (username: string, password: string): Promise<boolean> => {
       const request: LoginRequest = { username, password }
       const response = await this.communicator.post<AuthResponse>('/auth/login', request)
-      this.token = { token: response.authtoken, username: username }
+      this.authToken = { token: response.authtoken, username: username }
       console.log(response)
       return response.success
     },
 
     logout: async (): Promise<boolean> => {
-      if (!this.token) {
+      if (!this.authToken) {
         console.error("Tried to log out, but no one is logged in on this device.")
         return false;
       }
-      const request = { username: this.token.username }
-      const response = await this.communicator.post<BasicResponse>('/auth/login', request, this.token.token)
-      this.token = null;
+      const request = { username: this.authToken.username }
+      const response = await this.communicator.post<BasicResponse>('/auth/login', request, this.authToken.token)
+      this.authToken = null;
       return response.success
     }
   }
 
   category = {
     getCategory: async (categoryId: string): Promise<GetCategoryResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.get<GetCategoryResponse>(
         `/category/${categoryId}`,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     deleteCategory: async (categoryId: string): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.delete<BasicResponse>(
         `/category/${categoryId}`,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     addCategory: async (label: string): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const request: AddCategoryRequest = { label };
       const response = await this.communicator.post<BasicResponse>(
         '/category/add',
         request,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     updateCategory: async (id: string, label: string): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const request: UpdateCategoryRequest = { id, label };
       const response = await this.communicator.post<BasicResponse>(
         '/category/update',
         request,
-        this.token.token
+        authToken
       );
       return response;
     }
@@ -101,47 +103,39 @@ export class ServerFacade {
 
   contact = {
     getContact: async (contactId: string): Promise<GetContactResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.get<GetContactResponse>(
         `/contact/${contactId}`,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     deleteContact: async (contactId: string): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.delete<BasicResponse>(
         `/contact/${contactId}`,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     addContact: async (contactData: AddContactRequest): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.post<BasicResponse>(
         '/contact/add',
         contactData,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     updateContact: async (contactData: UpdateContactRequest): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.post<BasicResponse>(
         '/contact/update',
         contactData,
-        this.token.token
+        authToken
       );
       return response;
     }
@@ -150,47 +144,39 @@ export class ServerFacade {
 
   event = {
     getEvent: async (eventId: string): Promise<GetEventResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.get<GetEventResponse>(
         `/event/${eventId}`,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     deleteEvent: async (eventId: string): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.delete<BasicResponse>(
         `/event/${eventId}`,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     addEvent: async (eventData: AddEventRequest): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.post<BasicResponse>(
         '/event/add',
         eventData,
-        this.token.token
+        authToken
       );
       return response;
     },
 
     updateEvent: async (eventData: UpdateEventRequest): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
       const response = await this.communicator.post<BasicResponse>(
         '/event/update',
         eventData,
-        this.token.token
+        authToken
       );
       return response;
     }
@@ -198,9 +184,7 @@ export class ServerFacade {
 
   timeline = {
     getTimeline: async (userID: string, categoryIDs: string[], contactIDs: string[]): Promise<TimelineResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
 
       const request: TimelineRequest = {
         userID,
@@ -211,7 +195,7 @@ export class ServerFacade {
       const response = await this.communicator.post<TimelineResponse>(
         '/timeline/',
         request,
-        this.token.token
+        authToken
       );
 
       return response;
@@ -233,16 +217,14 @@ export class ServerFacade {
 
       // If login is successful, set the token
       if (response.success && response.token) {
-        this.token = { token: response.token, username };
+        this.authToken = { token: response.token, username };
       }
 
       return response;
     },
 
     updateUser: async (firstName: string, lastName: string, username: string, password: string): Promise<BasicResponse> => {
-      if (!this.token) {
-        return { success: false, message: "Authentication required" };
-      }
+      const authToken = this.requireToken();
 
       const request: UpdateUserRequest = {
         firstName,
@@ -254,7 +236,7 @@ export class ServerFacade {
       const response = await this.communicator.post<BasicResponse>(
         '/user/update',
         request,
-        this.token.token
+        authToken
       );
 
       return response;
