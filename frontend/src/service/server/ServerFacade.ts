@@ -6,7 +6,7 @@
  * and handling data transformation between API and application models.
  */
 import { ServerCommunicator } from './ServerCommunicator';
-import { AddUserRequest, AddUserResponse, UpdateUserRequest } from "@/service/server/message/UserMessage";
+import { AddUserResponse, UserRequest } from "@/service/server/message/UserMessage";
 import { BasicResponse } from "@/service/server/message/BasicResponse";
 import { AuthResponse, LoginRequest } from "@/service/server/message/AuthMessage";
 import {
@@ -203,13 +203,7 @@ export class ServerFacade {
   }
 
   user = {
-    addUser: async (firstName: string, lastName: string, username: string, password: string): Promise<AddUserResponse> => {
-      const request: AddUserRequest = {
-        firstName,
-        lastName,
-        username,
-        password
-      };
+    addUser: async (request: UserRequest): Promise<AddUserResponse> => {
       const response = await this.communicator.post<AddUserResponse>(
         '/user/add',
         request
@@ -217,21 +211,14 @@ export class ServerFacade {
 
       // If login is successful, set the token
       if (response.success && response.token) {
-        this.authToken = { token: response.token, username };
+        this.authToken = { token: response.token, username: request.username };
       }
 
       return response;
     },
 
-    updateUser: async (firstName: string, lastName: string, username: string, password: string): Promise<BasicResponse> => {
+    updateUser: async (request: UserRequest): Promise<BasicResponse> => {
       const authToken = this.requireToken();
-
-      const request: UpdateUserRequest = {
-        firstName,
-        lastName,
-        username,
-        password
-      };
 
       const response = await this.communicator.post<BasicResponse>(
         '/user/update',

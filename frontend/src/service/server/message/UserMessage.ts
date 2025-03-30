@@ -1,14 +1,7 @@
 import { User } from "@/model/user";
 import { BasicResponse } from "@/service/server/message/BasicResponse";
 
-export interface AddUserRequest {
-  firstName: string;
-  lastName: string;
-  username: string;
-  password: string;
-}
-
-export interface UpdateUserRequest {
+export interface UserRequest {
   firstName: string;
   lastName: string;
   username: string;
