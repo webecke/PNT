@@ -14,9 +14,10 @@ import {
   GetCategoryResponse,
   UpdateCategoryRequest
 } from "@/service/server/message/CategoryMessage";
-import { AddContactRequest, GetContactResponse, UpdateContactRequest } from "@/service/server/message/ContactMessage";
+import { AddContactRequest, GetContactResponse } from "@/service/server/message/ContactMessage";
 import { AddEventRequest, GetEventResponse, UpdateEventRequest } from "@/service/server/message/EventMessage";
 import { TimelineRequest, TimelineResponse } from "@/service/server/message/TimelineMessage";
+import { Contact } from "@/model/Contact";
 
 export class ServerFacade {
   private communicator: ServerCommunicator;
@@ -130,7 +131,7 @@ export class ServerFacade {
       return response;
     },
 
-    updateContact: async (contactData: UpdateContactRequest): Promise<BasicResponse> => {
+    updateContact: async (contactData: Contact): Promise<BasicResponse> => {
       const authToken = this.requireToken();
       const response = await this.communicator.post<BasicResponse>(
         '/contact/update',
