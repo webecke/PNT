@@ -1,6 +1,7 @@
-import { Person } from "@/model/Person";
-
-export interface User extends Person {
+export type User = {
+  id: string,
+  firstName: string,
+  lastName: string,
   username: string,
-  password: string
+  password?: string
 }

@@ -73,7 +73,7 @@ const ContactDetail = (props: Props) => {
       <div className="flex flex-col">
         <div className="flex flex-row gap-x-24 p-2 items-center justify-left">
           {/* Profile pic */}
-          <ProfileIcon src={image} alt={name ? name : "undefined"} />
+          <ProfileIcon src={image} alt={"profile pic"} />
           {/* Contact info */}
           <div className="max-w-xs">
             <h2 className="text-xl font-semibold">Contact Info</h2>
