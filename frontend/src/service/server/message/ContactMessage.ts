@@ -6,7 +6,7 @@ export interface AddContactRequest {
   lastName: string;
   email: string;
   phone: string;
-  note: string;
+  notes: string;
 }
 
 export interface GetContactResponse extends BasicResponse {
