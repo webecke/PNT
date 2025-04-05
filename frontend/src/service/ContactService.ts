@@ -1,47 +1,34 @@
-import { AuthToken } from "@/model/AuthToken";
 import { Contact } from "@/model/Contact";
-import IServerFacade from "@/service/IServerFacade";
-
-export interface ContactListQuery {
-  // TODO
-  requiredCategories: number[];
-}
-
-export interface ContactListQueryResult {
-  // TODO
-  contacts: Contact[];
-}
-
-export interface NewContactData {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  notes: string;
-}
+import { AddContactRequest } from "@/service/server/message/ContactMessage";
+import { ServerFacade } from "@/service/server";
+import { mockContacts } from "@/utils/mockContacts";
 
 export default class ContactService {
-  constructor(private server: IServerFacade) {
+  constructor(private server: ServerFacade) {
   }
 
-  public async createContact(newContactData: NewContactData, auth: AuthToken): Promise<void> {
-    await this.server.createContact(newContactData, auth);
+  public async createContact(newContactData: AddContactRequest): Promise<void> {
+    await this.server.contact.addContact(newContactData);
   }
 
-  public async getContact(contactId: string, auth: AuthToken): Promise<Contact> {
-    return await this.server.getContact(contactId, auth);
+  public async getContact(contactId: string): Promise<Contact | undefined> {
+    const response = await this.server.contact.getContact(contactId);
+    return response.contact;
   }
 
-  public async queryContactList(query: ContactListQuery, auth: AuthToken): Promise<Contact[]> {
-    const result = await this.server.queryContactList(query, auth);
-    return result.contacts;
+  public async getContacts(): Promise<Contact[]> {
+    // TODO getContacts() API call (or add a contactId array to User?)
+    console.warn("WARNING getContacts() is unimplemented");
+    return mockContacts;
+    // const response = await this.server.contact.getContacts();
+    // return response.contact;
   }
 
-  public async deleteContact(contactId: string, auth: AuthToken): Promise<void> {
-    await this.server.deleteContact(contactId, auth);
+  public async deleteContact(contactId: string): Promise<void> {
+    await this.server.contact.deleteContact(contactId);
   }
 
-  public async updateContact(contact: Contact, auth: AuthToken): Promise<void> {
-    await this.server.updateContact(contact, auth);
+  public async updateContact(contact: Contact): Promise<void> {
+    await this.server.contact.updateContact(contact);
   }
 }
