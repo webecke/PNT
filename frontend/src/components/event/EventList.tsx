@@ -23,7 +23,7 @@ const EventList = (props: Props) => {
   useEffect(() => {
     // See comment from ContactDetail.tsx about async useEffect()
     const asyncFunction = async () => {
-      const timeline = await presenter.current.getTimeline();
+      const timeline = await presenter.current.getEvents();
       setQueryState(timeline ? QueryState.SUCCESS : QueryState.FAILURE);
       setEvents(timeline);
     };

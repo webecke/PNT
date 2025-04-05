@@ -1,24 +1,19 @@
 import { Presenter, View } from "@/presenter/Presenter";
-import { mockAuthToken } from "@/utils/mockAuthToken";
-import EventService, { TimelineQuery } from "@/service/EventService";
-import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
+import EventService from "@/service/EventService";
+import { ServerFacade } from "@/service/server";
 import { TimelineEvent } from "@/model/TimelineEvent";
 
 export interface EventListView extends View {
 }
 
 export class EventListPresenter extends Presenter<EventListView> {
-  private service: EventService = new EventService(tempServerFacadeImpl);
+  private service: EventService = new EventService(new ServerFacade());
 
   constructor(protected view: EventListView) {
     super(view);
   }
 
-  public async getTimeline(): Promise<TimelineEvent[]> {
-    const query: TimelineQuery = {
-      requiredAttendees: [],
-    }
-    return await this.service.queryTimeline(query, mockAuthToken);
+  public async getEvents(): Promise<TimelineEvent[]> {
+    return await this.service.getEvents();
   }
-
 }

@@ -1,20 +1,19 @@
 import { Presenter, View } from "@/presenter/Presenter";
 import { TimelineEvent } from "@/model/TimelineEvent";
 import EventService from "@/service/EventService";
-import tempServerFacadeImpl from "@/service/TempServerFacadeImpl";
-import { mockAuthToken } from "@/utils/mockAuthToken";
+import { ServerFacade } from "@/service/server";
 
 export interface EventDetailView extends View {
 }
 
 export class EventDetailPresenter extends Presenter<EventDetailView> {
-  private service: EventService = new EventService(tempServerFacadeImpl);
+  private service: EventService = new EventService(new ServerFacade());
 
   constructor(protected view: EventDetailView) {
     super(view);
   }
 
   public async getEvent(eventId: string): Promise<TimelineEvent | undefined> {
-    return await this.service.getEvent(eventId, mockAuthToken);
+    return await this.service.getEvent(eventId);
   }
 }
