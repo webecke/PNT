@@ -23,13 +23,14 @@ const EventList = (props: Props) => {
   useEffect(() => {
     // See comment from ContactDetail.tsx about async useEffect()
     const asyncFunction = async () => {
-      const timeline = await presenter.current.getEvents();
+      const timeline = await presenter.current.getTimeline();
       setQueryState(timeline ? QueryState.SUCCESS : QueryState.FAILURE);
       setEvents(timeline);
     };
     asyncFunction();
   });
 
+  // TODO move into EventService.getTimeline
   const filteredEvents = useMemo(() => {
     return props.category
       ? events.filter((event) => event.categories?.includes(props.category!))

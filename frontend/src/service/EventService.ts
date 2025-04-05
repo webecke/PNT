@@ -1,6 +1,5 @@
 import { ServerFacade } from "@/service/server";
 import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
-import { mockTimelineEvents } from "@/utils/mockTimelineEvents";
 
 export default class EventService {
   constructor(private server: ServerFacade) {
@@ -23,9 +22,8 @@ export default class EventService {
     await this.server.event.updateEvent(event); // TODO Split into multiple functions
   }
 
-  public async getEvents(): Promise<TimelineEvent[]> {
-    // TODO getEvents() API call (or add an eventId array to User?)
-    console.warn("WARNING getEvents() is unimplemented");
-    return mockTimelineEvents;
+  public async getTimeline(userId: string, categoryIds: string[], contactIds: string[]): Promise<TimelineEvent[]> {
+    const response = await this.server.timeline.getTimeline("userId", categoryIds, contactIds);
+    return response.timeline?.events ?? [];
   }
 }

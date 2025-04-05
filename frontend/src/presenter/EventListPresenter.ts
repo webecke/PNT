@@ -13,7 +13,16 @@ export class EventListPresenter extends Presenter<EventListView> {
     super(view);
   }
 
-  public async getEvents(): Promise<TimelineEvent[]> {
-    return await this.service.getEvents();
+  public async getTimeline(categoryId?: string): Promise<TimelineEvent[]> {
+    // TODO un-hardcode userId
+    const userId = "HARDCODED USER ID";
+
+    // TODO? Support multiple simultaneous filters?
+    const categoryIds: string[] = categoryId ? [categoryId] : [];
+
+    // TODO? Support filtering contacts?
+    const contactIds: string[] = [];
+
+    return await this.service.getTimeline(userId, categoryIds, contactIds);
   }
 }
