@@ -12,6 +12,10 @@ const Signup = (props: Props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  // TODO Make these editable
+  const firstName: string = "HARDCODED FIRST NAME";
+  const lastName: string = "HARDCODED LAST NAME";
+
   const listener: SignupPresenterView = {
     navigateTo: url => router.push(url)
   }
@@ -20,7 +24,7 @@ const Signup = (props: Props) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await presenter.current.signup(email, password, confirmPassword);
+    await presenter.current.signup(firstName, lastName, email, password, confirmPassword);
   };
 
   return (
