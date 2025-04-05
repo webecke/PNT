@@ -8,11 +8,11 @@ export default class ContactService {
   }
 
   public async createContact(newContactData: AddContactRequest): Promise<void> {
-    await this.server.contact.addContact(newContactData);
+    await this.server.addContact(newContactData);
   }
 
   public async getContact(contactId: string): Promise<Contact | undefined> {
-    const response = await this.server.contact.getContact(contactId);
+    const response = await this.server.getContact(contactId);
     return response.contact;
   }
 
@@ -25,10 +25,10 @@ export default class ContactService {
   }
 
   public async deleteContact(contactId: string): Promise<void> {
-    await this.server.contact.deleteContact(contactId);
+    await this.server.deleteContact(contactId);
   }
 
   public async updateContact(contact: Contact): Promise<void> {
-    await this.server.contact.updateContact(contact);
+    await this.server.updateContact(contact);
   }
 }

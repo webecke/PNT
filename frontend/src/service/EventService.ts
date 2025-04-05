@@ -6,24 +6,24 @@ export default class EventService {
   }
 
   public async createEvent(newEventData: NewEventData): Promise<void> {
-    await this.server.event.addEvent(newEventData);
+    await this.server.addEvent(newEventData);
   }
 
   public async getEvent(eventId: string): Promise<TimelineEvent | undefined> {
-    const response = await this.server.event.getEvent(eventId);
+    const response = await this.server.getEvent(eventId);
     return response.event;
   }
 
   public async deleteEvent(eventId: string): Promise<void> {
-    await this.server.event.deleteEvent(eventId);
+    await this.server.deleteEvent(eventId);
   }
 
   public async updateEvent(event: TimelineEvent): Promise<void> {
-    await this.server.event.updateEvent(event); // TODO Split into multiple functions
+    await this.server.updateEvent(event); // TODO Split into multiple functions
   }
 
   public async getTimeline(userId: string, categoryIds: string[], contactIds: string[]): Promise<TimelineEvent[]> {
-    const response = await this.server.timeline.getTimeline("userId", categoryIds, contactIds);
+    const response = await this.server.getTimeline("userId", categoryIds, contactIds);
     return response.timeline?.events ?? [];
   }
 }
