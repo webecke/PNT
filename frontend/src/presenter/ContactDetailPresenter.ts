@@ -1,6 +1,5 @@
 import { Presenter, View } from "@/presenter/Presenter";
 import { Contact } from "@/model/Contact";
-import { TimelineEvent } from "@/model/TimelineEvent";
 import ContactService from "@/service/ContactService";
 import { ServerFacade } from "@/service/server";
 
@@ -20,15 +19,5 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
     } catch {
       return undefined;
     }
-  }
-
-  public async getContactTimeline(userId: string): Promise<TimelineEvent[]> {
-    throw new Error("Discontinued: getContactTimeline()");
-    // const query: TimelineQuery = { requiredAttendees: [userId] };
-    // try {
-    //   return await this.eventService.queryTimeline(query, mockAuthToken);
-    // } catch {
-    //   return [];
-    // }
   }
 }
