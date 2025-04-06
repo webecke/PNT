@@ -1,9 +1,9 @@
 import { beforeEach, describe, it } from "@jest/globals";
-import IServerFacade from "@/service/IServerFacade";
 import { instance, mock, verify } from "@typestrong/ts-mockito";
-import { AuthToken } from "@/model/AuthToken";
-import ContactService, { NewContactData } from "@/service/ContactService";
+import ContactService from "@/service/ContactService";
 import { Contact } from "@/model/Contact";
+import { ServerFacade } from "@/service/server";
+import { AddContactRequest } from "@/service/server/message/ContactMessage";
 
 const CONTACT: Contact = {
   id: "FAKE-CONTACT-ID",
@@ -15,7 +15,7 @@ const CONTACT: Contact = {
   timeline: []
 }
 
-const NEW_CONTACT: NewContactData = {
+const NEW_CONTACT: AddContactRequest = {
   email: "CONTACT-EMAIL",
   firstName: "FIRST-NAME",
   lastName: "LAST-NAME",
@@ -23,38 +23,33 @@ const NEW_CONTACT: NewContactData = {
   phone: "CONTACT-PHONE",
 };
 
-const TOKEN: AuthToken = {
-  token: "TEST-AUTH-TOKEN",
-  userId: "TEST-USER-ID",
-}
-
 describe("ContactService", () => {
-  let serverMock: IServerFacade;
+  let serverMock: ServerFacade;
   let service: ContactService;
 
   beforeEach(() => {
-    serverMock = mock<IServerFacade>();
+    serverMock = mock<ServerFacade>();
     const server = instance(serverMock);
     service = new ContactService(server);
   });
 
   it("calls the server correctly when createContact() is called", () => {
-    service.createContact(NEW_CONTACT, TOKEN);
-    verify(serverMock.createContact(NEW_CONTACT, TOKEN)).once();
+    service.createContact(NEW_CONTACT);
+    verify(serverMock.addContact(NEW_CONTACT)).once();
   });
 
   it("calls the server correctly when getContact() is called", () => {
-    service.getContact(CONTACT.id, TOKEN);
-    verify(serverMock.getContact(CONTACT.id, TOKEN)).once();
+    service.getContact(CONTACT.id);
+    verify(serverMock.getContact(CONTACT.id)).once();
   });
 
   it("calls the server correctly when deleteContact() is called", () => {
-    service.deleteContact(CONTACT.id, TOKEN);
-    verify(serverMock.deleteContact(CONTACT.id, TOKEN)).once();
+    service.deleteContact(CONTACT.id);
+    verify(serverMock.deleteContact(CONTACT.id)).once();
   });
 
   it("calls the server correctly when updateContact() is called", () => {
-    service.updateContact(CONTACT, TOKEN);
-    verify(serverMock.updateContact(CONTACT, TOKEN)).once();
+    service.updateContact(CONTACT);
+    verify(serverMock.updateContact(CONTACT)).once();
   });
 });
