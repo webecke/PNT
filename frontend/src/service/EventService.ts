@@ -9,8 +9,11 @@ export default class EventService {
     await this.server.addEvent(newEventData);
   }
 
-  public async getEvent(eventId: string): Promise<TimelineEvent | undefined> {
+  public async getEvent(eventId: string): Promise<TimelineEvent> {
     const response = await this.server.getEvent(eventId);
+    if (!response.event) {
+      throw new Error(`Failed to get event for eventId '${eventId}'`);
+    }
     return response.event;
   }
 
@@ -24,6 +27,9 @@ export default class EventService {
 
   public async getTimeline(userId: string, categoryIds: string[], contactIds: string[]): Promise<TimelineEvent[]> {
     const response = await this.server.getTimeline("userId", categoryIds, contactIds);
-    return response.timeline?.events ?? [];
+    if (!response.timeline) {
+      throw new Error(`Failed to get timeline for userId '${userId}'`);
+    }
+    return response.timeline.events;
   }
 }

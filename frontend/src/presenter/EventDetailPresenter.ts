@@ -13,7 +13,7 @@ export class EventDetailPresenter extends Presenter<EventDetailView> {
     super(view);
   }
 
-  public async getEvent(eventId: string): Promise<TimelineEvent | undefined> {
+  public async getEvent(eventId: string): Promise<TimelineEvent> {
     return await this.service.getEvent(eventId);
   }
 }

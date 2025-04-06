@@ -13,11 +13,7 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
     super(view);
   }
 
-  public async getContact(userId: string): Promise<Contact | undefined> {
-    try {
-      return await this.contactService.getContact(userId);
-    } catch {
-      return undefined;
-    }
+  public async getContact(userId: string): Promise<Contact> {
+    return await this.contactService.getContact(userId);
   }
 }

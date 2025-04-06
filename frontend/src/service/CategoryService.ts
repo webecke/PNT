@@ -13,8 +13,11 @@ export default class CategoryService {
     await this.server.updateCategory(category.id, category.label);
   }
 
-  public async getCategory(categoryId: string): Promise<Category | undefined> {
+  public async getCategory(categoryId: string): Promise<Category> {
     const response = await this.server.getCategory(categoryId);
+    if (!response.category) {
+      throw new Error(`Failed to get category with categoryId '${categoryId}'`);
+    }
     return response.category;
   }
 

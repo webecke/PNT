@@ -11,8 +11,11 @@ export default class ContactService {
     await this.server.addContact(newContactData);
   }
 
-  public async getContact(contactId: string): Promise<Contact | undefined> {
+  public async getContact(contactId: string): Promise<Contact> {
     const response = await this.server.getContact(contactId);
+    if (!response.contact) {
+      throw new Error(`Failed to get contact with contactId '${contactId}'`);
+    }
     return response.contact;
   }
 

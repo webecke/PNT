@@ -6,9 +6,12 @@ export default class AuthenticationService {
   constructor(private server: ServerFacade) {
   }
 
-  public async register(firstName: string, lastName: string, email: string, password: string): Promise<User | undefined> {
+  public async register(firstName: string, lastName: string, email: string, password: string): Promise<User> {
     const request: UserRequest = { firstName, lastName, password, username: email };
     const response = await this.server.addUser(request);
+    if (!response.user) {
+      throw new Error(`Failed to register user with request: ${JSON.stringify(request)}`);
+    }
     return response.user;
   }
 

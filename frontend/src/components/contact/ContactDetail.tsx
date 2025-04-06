@@ -42,12 +42,13 @@ const ContactDetail = (props: Props) => {
     // See this Stack Overflow:
     // https://stackoverflow.com/questions/56838392/how-to-call-an-async-function-inside-useeffect-in-react
     const asyncFunction = async () => {
-      const contact = await presenter.current.getContact(props.userId);
-      if (contact) {
+      try {
+        const contact = await presenter.current.getContact(props.userId);
         setQueryState(QueryState.SUCCESS);
         loadContactData(contact);
-      } else {
+      } catch (e) {
         setQueryState(QueryState.FAILURE);
+        console.warn((e as Error).message);
       }
     };
     asyncFunction();
