@@ -39,16 +39,20 @@ export class ServerFacade {
     return this.authToken.token;
   }
 
-
-  // AUTHENTICATION
+  private setAuthToken(authToken: AuthToken | null) {
+    this.authToken = authToken;
+  }
 
   public async login(username: string, password: string): Promise<boolean> {
     const request: LoginRequest = { username, password }
     const response = await this.communicator.post<AuthResponse>('/auth/login', request)
-    this.authToken = { token: response.authtoken, username: username }
+    this.setAuthToken({ token: response.authtoken, username: username });
     console.log(response)
     return response.success
   }
+
+
+  // AUTHENTICATION
 
   public async logout(): Promise<boolean> {
     if (!this.authToken) {
@@ -57,8 +61,22 @@ export class ServerFacade {
     }
     const request = { username: this.authToken.username }
     const response = await this.communicator.post<BasicResponse>('/auth/login', request, this.authToken.token)
-    this.authToken = null;
+    this.setAuthToken(null);
     return response.success
+  }
+
+  public async addUser(request: UserRequest): Promise<AddUserResponse> {
+    const response = await this.communicator.post<AddUserResponse>(
+      '/user/add',
+      request
+    );
+
+    // If login is successful, set the token
+    if (response.success && response.token) {
+      this.setAuthToken({ token: response.token, username: request.username });
+    }
+
+    return response;
   }
 
 
@@ -209,20 +227,6 @@ export class ServerFacade {
 
 
   // USER
-
-  public async addUser(request: UserRequest): Promise<AddUserResponse> {
-    const response = await this.communicator.post<AddUserResponse>(
-      '/user/add',
-      request
-    );
-
-    // If login is successful, set the token
-    if (response.success && response.token) {
-      this.authToken = { token: response.token, username: request.username };
-    }
-
-    return response;
-  }
 
   public async updateUser(request: UserRequest): Promise<BasicResponse> {
     const authToken = this.requireToken();
