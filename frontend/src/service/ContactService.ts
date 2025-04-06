@@ -28,8 +28,8 @@ export default class ContactService {
     console.warn("WARNING getContacts() is still hardcoded");
     const contactIds = mockContactIds;
 
-    let contacts: Contact[] = [];
-    for (let contactId of contactIds) {
+    const contacts: Contact[] = [];
+    for (const contactId of contactIds) {
       const contact = await this.getContact(contactId);
       contacts.push(contact);
     }
