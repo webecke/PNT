@@ -1,9 +1,10 @@
 import { beforeEach, describe, it } from "@jest/globals";
-import { instance, mock, verify } from "@typestrong/ts-mockito";
+import { anything, instance, mock, verify, when } from "@typestrong/ts-mockito";
 import ContactService from "@/service/ContactService";
 import { Contact } from "@/model/Contact";
 import { ServerFacade } from "@/service/server";
-import { AddContactRequest } from "@/service/server/message/ContactMessage";
+import { AddContactRequest, GetContactResponse } from "@/service/server/message/ContactMessage";
+import { BasicResponse } from "@/service/server/message/BasicResponse";
 
 const CONTACT: Contact = {
   id: "FAKE-CONTACT-ID",
@@ -23,6 +24,15 @@ const NEW_CONTACT: AddContactRequest = {
   phone: "CONTACT-PHONE",
 };
 
+const basicResponse: BasicResponse = {
+  success: true
+};
+
+const getContactResponse: GetContactResponse = {
+  ...basicResponse,
+  contact: {} as Contact
+};
+
 describe("ContactService", () => {
   let serverMock: ServerFacade;
   let service: ContactService;
@@ -31,6 +41,11 @@ describe("ContactService", () => {
     serverMock = mock<ServerFacade>();
     const server = instance(serverMock);
     service = new ContactService(server);
+
+    when(serverMock.addContact(anything())).thenResolve(basicResponse);
+    when(serverMock.getContact(anything())).thenResolve(getContactResponse);
+    when(serverMock.updateContact(anything())).thenResolve(basicResponse);
+    when(serverMock.deleteContact(anything())).thenResolve(basicResponse);
   });
 
   it("calls the server correctly when createContact() is called", () => {

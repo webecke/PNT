@@ -1,8 +1,10 @@
 import { beforeEach, describe, it } from "@jest/globals";
-import { instance, mock, verify } from "@typestrong/ts-mockito";
+import { anything, instance, mock, verify, when } from "@typestrong/ts-mockito";
 import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
 import EventService from "@/service/EventService";
 import { ServerFacade } from "@/service/server";
+import { BasicResponse } from "@/service/server/message/BasicResponse";
+import { GetEventResponse } from "@/service/server/message/EventMessage";
 
 const NEW_EVENT_DATA: NewEventData = {
   title: "EVENT-NAME",
@@ -17,6 +19,15 @@ const EVENT: TimelineEvent = {
   id: "FAKE-EVENT-ID",
 };
 
+const basicResponse: BasicResponse = {
+  success: true
+};
+
+const getEventResponse: GetEventResponse = {
+  ...basicResponse,
+  event: {} as TimelineEvent
+};
+
 describe("EventService", () => {
   let serverMock: ServerFacade;
   let service: EventService;
@@ -25,6 +36,11 @@ describe("EventService", () => {
     serverMock = mock<ServerFacade>();
     const server = instance(serverMock);
     service = new EventService(server);
+
+    when(serverMock.addEvent(anything())).thenResolve(basicResponse);
+    when(serverMock.getEvent(anything())).thenResolve(getEventResponse); // GetEventResponse
+    when(serverMock.updateEvent(anything())).thenResolve(basicResponse);
+    when(serverMock.deleteEvent(anything())).thenResolve(basicResponse);
   });
 
   it("calls the server correctly when createEvent() is called", () => {

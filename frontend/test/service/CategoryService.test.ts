@@ -1,13 +1,24 @@
 import { beforeEach, describe, it } from "@jest/globals";
-import { instance, mock, verify } from "@typestrong/ts-mockito";
+import { anything, instance, mock, verify, when } from "@typestrong/ts-mockito";
 import CategoryService from "@/service/CategoryService";
 import { Category } from "@/model/Category";
 import { ServerFacade } from "@/service/server";
+import { BasicResponse } from "@/service/server/message/BasicResponse";
+import { GetCategoryResponse } from "@/service/server/message/CategoryMessage";
 
 const CATEGORY: Category = {
   id: "TEST-CATEGORY-ID",
   label: "TEST-CATEGORY"
 }
+
+const basicResponse: BasicResponse = {
+  success: true
+};
+
+const getCategoryResponse: GetCategoryResponse = {
+  ...basicResponse,
+  category: {} as Category
+};
 
 describe("CategoryService", () => {
   let serverMock: ServerFacade;
@@ -17,6 +28,11 @@ describe("CategoryService", () => {
     serverMock = mock<ServerFacade>();
     const server = instance(serverMock);
     service = new CategoryService(server);
+
+    when(serverMock.addCategory(anything())).thenResolve(basicResponse);
+    when(serverMock.getCategory(anything())).thenResolve(getCategoryResponse);
+    when(serverMock.updateCategory(anything(), anything())).thenResolve(basicResponse);
+    when(serverMock.deleteCategory(anything())).thenResolve(basicResponse);
   });
 
   it("calls the server correctly when createCategory() is called", () => {

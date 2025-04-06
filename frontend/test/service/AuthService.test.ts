@@ -1,8 +1,9 @@
 import { beforeEach, describe, it } from "@jest/globals";
 import AuthenticationService from "@/service/AuthenticationService";
 import { ServerFacade } from "@/service/server";
-import { deepEqual, instance, mock, verify } from "@typestrong/ts-mockito";
-import { UserRequest } from "@/service/server/message/UserMessage";
+import { anything, deepEqual, instance, mock, verify, when } from "@typestrong/ts-mockito";
+import { AddUserResponse, UserRequest } from "@/service/server/message/UserMessage";
+import { User } from "@/model/User";
 
 const USER = {
   username: "test.email@email.com",
@@ -10,6 +11,11 @@ const USER = {
   firstName: "test-first-name",
   lastName: "test-last-name",
 }
+
+const addUserResponse: AddUserResponse = {
+  success: true,
+  user: {} as User
+};
 
 describe("AuthService", () => {
   let serverMock: ServerFacade;
@@ -19,6 +25,10 @@ describe("AuthService", () => {
     serverMock = mock<ServerFacade>();
     const server = instance(serverMock);
     service = new AuthenticationService(server);
+
+    when(serverMock.addUser(anything())).thenResolve(addUserResponse);
+    when(serverMock.login(anything(), anything())).thenResolve(true);
+    when(serverMock.logout()).thenResolve(true);
   });
 
   it("calls the server correctly when register() is called", () => {
