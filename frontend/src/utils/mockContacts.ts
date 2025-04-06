@@ -8,7 +8,7 @@ export const mockContacts: Contact[] = [
     lastName: "Potter",
     phone: "123-456-7890",
     email: "fake@gmail.com",
-    notes:
+    note:
       "Harry is a nice guy. I met him when I was running cross country in 9th grade.",
     image: HarryPotter,
     timeline: [
@@ -25,7 +25,7 @@ export const mockContacts: Contact[] = [
     lastName: "Granger",
     phone: "987-654-3210",
     email: "hermione@mail.com",
-    notes: "Brilliant mind, loves books.",
+    note: "Brilliant mind, loves books.",
     timeline: ["Study Group", "Graduation Ceremony", "Book Club"],
     categories: ["school"]
   },

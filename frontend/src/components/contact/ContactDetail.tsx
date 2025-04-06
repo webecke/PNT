@@ -31,7 +31,7 @@ const ContactDetail = (props: Props) => {
     setLastName(contact.lastName);
     setPhone(contact.phone);
     setEmail(contact.email);
-    setNotes(contact.notes);
+    setNotes(contact.note);
     setImage(contact.image ?? "");
   }
 

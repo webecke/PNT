@@ -28,7 +28,7 @@ const AddContact = (props: Props) => {
       lastName: lastName,
       phone: phone,
       email: email,
-      notes: notes,
+      note: notes,
     });
   };
 

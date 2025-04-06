@@ -11,7 +11,7 @@ const CONTACT: Contact = {
   email: "CONTACT-EMAIL",
   firstName: "CONTACT-FIRST-NAME",
   lastName: "CONTACT-LAST-NAME",
-  notes: "CONTACT-NOTES",
+  note: "CONTACT-NOTES",
   phone: "CONTACT-PHONE",
   timeline: []
 }
@@ -20,7 +20,7 @@ const NEW_CONTACT: AddContactRequest = {
   email: "CONTACT-EMAIL",
   firstName: "FIRST-NAME",
   lastName: "LAST-NAME",
-  notes: "CONTACT-NOTES",
+  note: "CONTACT-NOTES",
   phone: "CONTACT-PHONE",
 };
 
