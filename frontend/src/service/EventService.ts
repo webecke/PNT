@@ -1,8 +1,12 @@
 import { ServerFacade } from "@/service/server";
 import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
+import { AlmightySingleton } from "@/AlmightySingleton";
 
 export default class EventService {
-  constructor(private server: ServerFacade) {
+  private server: ServerFacade;
+
+  constructor(server?: ServerFacade) {
+    this.server = server ?? AlmightySingleton.getInstance().getServerFacade();
   }
 
   public async createEvent(newEventData: NewEventData): Promise<void> {

@@ -1,8 +1,12 @@
 import { ServerFacade } from "@/service/server";
 import { Category } from "@/model/Category";
+import { AlmightySingleton } from "@/AlmightySingleton";
 
 export default class CategoryService {
-  constructor(private server: ServerFacade) {
+  private server: ServerFacade;
+
+  constructor(server?: ServerFacade) {
+    this.server = server ?? AlmightySingleton.getInstance().getServerFacade();
   }
 
   public async createCategory(name: string): Promise<void> {

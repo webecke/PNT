@@ -1,10 +1,14 @@
 import { Contact } from "@/model/Contact";
 import { AddContactRequest } from "@/service/server/message/ContactMessage";
 import { ServerFacade } from "@/service/server";
-import { mockContactIds, mockContacts } from "@/utils/mockContacts";
+import { mockContactIds } from "@/utils/mockContacts";
+import { AlmightySingleton } from "@/AlmightySingleton";
 
 export default class ContactService {
-  constructor(private server: ServerFacade) {
+  private server: ServerFacade;
+
+  constructor(server?: ServerFacade) {
+    this.server = server ?? AlmightySingleton.getInstance().getServerFacade();
   }
 
   public async createContact(newContactData: AddContactRequest): Promise<void> {

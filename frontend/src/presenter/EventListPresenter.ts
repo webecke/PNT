@@ -1,13 +1,12 @@
 import { Presenter, View } from "@/presenter/Presenter";
 import EventService from "@/service/EventService";
-import { ServerFacade } from "@/service/server";
 import { TimelineEvent } from "@/model/TimelineEvent";
 
 export interface EventListView extends View {
 }
 
 export class EventListPresenter extends Presenter<EventListView> {
-  private service: EventService = new EventService(new ServerFacade());
+  private service: EventService = new EventService();
 
   constructor(protected view: EventListView) {
     super(view);

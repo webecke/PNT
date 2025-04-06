@@ -1,9 +1,13 @@
 import { ServerFacade } from "@/service/server";
 import { UserRequest } from "@/service/server/message/UserMessage";
 import { User } from "@/model/User";
+import { AlmightySingleton } from "@/AlmightySingleton";
 
 export default class AuthenticationService {
-  constructor(private server: ServerFacade) {
+  private server: ServerFacade;
+
+  constructor(server?: ServerFacade) {
+    this.server = server ?? AlmightySingleton.getInstance().getServerFacade();
   }
 
   public async register(firstName: string, lastName: string, email: string, password: string): Promise<User> {

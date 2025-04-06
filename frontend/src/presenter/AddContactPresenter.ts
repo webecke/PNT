@@ -1,13 +1,12 @@
 import { NavigableView, Presenter } from "@/presenter/Presenter";
 import ContactService from "@/service/ContactService";
-import { ServerFacade } from "@/service/server";
 import { AddContactRequest } from "@/service/server/message/ContactMessage";
 
 export interface AddContactView extends NavigableView {
 }
 
 export class AddContactPresenter extends Presenter<AddContactView> {
-  private service: ContactService = new ContactService(new ServerFacade());
+  private service: ContactService = new ContactService();
 
   constructor(protected view: AddContactView) {
     super(view);
