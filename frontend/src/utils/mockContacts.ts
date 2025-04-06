@@ -1,6 +1,12 @@
 import { HarryPotter } from "./harrypotterimg";
 import { Contact } from "@/model/Contact";
 
+// MANUALLY POPULATE THIS
+export const mockContactIds: string[] = [
+  "c6579cda-c4cb-49a4-bf03-ff3f03d9ce40",
+  "d4e3502d-2616-4a4d-b105-72da5dce160a",
+];
+
 export const mockContacts: Contact[] = [
   {
     id: "HarryPotterContactId",

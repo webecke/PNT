@@ -1,7 +1,7 @@
 import { Contact } from "@/model/Contact";
 import { AddContactRequest } from "@/service/server/message/ContactMessage";
 import { ServerFacade } from "@/service/server";
-import { mockContacts } from "@/utils/mockContacts";
+import { mockContactIds, mockContacts } from "@/utils/mockContacts";
 
 export default class ContactService {
   constructor(private server: ServerFacade) {
@@ -21,10 +21,15 @@ export default class ContactService {
 
   public async getContacts(): Promise<Contact[]> {
     // TODO getContacts() API call (or add a contactId array to User?)
-    console.warn("WARNING getContacts() is unimplemented");
-    return mockContacts;
-    // const response = await this.server.contact.getContacts();
-    // return response.contact;
+    console.warn("WARNING getContacts() is still hardcoded");
+    const contactIds = mockContactIds;
+
+    let contacts: Contact[] = [];
+    for (let contactId of contactIds) {
+      const contact = await this.getContact(contactId);
+      contacts.push(contact);
+    }
+    return contacts;
   }
 
   public async deleteContact(contactId: string): Promise<void> {
