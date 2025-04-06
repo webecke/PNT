@@ -118,7 +118,7 @@ export class ServerCommunicator {
     const requestHeaders = { ...this.defaultHeaders };
 
     if (authToken) {
-      requestHeaders['Authorization'] = `Bearer ${authToken}`;
+      requestHeaders['Authorization'] = authToken;
     }
 
     const options: RequestInit = {

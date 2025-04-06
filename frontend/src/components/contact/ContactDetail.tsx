@@ -1,9 +1,7 @@
 import ProfileIcon from "@/components/ProfileIcon";
-import Timeline from "@/components/timeline/Timeline";
 import { useEffect, useRef, useState } from "react";
 import EditForm from "@/components/EditForm";
 import { ContactDetailPresenter, ContactDetailView } from "@/presenter/ContactDetailPresenter";
-import { TimelineEvent } from "@/model/TimelineEvent";
 import { Contact } from "@/model/Contact";
 import { QueryState } from "@/utils/QueryState";
 
@@ -19,7 +17,6 @@ const ContactDetail = (props: Props) => {
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
-  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([]);
   // TODO Add categories
 
   const [editing, setEditing] = useState<boolean>(false);
@@ -29,14 +26,13 @@ const ContactDetail = (props: Props) => {
   const listener: ContactDetailView = {};
   const presenter = useRef(props.presenter ?? new ContactDetailPresenter(listener));
 
-  const loadContactData = (contact: Contact, timelineEvents: TimelineEvent[]) => {
+  const loadContactData = (contact: Contact) => {
     setFirstName(contact.firstName);
     setLastName(contact.lastName);
     setPhone(contact.phone);
     setEmail(contact.email);
-    setNotes(contact.notes);
+    setNotes(contact.note);
     setImage(contact.image ?? "");
-    setTimelineEvents(timelineEvents);
   }
 
   useEffect(() => {
@@ -46,13 +42,13 @@ const ContactDetail = (props: Props) => {
     // See this Stack Overflow:
     // https://stackoverflow.com/questions/56838392/how-to-call-an-async-function-inside-useeffect-in-react
     const asyncFunction = async () => {
-      const contact = await presenter.current.getContact(props.userId);
-      if (contact) {
-        const timelineEvents = await presenter.current.getContactTimeline(props.userId);
+      try {
+        const contact = await presenter.current.getContact(props.userId);
         setQueryState(QueryState.SUCCESS);
-        loadContactData(contact, timelineEvents);
-      } else {
+        loadContactData(contact);
+      } catch (e) {
         setQueryState(QueryState.FAILURE);
+        console.warn((e as Error).message);
       }
     };
     asyncFunction();
@@ -158,11 +154,6 @@ const ContactDetail = (props: Props) => {
         )}
       </div>
 
-      {/* Timeline */}
-      <div className="mt-4">
-        <h2 className="text-xl font-semibold">Timeline</h2>
-        <Timeline timelineEvents={timelineEvents} />
-      </div>
     </div>
   );
 };

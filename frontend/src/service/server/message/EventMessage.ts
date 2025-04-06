@@ -1,4 +1,5 @@
 import { BasicResponse } from "@/service/server/message/BasicResponse";
+import { TimelineEvent } from "@/model/TimelineEvent";
 
 export interface AddEventRequest {
   title: string;
@@ -18,5 +19,5 @@ export interface UpdateEventRequest {
 }
 
 export interface GetEventResponse extends BasicResponse {
-  event?: Event;
+  event?: TimelineEvent;
 }

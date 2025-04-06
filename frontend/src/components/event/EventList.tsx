@@ -30,6 +30,7 @@ const EventList = (props: Props) => {
     asyncFunction();
   });
 
+  // TODO move into EventService.getTimeline
   const filteredEvents = useMemo(() => {
     return props.category
       ? events.filter((event) => event.categories?.includes(props.category!))

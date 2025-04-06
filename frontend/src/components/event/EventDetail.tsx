@@ -34,12 +34,13 @@ const EventDetail = (props: Props) => {
   useEffect(() => {
     // See comment from ContactDetail.tsx
     const asyncFunction = async () => {
-      const timelineEvent = await presenter.current.getEvent(props.eventId);
-      if (timelineEvent) {
+      try {
+        const timelineEvent = await presenter.current.getEvent(props.eventId);
         setQueryState(QueryState.SUCCESS);
         loadEventData(timelineEvent);
-      } else {
+      } catch (e) {
         setQueryState(QueryState.FAILURE);
+        console.warn((e as Error).message);
       }
     }
     asyncFunction();
