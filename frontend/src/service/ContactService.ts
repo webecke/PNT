@@ -1,7 +1,7 @@
 import { Contact } from "@/model/Contact";
 import { AddContactRequest } from "@/service/server/message/ContactMessage";
 import { ServerFacade } from "@/service/server";
-import { mockContactIds } from "@/utils/mockContacts";
+import { hardcodedContactIds } from "@/utils/mockContacts";
 import { AlmightySingleton } from "@/AlmightySingleton";
 
 export default class ContactService {
@@ -26,7 +26,7 @@ export default class ContactService {
   public async getContacts(): Promise<Contact[]> {
     // TODO getContacts() API call (or add a contactId array to User?)
     console.warn("WARNING getContacts() is still hardcoded");
-    const contactIds = mockContactIds;
+    const contactIds = hardcodedContactIds;
 
     const contacts: Contact[] = [];
     for (const contactId of contactIds) {

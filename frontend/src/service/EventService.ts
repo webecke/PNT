@@ -1,6 +1,7 @@
 import { ServerFacade } from "@/service/server";
 import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
 import { AlmightySingleton } from "@/AlmightySingleton";
+import { hardcodedEventIds } from "@/utils/mockContacts";
 
 export default class EventService {
   private server: ServerFacade;
@@ -26,14 +27,26 @@ export default class EventService {
   }
 
   public async updateEvent(event: TimelineEvent): Promise<void> {
-    await this.server.updateEvent(event); // TODO Split into multiple functions
+    await this.server.updateEvent(event);
   }
 
   public async getTimeline(userId: string, categoryIds: string[], contactIds: string[]): Promise<TimelineEvent[]> {
     const response = await this.server.getTimeline(userId, categoryIds, contactIds);
-    if (!response.timeline) {
+    console.log(`Got timeline. Returned value (though not being used b/c hardcoding): ${JSON.stringify(response.timeline)}`);
+    if (!response.timeline) { // TODO allow empty timelines
       throw new Error(`Failed to get timeline for userId '${userId}'`);
     }
-    return response.timeline.events;
+    return await this.getHardcodedEvents();
+    // return response.timeline.events;
+  }
+
+  private async getHardcodedEvents(): Promise<TimelineEvent[]> {
+    let events: TimelineEvent[] = [];
+    for (let eventId of hardcodedEventIds) {
+      const event = await this.getEvent(eventId);
+      console.log(`Got hardcoded event ${eventId}. Result: ${JSON.stringify(event)}`);
+      events.push(event);
+    }
+    return events;
   }
 }
