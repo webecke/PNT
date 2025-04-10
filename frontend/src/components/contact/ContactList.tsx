@@ -49,7 +49,7 @@ const ContactList = (props: Props) => {
           <div onClick={() => setSelectedContactId(undefined)}>
             <IoArrowBackSharp className="text-4xl cursor-pointer" />
           </div>
-          <ContactDetail userId={selectedContactId} />
+          <ContactDetail contactId={selectedContactId} />
         </div>
         :
         <div className="w-1/2 mx-auto">

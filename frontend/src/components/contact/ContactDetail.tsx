@@ -7,7 +7,7 @@ import { QueryState } from "@/utils/QueryState";
 
 interface Props {
   presenter?: ContactDetailPresenter;
-  userId: string;
+  contactId: string;
 }
 
 const ContactDetail = (props: Props) => {
@@ -43,7 +43,7 @@ const ContactDetail = (props: Props) => {
     // https://stackoverflow.com/questions/56838392/how-to-call-an-async-function-inside-useeffect-in-react
     const asyncFunction = async () => {
       try {
-        const contact = await presenter.current.getContact(props.userId);
+        const contact = await presenter.current.getContact(props.contactId);
         setQueryState(QueryState.SUCCESS);
         loadContactData(contact);
       } catch (e) {
@@ -52,7 +52,7 @@ const ContactDetail = (props: Props) => {
       }
     };
     asyncFunction();
-  }, [props.userId]);
+  }, [props.contactId]);
 
   switch (queryState) {
     // TODO Move the queryState variable (and logic) into the presenter
