@@ -30,7 +30,7 @@ export default class EventService {
   }
 
   public async getTimeline(userId: string, categoryIds: string[], contactIds: string[]): Promise<TimelineEvent[]> {
-    const response = await this.server.getTimeline("userId", categoryIds, contactIds);
+    const response = await this.server.getTimeline(userId, categoryIds, contactIds);
     if (!response.timeline) {
       throw new Error(`Failed to get timeline for userId '${userId}'`);
     }
