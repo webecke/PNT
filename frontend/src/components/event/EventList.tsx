@@ -28,7 +28,7 @@ const EventList = (props: Props) => {
       setEvents(timeline);
     };
     asyncFunction();
-  });
+  }, []);
 
   // TODO move into EventService.getTimeline
   const filteredEvents = useMemo(() => {
