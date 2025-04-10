@@ -35,6 +35,11 @@ const ContactDetail = (props: Props) => {
     setImage(contact.image ?? "");
   }
 
+  const onSave = async () => {
+    await presenter.current.editContact(props.contactId, firstName, lastName, phone, email, notes);
+    setEditing(false);
+  }
+
   useEffect(() => {
     // An async lambda is created and called as a workaround to safely make
     // async calls in a useEffect. One concern is that Promise rejections are
@@ -108,7 +113,7 @@ const ContactDetail = (props: Props) => {
           ) : (
             <div
               className="bg-blue-600 rounded shadow-lg text-white p-2 hover:bg-blue-700 text-lg"
-              onClick={() => setEditing(false)}
+              onClick={onSave}
             >
               Save Edits
             </div>

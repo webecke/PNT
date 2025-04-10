@@ -15,4 +15,17 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
   public async getContact(userId: string): Promise<Contact> {
     return await this.contactService.getContact(userId);
   }
+
+  public async editContact(contactId: string, firstName: string, lastName: string, phone: string, email: string, notes: string) {
+    const contact: Contact = {
+      id: contactId,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      email: email,
+      note: notes,
+      timeline: []
+    };
+    await this.contactService.updateContact(contact);
+  }
 }
