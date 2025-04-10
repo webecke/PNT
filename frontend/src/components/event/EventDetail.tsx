@@ -31,6 +31,10 @@ const EventDetail = (props: Props) => {
     setCategories(event.categories);
   };
 
+  const onSave = async () => {
+    await presenter.current.editEvent(props.eventId, name, date, description);
+  }
+
   useEffect(() => {
     // See comment from ContactDetail.tsx
     const asyncFunction = async () => {

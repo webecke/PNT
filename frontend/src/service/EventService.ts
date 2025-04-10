@@ -2,6 +2,7 @@ import { ServerFacade } from "@/service/server";
 import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
 import { AlmightySingleton } from "@/AlmightySingleton";
 import { hardcodedEventIds } from "@/utils/mockContacts";
+import { UpdateEventRequest } from "@/service/server/message/EventMessage";
 
 export default class EventService {
   private server: ServerFacade;
@@ -26,7 +27,7 @@ export default class EventService {
     await this.server.deleteEvent(eventId);
   }
 
-  public async updateEvent(event: TimelineEvent): Promise<void> {
+  public async updateEvent(event: UpdateEventRequest): Promise<void> {
     await this.server.updateEvent(event);
   }
 
