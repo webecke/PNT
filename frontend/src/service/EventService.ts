@@ -42,8 +42,8 @@ export default class EventService {
   }
 
   private async getHardcodedEvents(): Promise<TimelineEvent[]> {
-    let events: TimelineEvent[] = [];
-    for (let eventId of hardcodedEventIds) {
+    const events: TimelineEvent[] = [];
+    for (const eventId of hardcodedEventIds) {
       const event = await this.getEvent(eventId);
       console.log(`Got hardcoded event ${eventId}. Result: ${JSON.stringify(event)}`);
       events.push(event);
