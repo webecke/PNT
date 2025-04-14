@@ -1,39 +1,75 @@
-import { AuthToken } from "@/model/AuthToken";
-import IServerFacade from "@/service/IServerFacade";
+import { ServerFacade } from "@/service/server";
 import { NewEventData, TimelineEvent } from "@/model/TimelineEvent";
-
-export interface TimelineQuery {
-  // TODO
-  requiredAttendees: string[];
-}
-
-export interface TimelineQueryResult {
-  // TODO
-  events: TimelineEvent[];
-}
+import { AlmightySingleton } from "@/AlmightySingleton";
+import { hardcodedEventIds } from "@/utils/mockContacts";
+import { Contact } from "@/model/Contact";
+import { UpdateEventRequest } from "@/service/server/message/EventMessage";
+import { CreateResponse } from "@/service/server/message/CreateResponse";
 
 export default class EventService {
-  constructor(private server: IServerFacade) {
+  private server: ServerFacade;
+
+  constructor(server?: ServerFacade) {
+    this.server = server ?? AlmightySingleton.getInstance().getServerFacade();
   }
 
-  public async createEvent(newEventData: NewEventData, auth: AuthToken): Promise<void> {
-    await this.server.createEvent(newEventData, auth);
+  public async createEvent(newEventData: NewEventData): Promise<CreateResponse> {
+    const response = await this.server.addEvent(newEventData);
+    console.log("EventService.createEvent response: ", response);
+    return response;
   }
 
-  public async getEvent(eventId: string, auth: AuthToken): Promise<TimelineEvent> {
-    return await this.server.getEvent(eventId, auth);
+  public async getEvent(eventId: string): Promise<TimelineEvent> {
+    const response = await this.server.getEvent(eventId);
+    if (!response.event) {
+      throw new Error(`Failed to get event for eventId '${eventId}'`);
+    }
+    return response.event;
   }
 
-  public async deleteEvent(eventId: string, auth: AuthToken): Promise<void> {
-    await this.server.deleteEvent(eventId, auth);
+  public async deleteEvent(eventId: string): Promise<void> {
+    await this.server.deleteEvent(eventId);
   }
 
-  public async updateEvent(event: TimelineEvent, auth: AuthToken): Promise<void> {
-    await this.server.updateEvent(event, auth); // TODO Split into multiple functions
+  public async updateEvent(event: UpdateEventRequest): Promise<void> {
+    await this.server.updateEvent(event);
+  }
+  public async getContacts(contactIds: string[]): Promise<any> {
+    const contacts: Contact[] = [];
+    for (const contactId of contactIds) {
+      const contact = (await this.server.getContact(contactId)).contact;
+      console.log(`Got contact ${contactId}. Result: ${JSON.stringify(contact)}`);
+      if (contact) contacts.push(contact);
+    }
+    return contacts;
   }
 
-  public async queryTimeline(query: TimelineQuery, auth: AuthToken): Promise<TimelineEvent[]> {
-    const result = await this.server.queryTimeline(query, auth);
-    return result.events;
+  private async getHardcodedEvents(): Promise<TimelineEvent[]> {
+    const events: TimelineEvent[] = [];
+    for (const eventId of hardcodedEventIds) {
+      const event = await this.getEvent(eventId);
+      console.log(`Got hardcoded event ${eventId}. Result: ${JSON.stringify(event)}`);
+      events.push(event);
+    }
+    return events;
   }
+  // public async getTimeline(userId: string, categoryIds: string[], contactIds: string[]): Promise<TimelineEvent[]> {
+  //   const response = await this.server.getTimeline(userId, categoryIds, contactIds);
+  //   console.log(`Got timeline. Returned value (though not being used b/c hardcoding): ${JSON.stringify(response.timeline)}`);
+  //   if (!response.timeline) { // TODO allow empty timelines
+  //     throw new Error(`Failed to get timeline for userId '${userId}'`);
+  //   }
+  //   return await this.getHardcodedEvents();
+  //   // return response.timeline.events;
+  // }
+
+  // private async getHardcodedEvents(): Promise<TimelineEvent[]> {
+  //   let events: TimelineEvent[] = [];
+  //   for (let eventId of hardcodedEventIds) {
+  //     const event = await this.getEvent(eventId);
+  //     console.log(`Got hardcoded event ${eventId}. Result: ${JSON.stringify(event)}`);
+  //     events.push(event);
+  //   }
+  //   return events;
+  // }
 }

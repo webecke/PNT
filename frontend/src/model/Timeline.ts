@@ -1,4 +1,6 @@
+import { TimelineEvent } from "@/model/TimelineEvent";
+
 export interface Timeline {
   ownerID: string;
-  events: Event[];
+  events: TimelineEvent[];
 }

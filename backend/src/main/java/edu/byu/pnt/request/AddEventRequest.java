@@ -11,9 +11,7 @@ public record AddEventRequest(
         String date,
         @NotBlank(message = "description must not be empty")
         String description,
-        @NotBlank(message = "contacts must not be empty")
         List<String> contacts,
-        @NotBlank(message = "categories must not be empty")
         List<String> categories
 
 ) { }

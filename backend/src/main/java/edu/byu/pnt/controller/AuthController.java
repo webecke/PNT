@@ -34,7 +34,7 @@ public class AuthController extends Controller {
             // Verify password
             // TODO add more robust password verifications and hashing
             if (!request.password().equals(user.getPassword())) {
-                return new LoginResponse(false, "Password incorrect", null);
+                return new LoginResponse(false, "Password incorrect", null, user);
             }
 
             // Build new authtoken
@@ -43,9 +43,9 @@ public class AuthController extends Controller {
             // Add authtoken to database
             authtokenDAO.addAuthtoken(authtoken);
 
-            return new LoginResponse(true, null, authtoken.token());
+            return new LoginResponse(true, null, authtoken.token(), user);
         } catch (DataAccessException e) {
-            return new LoginResponse(false, e.getMessage(), null);
+            return new LoginResponse(false, e.getMessage(), null, null);
         }
     }
 
