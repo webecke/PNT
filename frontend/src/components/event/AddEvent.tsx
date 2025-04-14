@@ -40,7 +40,7 @@ const AddEvent = (props: Props) => {
         title: name,
         date: date,
         description: description,
-        categories: [],
+        categories: categories,
         contacts: selectedContacts.map(contact => contact.id),
       }]);
     }
