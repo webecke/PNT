@@ -38,7 +38,7 @@ const AddContact = (props: Props) => {
       console.log('Contact added:', response);
       setContacts((prev) => [
         ...prev,
-        { timeline: [], firstName, lastName, phone, email, note: notes, id: response.contactID },
+        { timeline: [], firstName, lastName, phone, email, note: notes, id: response.contactId },
       ]);
     }
   };
