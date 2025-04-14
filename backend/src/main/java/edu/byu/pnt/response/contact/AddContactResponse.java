@@ -3,17 +3,17 @@ package edu.byu.pnt.response.contact;
 import edu.byu.pnt.response.Response;
 
 public class AddContactResponse extends Response {
-    String contactID;
-    public AddContactResponse(boolean success, String message, String contactID) {
+    String contactId;
+    public AddContactResponse(boolean success, String message, String contactId) {
         super(success, message);
-        this.contactID = contactID;
+        this.contactId = contactId;
     }
-    public String getContactID() {
-        return contactID;
+    public String getContactId() {
+        return contactId;
     }
 
-    public void setContactID(String contactID) {
-        this.contactID = contactID;
+    public void setContactId(String contactID) {
+        this.contactId = contactID;
     }
 
 }
