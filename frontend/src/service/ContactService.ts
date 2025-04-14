@@ -3,6 +3,7 @@ import { AddContactRequest } from '@/service/server/message/ContactMessage';
 import { ServerFacade } from '@/service/server';
 import { hardcodedContactIds } from '@/utils/mockContacts';
 import { AlmightySingleton } from '@/AlmightySingleton';
+import { BasicResponse } from './server/message/BasicResponse';
 
 export default class ContactService {
   private server: ServerFacade;
@@ -42,7 +43,7 @@ export default class ContactService {
     await this.server.deleteContact(contactId);
   }
 
-  public async updateContact(contact: Contact): Promise<void> {
-    await this.server.updateContact(contact);
+  public async updateContact(contact: Contact): Promise<BasicResponse> {
+    return await this.server.updateContact(contact);
   }
 }

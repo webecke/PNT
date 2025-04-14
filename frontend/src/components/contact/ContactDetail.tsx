@@ -4,6 +4,7 @@ import EditForm from '@/components/EditForm';
 import { ContactDetailPresenter, ContactDetailView } from '@/presenter/ContactDetailPresenter';
 import { Contact } from '@/model/Contact';
 import { QueryState } from '@/utils/QueryState';
+import { useUserContext } from '@/contexts/user-context';
 
 interface Props {
   presenter?: ContactDetailPresenter;
@@ -18,7 +19,7 @@ const ContactDetail = (props: Props) => {
   const [email, setEmail] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   // TODO Add categories
-
+  const {setContacts} = useUserContext();
   const [editing, setEditing] = useState<boolean>(false);
 
   // const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
@@ -65,6 +66,29 @@ const ContactDetail = (props: Props) => {
   //     return <div>Contact not found.</div>;
   // }
 
+  const saveEdits = async () => {
+    console.log('Saving edits...');
+    const response = await presenter.current.updateContact({
+      id: props.userId,
+      firstName,
+      lastName,
+      phone,
+      email,
+      note: notes,
+      timeline: []
+    });
+    console.log('Contact updated:', response);
+    if (response.success) {
+      setEditing(false)
+      setContacts(prev => prev.map(contact => {
+        if (contact.id === props.userId) {
+          return { ...contact, firstName, lastName, phone, email, note: notes };
+        }
+        return contact;
+      }))
+    };
+  }
+
   return (
     <div className="m-12 p-6 shadow-lg rounded-lg bg-white">
       <div className="flex flex-col">
@@ -99,7 +123,7 @@ const ContactDetail = (props: Props) => {
           ) : (
             <div
               className="bg-blue-600 rounded shadow-lg text-white p-2 hover:bg-blue-700 text-lg"
-              onClick={() => setEditing(false)}
+              onClick={saveEdits}
             >
               Save Edits
             </div>
