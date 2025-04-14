@@ -37,6 +37,7 @@ const EventDetail = (props: Props) => {
     const asyncFunction = async () => {
       try {
         const timelineEvent = await presenter.current.getEvent(props.eventId);
+        console.log("timelineEvent: ", timelineEvent);
         setQueryState(QueryState.SUCCESS);
         const contactResults = await presenter.current.getContacts(timelineEvent.contacts);
         loadEventData(timelineEvent, contactResults);

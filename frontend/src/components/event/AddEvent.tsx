@@ -5,6 +5,7 @@ import { AddEventPresenter } from "@/presenter/AddEventPresenter";
 import { AddContactView } from "@/presenter/AddContactPresenter";
 import { useUserContext } from "@/contexts/user-context";
 import { Contact } from "@/model/Contact";
+import { Category } from "@/model/Category";
 
 interface Props {
   presenter?: AddEventPresenter;
@@ -14,7 +15,7 @@ const AddEvent = (props: Props) => {
   const router = useRouter();
   const {contacts} = useUserContext();
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState<string>("");
   const [date, setDate] = useState("");
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
@@ -40,7 +41,7 @@ const AddEvent = (props: Props) => {
         title: name,
         date: date,
         description: description,
-        categories: [],
+        categories: categories.map(cat => ({ name: cat, label: cat, id: cat }) as Category),
         contacts: selectedContacts.map(contact => contact.id),
       }]);
     }
@@ -67,22 +68,22 @@ const AddEvent = (props: Props) => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div>
-              <label
-                htmlFor="event_categories"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Description
-              </label>
-              <input
-                type="text"
-                id="event_categories"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="memory, friends, school"
-                onChange={getOnChangeFunc_ForStringListFormElement(setCategories)}
-              />
-            </div>
+          <div className="grid gap-6 md:grid-cols-2 mt-4">
+          <div className="mb-6">
+            <label
+              htmlFor="event_description"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Description
+            </label>
+            <input
+              type="text"
+              id="event_description"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Puddlemere United played the Ballycastle Bats with..."
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
             <div>
               <label
                 htmlFor="event_date"
@@ -147,21 +148,22 @@ const AddEvent = (props: Props) => {
               </ul>
             )}
           </div>
-          <div className="mb-6">
-            <label
-              htmlFor="event_description"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Categories
-            </label>
-            <input
-              type="text"
-              id="event_description"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Puddlemere United played the Ballycastle Bats with..."
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
+          
+          <div className="mb-4">
+              <label
+                htmlFor="event_categories"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Categories
+              </label>
+              <input
+                type="text"
+                id="event_categories"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="memory, friends, school"
+                onChange={getOnChangeFunc_ForStringListFormElement(setCategories)}
+              />
+            </div>
 
           <button
             type="submit"

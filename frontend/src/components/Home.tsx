@@ -61,20 +61,32 @@ export default function Home() {
           </form>
 
           {content === 'contacts' && (
-            <Link
-              href="/addContact"
-              className="px-4 py-2 rounded-md shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
-            >
-              Add Contact
-            </Link>
+            user ? (
+              <Link
+                href="/addContact"
+                className="px-4 py-2 rounded-md shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
+              >
+                Add Contact
+              </Link>
+            ) : (
+              <div className="px-4 py-2 rounded-md shadow-md bg-gray-400 text-white text-lg font-semibold cursor-not-allowed">
+                Add Contact
+              </div>
+            )
           )}
           {content === 'events' && (
-            <Link
-              href="/addEvent"
-              className="px-4 py-2 rounded-md shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
-            >
-              Add Event
-            </Link>
+            user ? (
+              <Link
+                href="/addEvent"
+                className="px-4 py-2 rounded-md shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
+              >
+                Add Event
+              </Link>
+            ) : (
+              <div className="px-4 py-2 rounded-md shadow-md bg-gray-400 text-white text-lg font-semibold cursor-not-allowed">
+                Add Event
+              </div>
+            )
           )}
         </div>
         <hr className="border-gray-300 my-4" />
