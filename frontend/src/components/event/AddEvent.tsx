@@ -39,12 +39,14 @@ const AddEvent = (props: Props) => {
       <div className="flex flex-col m-12 p-6 shadow-lg w-max rounded-lg bg-white">
         <h2 className="text-5xl font-bold">Add Event</h2>
         <form className="mt-5" onSubmit={(e) => handleSubmit(e)}>
+
+          {/* Event name */}
           <div>
             <label
               htmlFor="event_name"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Event name
+              Event Title
             </label>
             <input
               type="text"
@@ -55,13 +57,16 @@ const AddEvent = (props: Props) => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
+
           <div className="grid gap-6 md:grid-cols-2">
+
+            {/* Categories */}
             <div>
               <label
                 htmlFor="event_categories"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Description
+                Categories
               </label>
               <input
                 type="text"
@@ -71,12 +76,14 @@ const AddEvent = (props: Props) => {
                 onChange={getOnChangeFunc_ForStringListFormElement(setCategories)}
               />
             </div>
+
+          {/* Date */}
             <div>
               <label
                 htmlFor="event_date"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Last name
+                Event Date
               </label>
               <input
                 type="date"
@@ -86,7 +93,10 @@ const AddEvent = (props: Props) => {
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
+
           </div>
+
+          {/* Contacts */}
           <div>
             <label
               htmlFor="event_contacts"
@@ -102,6 +112,8 @@ const AddEvent = (props: Props) => {
               onChange={getOnChangeFunc_ForStringListFormElement(setContacts)}
             />
           </div>
+
+          {/* Notes */}
           <div className="mb-6">
             <label
               htmlFor="event_description"
