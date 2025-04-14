@@ -64,7 +64,7 @@ export class ServerFacade {
     }
     const request = { username: this.authToken.username };
     const response = await this.communicator.post<BasicResponse>(
-      '/auth/login',
+      '/auth/logout',
       request,
       this.authToken.token
     );
@@ -180,7 +180,7 @@ export class ServerFacade {
     return response;
   }
 
-  public async addEvent(eventData: AddEventRequest): Promise<BasicResponse> {
+  public async addEvent(eventData: AddEventRequest): Promise<any> {
     const authToken = this.requireToken();
     const response = await this.communicator.post<BasicResponse>(
       '/event/add',

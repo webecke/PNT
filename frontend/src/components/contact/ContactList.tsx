@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ContactList = (props: Props) => {
-  const { contacts, selectedContactId, setSelectedContactId } = useUserContext();
+  const { user, contacts, selectedContactId, setSelectedContactId } = useUserContext();
   // const [selectedContactId, setSelectedContactId] = useState<string | undefined>(undefined);
   // const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
@@ -49,7 +49,7 @@ const ContactList = (props: Props) => {
 
   return (
     <>
-      {selectedContactId ? (
+      {user ? selectedContactId ? (
         <div>
           <div onClick={() => setSelectedContactId(undefined)}>
             <IoArrowBackSharp className="text-4xl cursor-pointer" />
@@ -76,10 +76,10 @@ const ContactList = (props: Props) => {
               </ul>
             </div>
           ) : (
-            <div className="text-5xl mb-6">No contacts found</div>
+            <div className="text-lg mb-6">No contacts added yet</div>
           )}
         </>
-      )}
+      ) : <div className="text-lg">Please log in </div>}
     </>
   );
 };

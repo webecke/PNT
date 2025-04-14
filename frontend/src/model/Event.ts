@@ -6,6 +6,6 @@ export interface Event {
   title: string;
   date: string;
   description: string;
-  contacts: Contact[];
-  categories: Category[];
+  contacts: string[];
+  categories?: Category[];
 }

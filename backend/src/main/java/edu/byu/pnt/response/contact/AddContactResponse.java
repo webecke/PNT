@@ -8,4 +8,12 @@ public class AddContactResponse extends Response {
         super(success, message);
         this.contactID = contactID;
     }
+    public String getContactID() {
+        return contactID;
+    }
+
+    public void setContactID(String contactID) {
+        this.contactID = contactID;
+    }
+
 }

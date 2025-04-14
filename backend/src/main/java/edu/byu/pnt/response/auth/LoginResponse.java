@@ -9,7 +9,8 @@ import edu.byu.pnt.response.Response;
 public class LoginResponse extends Response {
 
     private final String token;
-    private final User user;
+
+    private User user;
     
     public LoginResponse(boolean success, String message, String token, User user) {
         super(success, message);
@@ -20,5 +21,13 @@ public class LoginResponse extends Response {
     @JsonProperty("authtoken")
     public String getToken() {
         return token;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

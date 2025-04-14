@@ -1,3 +1,5 @@
+import { Contact } from "./Contact";
+
 export interface TimelineEvent extends NewEventData {
   id: string;
 }

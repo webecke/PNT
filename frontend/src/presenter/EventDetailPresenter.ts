@@ -15,4 +15,8 @@ export class EventDetailPresenter extends Presenter<EventDetailView> {
   public async getEvent(eventId: string): Promise<TimelineEvent> {
     return await this.service.getEvent(eventId);
   }
+
+  public async getContacts(contactIds: string[]): Promise<any> {
+    return await this.service.getContacts(contactIds);
+  }
 }

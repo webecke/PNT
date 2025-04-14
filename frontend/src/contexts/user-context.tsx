@@ -21,8 +21,10 @@ interface UserContextType {
   setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
   selectedContactId: string | undefined;
   setSelectedContactId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  selectedEvent: Event | null;
-  setSelectedEvent: React.Dispatch<React.SetStateAction<Event | null>>;
+  selectedEventId: string | undefined;
+  setSelectedEventId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  content: 'contacts' | 'events';
+  setContent: React.Dispatch<React.SetStateAction<'contacts' | 'events'>>;
 }
 
 // Create the context
@@ -42,7 +44,8 @@ export function UserProvider({
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedContactId, setSelectedContactId] = useState<string | undefined>();
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [selectedEventId, setSelectedEventId] = useState<string | undefined>();
+  const [content, setContent] = useState<'contacts' | 'events'>('contacts');
 
   return (
     <UserContext.Provider
@@ -51,12 +54,14 @@ export function UserProvider({
         events,
         contacts,
         selectedContactId,
-        selectedEvent,
+        selectedEventId,
+        content, 
+        setContent,
         setUser,
         setEvents,
         setContacts,
         setSelectedContactId,
-        setSelectedEvent,
+        setSelectedEventId,
       }}
     >
       {children}

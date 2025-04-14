@@ -35,6 +35,7 @@ const AddContact = (props: Props) => {
       note: notes,
     });
     if (response) {
+      console.log('Contact added:', response);
       setContacts((prev) => [
         ...prev,
         { firstName, lastName, phone, email, note: notes, id: response.contactID } as Contact,
@@ -96,7 +97,7 @@ const AddContact = (props: Props) => {
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Event Notes
+              Contact Notes
             </label>
             <input
               type="text"

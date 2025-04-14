@@ -29,7 +29,8 @@ export default class AuthenticationService {
     return response.user;
   }
 
-  public async logout(): Promise<void> {
-    await this.server.logout();
+  public async logout(): Promise<boolean> {
+    const response = await this.server.logout();
+    return response;
   }
 }

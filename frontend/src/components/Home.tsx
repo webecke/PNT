@@ -7,17 +7,11 @@ import EventList from '@/components/event/EventList';
 import { useUserContext } from '@/contexts/user-context';
 
 export default function Home() {
-  const [content, setContent] = useState<'contacts' | 'events'>('contacts');
   const [category, setCategory] = useState<string>('');
   const {
-    user,
-    setUser,
-    events,
-    setEvents,
-    contacts,
-    setContacts,
-    selectedEvent,
-    setSelectedEvent,
+    user, 
+    content,
+    setContent
   } = useUserContext();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -83,6 +77,7 @@ export default function Home() {
             </Link>
           )}
         </div>
+        <hr className="border-gray-300 my-4" />
 
         {/* Conditional Rendering of Lists */}
         <div className="flex-1 overflow-x-hidden">
