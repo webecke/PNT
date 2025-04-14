@@ -13,8 +13,10 @@ export class AddEventPresenter extends Presenter<AddEventView> {
   }
 
   public async submit(newEventData: NewEventData) {
-    await this.service.createEvent(newEventData);
     console.log("Form submitted. Adding event: ", newEventData);
-    this.view.navigateTo("/");
+    const response = await this.service.createEvent(newEventData);
+    
+    if (response.success) this.view.navigateTo("/");
+    return response;
   }
 }

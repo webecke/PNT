@@ -113,9 +113,9 @@ public class EventController extends Controller {
             EventFragment eventFragment = new EventFragment(id, request.title(), request.date(), request.description());
             eventDAO.addEventFragment(eventFragment);
 
-            return new AddEventResponse(true, null);
+            return new AddEventResponse(true, null, id);
         } catch (DataAccessException e) {
-            return new AddEventResponse(false, e.getMessage());
+            return new AddEventResponse(false, e.getMessage(), null);
         }
     }
 

@@ -1,9 +1,9 @@
-import ProfileIcon from "@/components/ProfileIcon";
-import { useEffect, useRef, useState } from "react";
-import EditForm from "@/components/EditForm";
-import { ContactDetailPresenter, ContactDetailView } from "@/presenter/ContactDetailPresenter";
-import { Contact } from "@/model/Contact";
-import { QueryState } from "@/utils/QueryState";
+import ProfileIcon from '@/components/ProfileIcon';
+import { useEffect, useRef, useState } from 'react';
+import EditForm from '@/components/EditForm';
+import { ContactDetailPresenter, ContactDetailView } from '@/presenter/ContactDetailPresenter';
+import { Contact } from '@/model/Contact';
+import { QueryState } from '@/utils/QueryState';
 
 interface Props {
   presenter?: ContactDetailPresenter;
@@ -11,17 +11,17 @@ interface Props {
 }
 
 const ContactDetail = (props: Props) => {
-  const [image, setImage] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [notes, setNotes] = useState<string>("");
+  const [image, setImage] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
   // TODO Add categories
 
   const [editing, setEditing] = useState<boolean>(false);
 
-  const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
+  // const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: ContactDetailView = {};
   const presenter = useRef(props.presenter ?? new ContactDetailPresenter(listener));
@@ -32,8 +32,8 @@ const ContactDetail = (props: Props) => {
     setPhone(contact.phone);
     setEmail(contact.email);
     setNotes(contact.note);
-    setImage(contact.image ?? "");
-  }
+    setImage(contact.image ?? '');
+  };
 
   const onSave = async () => {
     await presenter.current.editContact(props.contactId, firstName, lastName, phone, email, notes);
@@ -49,55 +49,46 @@ const ContactDetail = (props: Props) => {
     const asyncFunction = async () => {
       try {
         const contact = await presenter.current.getContact(props.contactId);
-        setQueryState(QueryState.SUCCESS);
+        // setQueryState(QueryState.SUCCESS);
         loadContactData(contact);
       } catch (e) {
-        setQueryState(QueryState.FAILURE);
-        console.warn((e as Error).message);
+        // setQueryState(QueryState.FAILURE);
+        console.log('Error loading contact data:', e);
+        // console.warn((e as Error).message);
       }
     };
     asyncFunction();
   }, [props.contactId]);
 
-  switch (queryState) {
-    // TODO Move the queryState variable (and logic) into the presenter
-    //  This will probably require adding loadContactData to the view
-    //  and giving presenter.getContact() significantly more control.
-    case QueryState.IN_PROCESS:
-      return <div>Loading...</div>;
-    case QueryState.FAILURE:
-      return <div>Contact not found.</div>;
-  }
+  // switch (queryState) {
+  //   // TODO Move the queryState variable (and logic) into the presenter
+  //   //  This will probably require adding loadContactData to the view
+  //   //  and giving presenter.getContact() significantly more control.
+  //   case QueryState.IN_PROCESS:
+  //     return <div>Loading...</div>;
+  //   case QueryState.FAILURE:
+  //     return <div>Contact not found.</div>;
+  // }
 
   return (
     <div className="m-12 p-6 shadow-lg rounded-lg bg-white">
       <div className="flex flex-col">
         <div className="flex flex-row gap-x-24 p-2 items-center justify-left">
           {/* Profile pic */}
-          <ProfileIcon src={image} alt={"profile pic"} />
+          <ProfileIcon src={image} alt={'profile pic'} />
           {/* Contact info */}
           <div className="max-w-xs">
             <h2 className="text-xl font-semibold">Contact Info</h2>
             <div>
               {editing ? (
-                <EditForm
-                  name="Phone"
-                  value={phone}
-                  setValue={setPhone}
-                  setEditing={setEditing}
-                />
+                <EditForm name="Phone" value={phone} setValue={setPhone} setEditing={setEditing} />
               ) : (
                 <div>📞 {phone}</div>
               )}
             </div>
             <div>
               {editing ? (
-                <EditForm
-                  name="Email"
-                  value={email}
-                  setValue={setEmail}
-                  setEditing={setEditing}
-                />
+                <EditForm name="Email" value={email} setValue={setEmail} setEditing={setEditing} />
               ) : (
                 <div>✉️ {email}</div>
               )}
@@ -158,7 +149,6 @@ const ContactDetail = (props: Props) => {
           </div>
         )}
       </div>
-
     </div>
   );
 };

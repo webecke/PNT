@@ -17,6 +17,10 @@ export class EventDetailPresenter extends Presenter<EventDetailView> {
     return await this.service.getEvent(eventId);
   }
 
+  public async getContacts(contactIds: string[]): Promise<any> {
+    return await this.service.getContacts(contactIds);
+  }
+
   public async editEvent(eventId: string, title: string, date: string, description: string) {
     const event: UpdateEventRequest = {
       id: eventId,

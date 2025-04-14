@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { LoginPresenter } from "@/presenter/authentication/LoginPresenter";
-import { NavigableView } from "@/presenter/Presenter";
+import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { LoginPresenter } from '@/presenter/authentication/LoginPresenter';
+import { NavigableView } from '@/presenter/Presenter';
+import { useUserContext } from '@/contexts/user-context';
 
 interface Props {
   presenter?: LoginPresenter;
@@ -9,18 +10,20 @@ interface Props {
 
 const Login = (props: Props) => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { setUser } = useUserContext();
 
   const listener: NavigableView = {
-    navigateTo: url => router.push(url)
-  }
+    navigateTo: (url) => router.push(url),
+  };
 
   const presenter = useRef(props.presenter ? props.presenter : new LoginPresenter(listener));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await presenter.current.login(email, password);
+    const user = await presenter.current.login(email, password);
+    setUser(user);
   };
 
   return (
@@ -29,14 +32,11 @@ const Login = (props: Props) => {
         <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
-              type="email"
+              type="text"
               id="email"
               className="w-full p-2 mt-2 border border-gray-300 rounded-md"
               placeholder="Enter your email"
@@ -45,10 +45,7 @@ const Login = (props: Props) => {
             />
           </div>
           <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
             <input
@@ -69,8 +66,11 @@ const Login = (props: Props) => {
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm">
-            Don&apos;t have an account?{" "}
-            <a href="/frontend/src/components/auth/Signup" className="text-blue-600 hover:underline">
+            Don&apos;t have an account?{' '}
+            <a
+              href="/frontend/src/components/auth/Signup"
+              className="text-blue-600 hover:underline"
+            >
               Sign up
             </a>
           </p>

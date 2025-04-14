@@ -6,18 +6,22 @@
  * and handling data transformation between API and application models.
  */
 import { ServerCommunicator } from './ServerCommunicator';
-import { AddUserResponse, UserRequest } from "@/service/server/message/UserMessage";
-import { BasicResponse } from "@/service/server/message/BasicResponse";
-import { AuthResponse, LoginRequest } from "@/service/server/message/AuthMessage";
+import { AddUserResponse, UserRequest } from '@/service/server/message/UserMessage';
+import { BasicResponse } from '@/service/server/message/BasicResponse';
+import { AuthResponse, LoginRequest } from '@/service/server/message/AuthMessage';
 import {
   AddCategoryRequest,
   GetCategoryResponse,
-  UpdateCategoryRequest
-} from "@/service/server/message/CategoryMessage";
-import { AddContactRequest, GetContactResponse } from "@/service/server/message/ContactMessage";
-import { AddEventRequest, GetEventResponse, UpdateEventRequest } from "@/service/server/message/EventMessage";
-import { TimelineRequest, TimelineResponse } from "@/service/server/message/TimelineMessage";
-import { Contact } from "@/model/Contact";
+  UpdateCategoryRequest,
+} from '@/service/server/message/CategoryMessage';
+import { AddContactRequest, GetContactResponse } from '@/service/server/message/ContactMessage';
+import {
+  AddEventRequest,
+  GetEventResponse,
+  UpdateEventRequest,
+} from '@/service/server/message/EventMessage';
+import { TimelineRequest, TimelineResponse } from '@/service/server/message/TimelineMessage';
+import { Contact } from '@/model/Contact';
 
 export class ServerFacade {
   private communicator: ServerCommunicator;
@@ -34,7 +38,7 @@ export class ServerFacade {
    */
   private requireToken(): string {
     if (!this.authToken) {
-      throw new Error("Authentication required");
+      throw new Error('Authentication required');
     }
     return this.authToken.token;
   }
@@ -43,33 +47,33 @@ export class ServerFacade {
     this.authToken = authToken;
   }
 
-  public async login(username: string, password: string): Promise<boolean> {
-    const request: LoginRequest = { username, password }
-    const response = await this.communicator.post<AuthResponse>('/auth/login', request)
+  public async login(username: string, password: string): Promise<any> {
+    const request: LoginRequest = { username, password };
+    const response = await this.communicator.post<AuthResponse>('/auth/login', request);
     this.setAuthToken({ token: response.authtoken, username: username });
-    console.log(response)
-    return response.success
+    console.log(response);
+    return response;
   }
-
 
   // AUTHENTICATION
 
   public async logout(): Promise<boolean> {
     if (!this.authToken) {
-      console.error("Tried to log out, but no one is logged in on this device.")
+      console.error('Tried to log out, but no one is logged in on this device.');
       return false;
     }
-    const request = { username: this.authToken.username }
-    const response = await this.communicator.post<BasicResponse>('/auth/login', request, this.authToken.token)
+    const request = { username: this.authToken.username };
+    const response = await this.communicator.post<BasicResponse>(
+      '/auth/logout',
+      request,
+      this.authToken.token
+    );
     this.setAuthToken(null);
-    return response.success
+    return response.success;
   }
 
   public async addUser(request: UserRequest): Promise<AddUserResponse> {
-    const response = await this.communicator.post<AddUserResponse>(
-      '/user/add',
-      request
-    );
+    const response = await this.communicator.post<AddUserResponse>('/user/add', request);
 
     // If login is successful, set the token
     if (response.success && response.token) {
@@ -78,7 +82,6 @@ export class ServerFacade {
 
     return response;
   }
-
 
   //  CATEGORY
 
@@ -122,7 +125,6 @@ export class ServerFacade {
     return response;
   }
 
-
   //  CONTACT
 
   public async getContact(contactId: string): Promise<GetContactResponse> {
@@ -143,13 +145,14 @@ export class ServerFacade {
     return response;
   }
 
-  public async addContact(contactData: AddContactRequest): Promise<BasicResponse> {
+  public async addContact(contactData: AddContactRequest): Promise<any> {
     const authToken = this.requireToken();
-    const response = await this.communicator.post<BasicResponse>(
+    const response = await this.communicator.post<any>(
       '/contact/add',
       contactData,
       authToken
     );
+    console.log("this is what we got from the backend: ", response);
     return response;
   }
 
@@ -163,28 +166,21 @@ export class ServerFacade {
     return response;
   }
 
-
   // EVENT
 
   public async getEvent(eventId: string): Promise<GetEventResponse> {
     const authToken = this.requireToken();
-    const response = await this.communicator.get<GetEventResponse>(
-      `/event/${eventId}`,
-      authToken
-    );
+    const response = await this.communicator.get<GetEventResponse>(`/event/${eventId}`, authToken);
     return response;
   }
 
   public async deleteEvent(eventId: string): Promise<BasicResponse> {
     const authToken = this.requireToken();
-    const response = await this.communicator.delete<BasicResponse>(
-      `/event/${eventId}`,
-      authToken
-    );
+    const response = await this.communicator.delete<BasicResponse>(`/event/${eventId}`, authToken);
     return response;
   }
 
-  public async addEvent(eventData: AddEventRequest): Promise<BasicResponse> {
+  public async addEvent(eventData: AddEventRequest): Promise<any> {
     const authToken = this.requireToken();
     const response = await this.communicator.post<BasicResponse>(
       '/event/add',
@@ -204,16 +200,19 @@ export class ServerFacade {
     return response;
   }
 
-
   //  TIMELINE
 
-  public async getTimeline(userID: string, categoryIDs: string[], contactIDs: string[]): Promise<TimelineResponse> {
+  public async getTimeline(
+    userID: string,
+    categoryIDs: string[],
+    contactIDs: string[]
+  ): Promise<TimelineResponse> {
     const authToken = this.requireToken();
 
     const request: TimelineRequest = {
       userID,
       categoryIDs,
-      contactIDs
+      contactIDs,
     };
 
     const response = await this.communicator.post<TimelineResponse>(
@@ -224,7 +223,6 @@ export class ServerFacade {
 
     return response;
   }
-
 
   // USER
 
@@ -239,10 +237,9 @@ export class ServerFacade {
 
     return response;
   }
-
 }
 
 type AuthToken = {
   token: string;
   username: string;
-}
+};
