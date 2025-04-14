@@ -1,6 +1,7 @@
 import { Presenter, View } from "@/presenter/Presenter";
 import { Contact } from "@/model/Contact";
 import ContactService from "@/service/ContactService";
+import { BasicResponse } from "@/service/server/message/BasicResponse";
 
 export interface ContactDetailView extends View {
 }
@@ -16,16 +17,7 @@ export class ContactDetailPresenter extends Presenter<ContactDetailView> {
     return await this.contactService.getContact(userId);
   }
 
-  public async editContact(contactId: string, firstName: string, lastName: string, phone: string, email: string, notes: string) {
-    const contact: Contact = {
-      id: contactId,
-      firstName: firstName,
-      lastName: lastName,
-      phone: phone,
-      email: email,
-      note: notes,
-      timeline: []
-    };
-    await this.contactService.updateContact(contact);
+  public async updateContact(contact: Contact): Promise<BasicResponse> {
+    return await this.contactService.updateContact(contact);
   }
 }

@@ -157,12 +157,14 @@ export class ServerFacade {
   }
 
   public async updateContact(contactData: Contact): Promise<BasicResponse> {
+    console.log("updateContact contactData: ", contactData);
     const authToken = this.requireToken();
     const response = await this.communicator.post<BasicResponse>(
       '/contact/update',
       contactData,
       authToken
     );
+    console.log("updateContact response: ", response);
     return response;
   }
 

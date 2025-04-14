@@ -37,7 +37,6 @@ public class MongoEventDAO extends MongoDAO implements EventDAO{
                 String title = eventDocument.getString("title");
                 String date = eventDocument.getString("date");
                 String description = eventDocument.getString("description");
-
                 return new EventFragment(id, title, date, description);
             } else {
                 throw new DataAccessException("Event not found in database.");
