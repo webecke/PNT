@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ContactList = (props: Props) => {
-  const { user, contacts, selectedContactId, setSelectedContactId } = useUserContext();
+  const { user, contacts, selectedContactId, setSelectedContactId, setContacts } = useUserContext();
   const [filteredContacts, setFilteredContacts] = useState<Contact[]>([]);
 
   // Update filteredContacts whenever contacts or category changes
@@ -21,7 +21,7 @@ const ContactList = (props: Props) => {
       : contacts;
 
     setFilteredContacts(filtered);
-  }, [contacts, props.category]);
+  }, [contacts, props.category, setContacts]);
 
   return (
     <>

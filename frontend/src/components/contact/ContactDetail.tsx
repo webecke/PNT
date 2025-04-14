@@ -1,9 +1,10 @@
 import ProfileIcon from '@/components/ProfileIcon';
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import EditForm from '@/components/EditForm';
 import { ContactDetailPresenter, ContactDetailView } from '@/presenter/ContactDetailPresenter';
 import { Contact } from '@/model/Contact';
 import { QueryState } from '@/utils/QueryState';
+import { useUserContext } from '@/contexts/user-context';
 
 interface Props {
   presenter?: ContactDetailPresenter;
@@ -20,7 +21,7 @@ const ContactDetail = (props: Props) => {
   // TODO Add categories
 
   const [editing, setEditing] = useState<boolean>(false);
-
+  const {setContacts} = useUserContext();
   // const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: ContactDetailView = {};
@@ -37,6 +38,21 @@ const ContactDetail = (props: Props) => {
 
   const onSave = async () => {
     await presenter.current.editContact(props.contactId, firstName, lastName, phone, email, notes);
+    setContacts((prev) =>
+      prev.map((contact) => {
+        if (contact.id === props.contactId) {
+          return {
+            ...contact,
+            firstName,
+            lastName,
+            phone,
+            email,
+            note: notes,
+          };
+        }
+        return contact;
+      })
+    );
     setEditing(false);
   }
 
