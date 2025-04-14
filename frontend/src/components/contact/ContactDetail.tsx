@@ -1,42 +1,59 @@
-import ProfileIcon from "@/components/ProfileIcon";
-import Timeline from "@/components/timeline/Timeline";
-import { useEffect, useRef, useState } from "react";
-import EditForm from "@/components/EditForm";
-import { ContactDetailPresenter, ContactDetailView } from "@/presenter/ContactDetailPresenter";
-import { TimelineEvent } from "@/model/TimelineEvent";
-import { Contact } from "@/model/Contact";
-import { QueryState } from "@/utils/QueryState";
+import ProfileIcon from '@/components/ProfileIcon';
+import { use, useEffect, useRef, useState } from 'react';
+import EditForm from '@/components/EditForm';
+import { ContactDetailPresenter, ContactDetailView } from '@/presenter/ContactDetailPresenter';
+import { Contact } from '@/model/Contact';
+import { QueryState } from '@/utils/QueryState';
+import { useUserContext } from '@/contexts/user-context';
 
 interface Props {
   presenter?: ContactDetailPresenter;
-  userId: string;
+  contactId: string;
 }
 
 const ContactDetail = (props: Props) => {
-  const [image, setImage] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [notes, setNotes] = useState<string>("");
-  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([]);
+  const [image, setImage] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
   // TODO Add categories
 
   const [editing, setEditing] = useState<boolean>(false);
-
-  const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
+  const {setContacts} = useUserContext();
+  // const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
 
   const listener: ContactDetailView = {};
   const presenter = useRef(props.presenter ?? new ContactDetailPresenter(listener));
 
-  const loadContactData = (contact: Contact, timelineEvents: TimelineEvent[]) => {
+  const loadContactData = (contact: Contact) => {
     setFirstName(contact.firstName);
     setLastName(contact.lastName);
     setPhone(contact.phone);
     setEmail(contact.email);
-    setNotes(contact.notes);
-    setImage(contact.image ?? "");
-    setTimelineEvents(timelineEvents);
+    setNotes(contact.note);
+    setImage(contact.image ?? '');
+  };
+
+  const onSave = async () => {
+    await presenter.current.editContact(props.contactId, firstName, lastName, phone, email, notes);
+    setContacts((prev) =>
+      prev.map((contact) => {
+        if (contact.id === props.contactId) {
+          return {
+            ...contact,
+            firstName,
+            lastName,
+            phone,
+            email,
+            note: notes,
+          };
+        }
+        return contact;
+      })
+    );
+    setEditing(false);
   }
 
   useEffect(() => {
@@ -46,57 +63,48 @@ const ContactDetail = (props: Props) => {
     // See this Stack Overflow:
     // https://stackoverflow.com/questions/56838392/how-to-call-an-async-function-inside-useeffect-in-react
     const asyncFunction = async () => {
-      const contact = await presenter.current.getContact(props.userId);
-      if (contact) {
-        const timelineEvents = await presenter.current.getContactTimeline(props.userId);
-        setQueryState(QueryState.SUCCESS);
-        loadContactData(contact, timelineEvents);
-      } else {
-        setQueryState(QueryState.FAILURE);
+      try {
+        const contact = await presenter.current.getContact(props.contactId);
+        // setQueryState(QueryState.SUCCESS);
+        loadContactData(contact);
+      } catch (e) {
+        // setQueryState(QueryState.FAILURE);
+        console.log('Error loading contact data:', e);
+        // console.warn((e as Error).message);
       }
     };
     asyncFunction();
-  }, [props.userId]);
+  }, [props.contactId]);
 
-  switch (queryState) {
-    // TODO Move the queryState variable (and logic) into the presenter
-    //  This will probably require adding loadContactData to the view
-    //  and giving presenter.getContact() significantly more control.
-    case QueryState.IN_PROCESS:
-      return <div>Loading...</div>;
-    case QueryState.FAILURE:
-      return <div>Contact not found.</div>;
-  }
+  // switch (queryState) {
+  //   // TODO Move the queryState variable (and logic) into the presenter
+  //   //  This will probably require adding loadContactData to the view
+  //   //  and giving presenter.getContact() significantly more control.
+  //   case QueryState.IN_PROCESS:
+  //     return <div>Loading...</div>;
+  //   case QueryState.FAILURE:
+  //     return <div>Contact not found.</div>;
+  // }
 
   return (
     <div className="m-12 p-6 shadow-lg rounded-lg bg-white">
       <div className="flex flex-col">
         <div className="flex flex-row gap-x-24 p-2 items-center justify-left">
           {/* Profile pic */}
-          <ProfileIcon src={image} alt={"profile pic"} />
+          <ProfileIcon src={image} alt={'profile pic'} />
           {/* Contact info */}
           <div className="max-w-xs">
             <h2 className="text-xl font-semibold">Contact Info</h2>
             <div>
               {editing ? (
-                <EditForm
-                  name="Phone"
-                  value={phone}
-                  setValue={setPhone}
-                  setEditing={setEditing}
-                />
+                <EditForm name="Phone" value={phone} setValue={setPhone} setEditing={setEditing} />
               ) : (
                 <div>📞 {phone}</div>
               )}
             </div>
             <div>
               {editing ? (
-                <EditForm
-                  name="Email"
-                  value={email}
-                  setValue={setEmail}
-                  setEditing={setEditing}
-                />
+                <EditForm name="Email" value={email} setValue={setEmail} setEditing={setEditing} />
               ) : (
                 <div>✉️ {email}</div>
               )}
@@ -112,7 +120,7 @@ const ContactDetail = (props: Props) => {
           ) : (
             <div
               className="bg-blue-600 rounded shadow-lg text-white p-2 hover:bg-blue-700 text-lg"
-              onClick={() => setEditing(false)}
+              onClick={onSave}
             >
               Save Edits
             </div>
@@ -156,12 +164,6 @@ const ContactDetail = (props: Props) => {
             {notes}
           </div>
         )}
-      </div>
-
-      {/* Timeline */}
-      <div className="mt-4">
-        <h2 className="text-xl font-semibold">Timeline</h2>
-        <Timeline timelineEvents={timelineEvents} />
       </div>
     </div>
   );

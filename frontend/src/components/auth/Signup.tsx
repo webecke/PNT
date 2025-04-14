@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { SignupPresenter, SignupPresenterView } from "@/presenter/authentication/SignupPresenter";
+import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { SignupPresenter, SignupPresenterView } from '@/presenter/authentication/SignupPresenter';
+import { useUserContext } from '@/contexts/user-context';
 
 interface Props {
   presenter?: SignupPresenter;
@@ -8,19 +9,30 @@ interface Props {
 
 const Signup = (props: Props) => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  const { setUser } = useUserContext();
 
   const listener: SignupPresenterView = {
-    navigateTo: url => router.push(url)
-  }
+    navigateTo: (url) => router.push(url),
+  };
 
   const presenter = useRef(props.presenter ? props.presenter : new SignupPresenter(listener));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await presenter.current.signup(email, password, confirmPassword);
+    const newUser = await presenter.current.signup(
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword
+    );
+    setUser(newUser);
   };
 
   return (
@@ -29,14 +41,37 @@ const Signup = (props: Props) => {
         <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+              First Name
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              className="w-full p-2 mt-2 border border-gray-300 rounded-md"
+              placeholder="Enter your first name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              className="w-full p-2 mt-2 border border-gray-300 rounded-md"
+              placeholder="Enter your last name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
-              type="email"
+              type="text"
               id="email"
               className="w-full p-2 mt-2 border border-gray-300 rounded-md"
               placeholder="Enter your email"
@@ -45,10 +80,7 @@ const Signup = (props: Props) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
             <input
@@ -61,10 +93,7 @@ const Signup = (props: Props) => {
             />
           </div>
           <div className="mb-6">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
               Confirm Password
             </label>
             <input
@@ -85,7 +114,7 @@ const Signup = (props: Props) => {
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <a href="/frontend/src/components/auth/Login" className="text-blue-600 hover:underline">
               Login
             </a>

@@ -2,6 +2,7 @@ import { EventDetailPresenter, EventDetailView } from "@/presenter/EventDetailPr
 import { useEffect, useRef, useState } from "react";
 import { TimelineEvent } from "@/model/TimelineEvent";
 import { QueryState } from "@/utils/QueryState";
+import { Contact } from "@/model/Contact";
 
 interface Props {
   eventId: string;
@@ -15,7 +16,7 @@ const EventDetail = (props: Props) => {
   const [name, setName] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [contacts, setContacts] = useState<string[]>([]);
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
   const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
@@ -23,23 +24,29 @@ const EventDetail = (props: Props) => {
   const listener: EventDetailView = {};
   const presenter = useRef(props.presenter ?? new EventDetailPresenter(listener));
 
-  const loadEventData = (event: TimelineEvent) => {
+  const loadEventData = (event: TimelineEvent, contactResults: Contact[]) => {
     setName(event.title);
     setDate(event.date);
     setDescription(event.description);
-    setContacts(event.contacts);
+    setContacts(contactResults);
     setCategories(event.categories);
   };
+
+  const onSave = async () => {
+    await presenter.current.editEvent(props.eventId, name, date, description);
+  }
 
   useEffect(() => {
     // See comment from ContactDetail.tsx
     const asyncFunction = async () => {
-      const timelineEvent = await presenter.current.getEvent(props.eventId);
-      if (timelineEvent) {
+      try {
+        const timelineEvent = await presenter.current.getEvent(props.eventId);
         setQueryState(QueryState.SUCCESS);
-        loadEventData(timelineEvent);
-      } else {
+        const contactResults = await presenter.current.getContacts(timelineEvent.contacts);
+        loadEventData(timelineEvent, contactResults);
+      } catch (e) {
         setQueryState(QueryState.FAILURE);
+        console.warn((e as Error).message);
       }
     }
     asyncFunction();
@@ -61,7 +68,11 @@ const EventDetail = (props: Props) => {
       <p className="text-gray-700 mb-4">{description}</p>
       <div className="border-t pt-4">
         <h3 className="text-lg font-semibold text-gray-800">Contacts</h3>
-        <p className="text-gray-600">{contacts /* TODO Retrieve & display names rather than IDs */}</p>
+        <div>
+          {contacts.map((contact) => (
+            <p key={contact.id} className="text-gray-600">{contact.firstName} {contact.lastName}</p>
+          ))}
+        </div>
       </div>
       <div className="border-t pt-4 mt-4">
         <h3 className="text-lg font-semibold text-gray-800">Categories</h3>

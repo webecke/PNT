@@ -17,15 +17,38 @@ import edu.byu.pnt.response.contact.DeleteContactResponse;
 import edu.byu.pnt.response.contact.GetContactResponse;
 import edu.byu.pnt.response.contact.UpdateContactResponse;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/contact")
 public class ContactController extends Controller {
+    @PostMapping("/add")
+    public AddContactResponse addContact(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody AddContactRequest request) {
+        try {
+            // Authenticate token
+            this.authenticate(token);
+
+            // Create factory and DAO class
+            DAOFactory factory = new FactoryProvider().getFactory();
+            ContactDAO contactDAO = factory.createContactDAO();
+
+            // Generate id and add the contact
+            String id = UUID.randomUUID().toString();
+            ContactFragment contactFragment = new ContactFragment(id, request.firstName(), request.lastName(), request.email(), request.phone(), request.note());
+            contactDAO.addContactFragment(contactFragment);
+
+            return new AddContactResponse(true, "created a contact with id: " + id, id);
+        } catch (DataAccessException e) {
+            return new AddContactResponse(false, e.getMessage(), null);
+        }
+    }
+
 
     @GetMapping("/{id}")
     public GetContactResponse getContact(
@@ -80,29 +103,7 @@ public class ContactController extends Controller {
         }
     }
 
-    @PostMapping("/add")
-    public AddContactResponse addContact(
-            @RequestHeader("Authorization") String token,
-            @Valid @RequestBody AddContactRequest request) {
-        try {
-            // Authenticate token
-            this.authenticate(token);
-
-            // Create factory and DAO class
-            DAOFactory factory = new FactoryProvider().getFactory();
-            ContactDAO contactDAO = factory.createContactDAO();
-
-            // Generate id and add the contact
-            String id = UUID.randomUUID().toString();
-            ContactFragment contactFragment = new ContactFragment(id, request.firstName(), request.lastName(), request.email(), request.phone(), request.note());
-            contactDAO.addContactFragment(contactFragment);
-
-            return new AddContactResponse(true, null);
-        } catch (DataAccessException e) {
-            return new AddContactResponse(false, e.getMessage());
-        }
-    }
-
+   
     @PostMapping("/update")
     public UpdateContactResponse updateContact(
             @RequestHeader("Authorization") String token,

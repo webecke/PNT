@@ -6,17 +6,22 @@
  * and handling data transformation between API and application models.
  */
 import { ServerCommunicator } from './ServerCommunicator';
-import { AddUserResponse, UserRequest } from "@/service/server/message/UserMessage";
-import { BasicResponse } from "@/service/server/message/BasicResponse";
-import { AuthResponse, LoginRequest } from "@/service/server/message/AuthMessage";
+import { AddUserResponse, UserRequest } from '@/service/server/message/UserMessage';
+import { BasicResponse } from '@/service/server/message/BasicResponse';
+import { AuthResponse, LoginRequest, LoginResponse } from '@/service/server/message/AuthMessage';
 import {
   AddCategoryRequest,
   GetCategoryResponse,
-  UpdateCategoryRequest
-} from "@/service/server/message/CategoryMessage";
-import { AddContactRequest, GetContactResponse, UpdateContactRequest } from "@/service/server/message/ContactMessage";
-import { AddEventRequest, GetEventResponse, UpdateEventRequest } from "@/service/server/message/EventMessage";
-import { TimelineRequest, TimelineResponse } from "@/service/server/message/TimelineMessage";
+  UpdateCategoryRequest,
+} from '@/service/server/message/CategoryMessage';
+import { AddContactRequest, GetContactResponse } from '@/service/server/message/ContactMessage';
+import {
+  AddEventRequest,
+  GetEventResponse,
+  UpdateEventRequest,
+} from '@/service/server/message/EventMessage';
+import { TimelineRequest, TimelineResponse } from '@/service/server/message/TimelineMessage';
+import { Contact } from '@/model/Contact';
 
 export class ServerFacade {
   private communicator: ServerCommunicator;
@@ -33,205 +38,208 @@ export class ServerFacade {
    */
   private requireToken(): string {
     if (!this.authToken) {
-      throw new Error("Authentication required");
+      throw new Error('Authentication required');
     }
     return this.authToken.token;
   }
 
-  auth = {
-    login: async (username: string, password: string): Promise<boolean> => {
-      const request: LoginRequest = { username, password }
-      const response = await this.communicator.post<AuthResponse>('/auth/login', request)
-      this.authToken = { token: response.authtoken, username: username }
-      console.log(response)
-      return response.success
-    },
-
-    logout: async (): Promise<boolean> => {
-      if (!this.authToken) {
-        console.error("Tried to log out, but no one is logged in on this device.")
-        return false;
-      }
-      const request = { username: this.authToken.username }
-      const response = await this.communicator.post<BasicResponse>('/auth/login', request, this.authToken.token)
-      this.authToken = null;
-      return response.success
-    }
+  private setAuthToken(authToken: AuthToken | null) {
+    this.authToken = authToken;
   }
 
-  category = {
-    getCategory: async (categoryId: string): Promise<GetCategoryResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.get<GetCategoryResponse>(
-        `/category/${categoryId}`,
-        authToken
-      );
-      return response;
-    },
-
-    deleteCategory: async (categoryId: string): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.delete<BasicResponse>(
-        `/category/${categoryId}`,
-        authToken
-      );
-      return response;
-    },
-
-    addCategory: async (label: string): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const request: AddCategoryRequest = { label };
-      const response = await this.communicator.post<BasicResponse>(
-        '/category/add',
-        request,
-        authToken
-      );
-      return response;
-    },
-
-    updateCategory: async (id: string, label: string): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const request: UpdateCategoryRequest = { id, label };
-      const response = await this.communicator.post<BasicResponse>(
-        '/category/update',
-        request,
-        authToken
-      );
-      return response;
-    }
+  public async login(username: string, password: string): Promise<LoginResponse> {
+    const request: LoginRequest = { username, password };
+    const response = await this.communicator.post<LoginResponse>('/auth/login', request);
+    this.setAuthToken({ token: response.authtoken, username: username });
+    console.log(response);
+    return response;
   }
 
-  contact = {
-    getContact: async (contactId: string): Promise<GetContactResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.get<GetContactResponse>(
-        `/contact/${contactId}`,
-        authToken
-      );
-      return response;
-    },
+  // AUTHENTICATION
 
-    deleteContact: async (contactId: string): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.delete<BasicResponse>(
-        `/contact/${contactId}`,
-        authToken
-      );
-      return response;
-    },
-
-    addContact: async (contactData: AddContactRequest): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.post<BasicResponse>(
-        '/contact/add',
-        contactData,
-        authToken
-      );
-      return response;
-    },
-
-    updateContact: async (contactData: UpdateContactRequest): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.post<BasicResponse>(
-        '/contact/update',
-        contactData,
-        authToken
-      );
-      return response;
+  public async logout(): Promise<boolean> {
+    if (!this.authToken) {
+      console.error('Tried to log out, but no one is logged in on this device.');
+      return false;
     }
+    const request = { username: this.authToken.username };
+    const response = await this.communicator.post<BasicResponse>(
+      '/auth/logout',
+      request,
+      this.authToken.token
+    );
+    this.setAuthToken(null);
+    return response.success;
   }
 
+  public async addUser(request: UserRequest): Promise<AddUserResponse> {
+    const response = await this.communicator.post<AddUserResponse>('/user/add', request);
 
-  event = {
-    getEvent: async (eventId: string): Promise<GetEventResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.get<GetEventResponse>(
-        `/event/${eventId}`,
-        authToken
-      );
-      return response;
-    },
-
-    deleteEvent: async (eventId: string): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.delete<BasicResponse>(
-        `/event/${eventId}`,
-        authToken
-      );
-      return response;
-    },
-
-    addEvent: async (eventData: AddEventRequest): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.post<BasicResponse>(
-        '/event/add',
-        eventData,
-        authToken
-      );
-      return response;
-    },
-
-    updateEvent: async (eventData: UpdateEventRequest): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
-      const response = await this.communicator.post<BasicResponse>(
-        '/event/update',
-        eventData,
-        authToken
-      );
-      return response;
+    // If login is successful, set the token
+    if (response.success && response.token) {
+      this.setAuthToken({ token: response.token, username: request.username });
     }
+
+    return response;
   }
 
-  timeline = {
-    getTimeline: async (userID: string, categoryIDs: string[], contactIDs: string[]): Promise<TimelineResponse> => {
-      const authToken = this.requireToken();
+  //  CATEGORY
 
-      const request: TimelineRequest = {
-        userID,
-        categoryIDs,
-        contactIDs
-      };
-
-      const response = await this.communicator.post<TimelineResponse>(
-        '/timeline/',
-        request,
-        authToken
-      );
-
-      return response;
-    }
+  public async getCategory(categoryId: string): Promise<GetCategoryResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.get<GetCategoryResponse>(
+      `/category/${categoryId}`,
+      authToken
+    );
+    return response;
   }
 
-  user = {
-    addUser: async (request: UserRequest): Promise<AddUserResponse> => {
-      const response = await this.communicator.post<AddUserResponse>(
-        '/user/add',
-        request
-      );
+  public async deleteCategory(categoryId: string): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.delete<BasicResponse>(
+      `/category/${categoryId}`,
+      authToken
+    );
+    return response;
+  }
 
-      // If login is successful, set the token
-      if (response.success && response.token) {
-        this.authToken = { token: response.token, username: request.username };
-      }
+  public async addCategory(label: string): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+    const request: AddCategoryRequest = { label };
+    const response = await this.communicator.post<BasicResponse>(
+      '/category/add',
+      request,
+      authToken
+    );
+    return response;
+  }
 
-      return response;
-    },
+  public async updateCategory(id: string, label: string): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+    const request: UpdateCategoryRequest = { id, label };
+    const response = await this.communicator.post<BasicResponse>(
+      '/category/update',
+      request,
+      authToken
+    );
+    return response;
+  }
 
-    updateUser: async (request: UserRequest): Promise<BasicResponse> => {
-      const authToken = this.requireToken();
+  //  CONTACT
 
-      const response = await this.communicator.post<BasicResponse>(
-        '/user/update',
-        request,
-        authToken
-      );
+  public async getContact(contactId: string): Promise<GetContactResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.get<GetContactResponse>(
+      `/contact/${contactId}`,
+      authToken
+    );
+    return response;
+  }
 
-      return response;
-    }
+  public async deleteContact(contactId: string): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.delete<BasicResponse>(
+      `/contact/${contactId}`,
+      authToken
+    );
+    return response;
+  }
+
+  public async addContact(contactData: AddContactRequest): Promise<any> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.post<any>(
+      '/contact/add',
+      contactData,
+      authToken
+    );
+    console.log("this is what we got from the backend: ", response);
+    return response;
+  }
+
+  public async updateContact(contactData: Contact): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.post<BasicResponse>(
+      '/contact/update',
+      contactData,
+      authToken
+    );
+    return response;
+  }
+
+  // EVENT
+
+  public async getEvent(eventId: string): Promise<GetEventResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.get<GetEventResponse>(`/event/${eventId}`, authToken);
+    return response;
+  }
+
+  public async deleteEvent(eventId: string): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.delete<BasicResponse>(`/event/${eventId}`, authToken);
+    return response;
+  }
+
+  public async addEvent(eventData: AddEventRequest): Promise<any> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.post<BasicResponse>(
+      '/event/add',
+      eventData,
+      authToken
+    );
+    return response;
+  }
+
+  public async updateEvent(eventData: UpdateEventRequest): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+    const response = await this.communicator.post<BasicResponse>(
+      '/event/update',
+      eventData,
+      authToken
+    );
+    return response;
+  }
+
+  //  TIMELINE
+
+  public async getTimeline(
+    userID: string,
+    categoryIDs: string[],
+    contactIDs: string[]
+  ): Promise<TimelineResponse> {
+    const authToken = this.requireToken();
+
+    const request: TimelineRequest = {
+      userID,
+      categoryIDs,
+      contactIDs,
+    };
+
+    const response = await this.communicator.post<TimelineResponse>(
+      '/timeline/',
+      request,
+      authToken
+    );
+
+    return response;
+  }
+
+  // USER
+
+  public async updateUser(request: UserRequest): Promise<BasicResponse> {
+    const authToken = this.requireToken();
+
+    const response = await this.communicator.post<BasicResponse>(
+      '/user/update',
+      request,
+      authToken
+    );
+
+    return response;
   }
 }
 
 type AuthToken = {
   token: string;
   username: string;
-}
+};

@@ -4,7 +4,7 @@ export interface Contact extends Person {
   id: string;
   phone: string;
   email: string;
-  notes: string;
+  note: string;
   image?: string;
   timeline: string[];
   categories?: string[];
