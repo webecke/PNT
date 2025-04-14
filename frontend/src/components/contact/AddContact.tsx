@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
-import ProfileIcon from "@/components/ProfileIcon";
-import { useRouter } from "next/navigation";
-import { AddContactPresenter, AddContactView } from "@/presenter/AddContactPresenter";
+import React, { useRef, useState } from 'react';
+import ProfileIcon from '@/components/ProfileIcon';
+import { useRouter } from 'next/navigation';
+import { AddContactPresenter, AddContactView } from '@/presenter/AddContactPresenter';
+import { useUserContext } from '@/contexts/user-context';
+import { Contact } from '@/model/Contact';
 
 interface Props {
   presenter?: AddContactPresenter;
@@ -9,27 +11,35 @@ interface Props {
 
 const AddContact = (props: Props) => {
   const router = useRouter();
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [notes, setNotes] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+
+  const { setContacts } = useUserContext();
 
   const listener: AddContactView = {
-    navigateTo: url => router.push(url)
-  }
+    navigateTo: (url) => router.push(url),
+  };
 
   const presenter = useRef(props.presenter ?? new AddContactPresenter(listener));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await presenter.current.submit({
+    const response = await presenter.current.submit({
       firstName: firstName,
       lastName: lastName,
       phone: phone,
       email: email,
       note: notes,
     });
+    if (response) {
+      setContacts((prev) => [
+        ...prev,
+        { firstName, lastName, phone, email, note: notes, id: response.contactID } as Contact,
+      ]);
+    }
   };
 
   return (

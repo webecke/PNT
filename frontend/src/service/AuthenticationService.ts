@@ -1,7 +1,7 @@
-import { ServerFacade } from "@/service/server";
-import { UserRequest } from "@/service/server/message/UserMessage";
-import { User } from "@/model/User";
-import { AlmightySingleton } from "@/AlmightySingleton";
+import { ServerFacade } from '@/service/server';
+import { UserRequest } from '@/service/server/message/UserMessage';
+import { User } from '@/model/User';
+import { AlmightySingleton } from '@/AlmightySingleton';
 
 export default class AuthenticationService {
   private server: ServerFacade;
@@ -10,7 +10,12 @@ export default class AuthenticationService {
     this.server = server ?? AlmightySingleton.getInstance().getServerFacade();
   }
 
-  public async register(firstName: string, lastName: string, email: string, password: string): Promise<User> {
+  public async register(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ): Promise<User> {
     const request: UserRequest = { firstName, lastName, password, username: email };
     const response = await this.server.addUser(request);
     if (!response.user) {
@@ -19,8 +24,9 @@ export default class AuthenticationService {
     return response.user;
   }
 
-  public async login(email: string, password: string): Promise<void> {
-    await this.server.login(email, password);
+  public async login(email: string, password: string): Promise<any> {
+    const response = await this.server.login(email, password);
+    return response.user;
   }
 
   public async logout(): Promise<void> {

@@ -1,6 +1,10 @@
-import Link from "next/link";
+'use client';
+
+import { useUserContext } from '@/contexts/user-context';
+import Link from 'next/link';
 
 export default function Header() {
+  const { user } = useUserContext();
   return (
     <header className="w-screen overflow-auto bg-gray-800 text-white">
       <div className="flex justify-between items-center">
@@ -30,12 +34,18 @@ export default function Header() {
 
         {/* Right Section: Sign Up and Login */}
         <div className="flex space-x-6 mr-6">
-          <Link href="/signup" className="hover:text-gray-300">
-            Signup
-          </Link>
-          <Link href="/login" className="hover:text-gray-300">
-            Login
-          </Link>
+          {user ? (
+            <div>Log out</div>
+          ) : (
+            <>
+              <Link href="/signup" className="hover:text-gray-300">
+                Signup
+              </Link>
+              <Link href="/login" className="hover:text-gray-300">
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

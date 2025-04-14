@@ -1,13 +1,24 @@
 'use client';
 
-import Link from "next/link";
-import ContactList from "@/components/contact/ContactList";
-import React, { useState } from "react";
-import EventList from "@/components/event/EventList";
+import Link from 'next/link';
+import ContactList from '@/components/contact/ContactList';
+import React, { useEffect, useState } from 'react';
+import EventList from '@/components/event/EventList';
+import { useUserContext } from '@/contexts/user-context';
 
 export default function Home() {
-  const [content, setContent] = useState<"contacts" | "events">("contacts");
-  const [category, setCategory] = useState<string>("");
+  const [content, setContent] = useState<'contacts' | 'events'>('contacts');
+  const [category, setCategory] = useState<string>('');
+  const {
+    user,
+    setUser,
+    events,
+    setEvents,
+    contacts,
+    setContacts,
+    selectedEvent,
+    setSelectedEvent,
+  } = useUserContext();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,17 +31,17 @@ export default function Home() {
       <div className="w-1/4 bg-gray-100 p-6 space-y-6 flex-shrink-0">
         <div className="text-3xl font-bold">Menu</div>
         <button
-          onClick={() => setContent("contacts")}
+          onClick={() => setContent('contacts')}
           className={`w-full px-4 py-2 text-lg font-semibold rounded-md ${
-            content === "contacts" ? "bg-blue-500 text-white" : "bg-gray-300"
+            content === 'contacts' ? 'bg-blue-500 text-white' : 'bg-gray-300'
           }`}
         >
           Contacts
         </button>
         <button
-          onClick={() => setContent("events")}
+          onClick={() => setContent('events')}
           className={`w-full px-4 py-2 text-lg font-semibold rounded-md ${
-            content === "events" ? "bg-blue-500 text-white" : "bg-gray-300"
+            content === 'events' ? 'bg-blue-500 text-white' : 'bg-gray-300'
           }`}
         >
           Events
@@ -39,23 +50,23 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="flex flex-col flex-1 p-6 overflow-hidden">
-        <div className="text-5xl mb-6">Welcome to Personal Network Tracker</div>
+        <div className="text-5xl mb-6">
+          Welcome {user ? user.firstName : 'to Personal Network Tracker'}
+        </div>
 
         {/* Header and Action Buttons */}
         <div className="flex justify-between items-center mb-6">
-          <div className="text-5xl font-bold">
-            {content === "contacts" ? "Contacts" : "Events"}
-          </div>
+          <div className="text-5xl font-bold">{content === 'contacts' ? 'Contacts' : 'Events'}</div>
           <form className="relative" onSubmit={handleSearch}>
             <input
               type="text"
               placeholder="Filter by category..."
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              onChange={e => setCategory(e.target.value)}
+              onChange={(e) => setCategory(e.target.value)}
             />
           </form>
 
-          {content === "contacts" && (
+          {content === 'contacts' && (
             <Link
               href="/addContact"
               className="px-4 py-2 rounded-md shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
@@ -63,7 +74,7 @@ export default function Home() {
               Add Contact
             </Link>
           )}
-          {content === "events" && (
+          {content === 'events' && (
             <Link
               href="/addEvent"
               className="px-4 py-2 rounded-md shadow-md bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition duration-200"
@@ -75,7 +86,11 @@ export default function Home() {
 
         {/* Conditional Rendering of Lists */}
         <div className="flex-1 overflow-x-hidden">
-          {content === "contacts" ? <ContactList category={category} /> : <EventList category={category} />}
+          {content === 'contacts' ? (
+            <ContactList category={category} />
+          ) : (
+            <EventList category={category} />
+          )}
         </div>
       </div>
     </div>
