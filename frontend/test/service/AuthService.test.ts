@@ -4,6 +4,7 @@ import { ServerFacade } from "@/service/server";
 import { anything, deepEqual, instance, mock, verify, when } from "@typestrong/ts-mockito";
 import { AddUserResponse, UserRequest } from "@/service/server/message/UserMessage";
 import { User } from "@/model/User";
+import { AuthResponse } from "@/service/server/message/AuthMessage";
 
 const USER = {
   username: "test.email@email.com",
@@ -27,7 +28,7 @@ describe("AuthService", () => {
     service = new AuthenticationService(server);
 
     when(serverMock.addUser(anything())).thenResolve(addUserResponse);
-    when(serverMock.login(anything(), anything())).thenResolve(true);
+    when(serverMock.login(anything(), anything())).thenResolve({} as AuthResponse);
     when(serverMock.logout()).thenResolve(true);
   });
 

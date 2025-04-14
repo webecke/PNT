@@ -3,6 +3,7 @@
 import { Contact } from '@/model/Contact';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Event } from '@/model/Event';
+import { TimelineEvent } from "@/model/TimelineEvent";
 
 export interface User {
   firstName: string;
@@ -15,8 +16,8 @@ export interface User {
 interface UserContextType {
   user: User | undefined;
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
-  events: Event[];
-  setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+  events: TimelineEvent[];
+  setEvents: React.Dispatch<React.SetStateAction<TimelineEvent[]>>;
   contacts: Contact[];
   setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
   selectedContactId: string | undefined;
@@ -42,7 +43,7 @@ export function UserProvider({
 }) {
   const [user, setUser] = useState<User | undefined>(fetchedUser);
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<TimelineEvent[]>([]);
   const [selectedContactId, setSelectedContactId] = useState<string | undefined>();
   const [selectedEventId, setSelectedEventId] = useState<string | undefined>();
   const [content, setContent] = useState<'contacts' | 'events'>('contacts');
@@ -55,7 +56,7 @@ export function UserProvider({
         contacts,
         selectedContactId,
         selectedEventId,
-        content, 
+        content,
         setContent,
         setUser,
         setEvents,

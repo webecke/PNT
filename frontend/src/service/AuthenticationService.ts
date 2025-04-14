@@ -24,7 +24,7 @@ export default class AuthenticationService {
     return response.user;
   }
 
-  public async login(email: string, password: string): Promise<any> {
+  public async login(email: string, password: string): Promise<User | undefined> {
     const response = await this.server.login(email, password);
     return response.user;
   }

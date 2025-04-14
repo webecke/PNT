@@ -8,7 +8,7 @@
 import { ServerCommunicator } from './ServerCommunicator';
 import { AddUserResponse, UserRequest } from '@/service/server/message/UserMessage';
 import { BasicResponse } from '@/service/server/message/BasicResponse';
-import { AuthResponse, LoginRequest } from '@/service/server/message/AuthMessage';
+import { AuthResponse, LoginRequest, LoginResponse } from '@/service/server/message/AuthMessage';
 import {
   AddCategoryRequest,
   GetCategoryResponse,
@@ -47,9 +47,9 @@ export class ServerFacade {
     this.authToken = authToken;
   }
 
-  public async login(username: string, password: string): Promise<any> {
+  public async login(username: string, password: string): Promise<LoginResponse> {
     const request: LoginRequest = { username, password };
-    const response = await this.communicator.post<AuthResponse>('/auth/login', request);
+    const response = await this.communicator.post<LoginResponse>('/auth/login', request);
     this.setAuthToken({ token: response.authtoken, username: username });
     console.log(response);
     return response;
