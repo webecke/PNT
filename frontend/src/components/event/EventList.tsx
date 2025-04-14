@@ -1,7 +1,10 @@
-import { useMemo } from "react";
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
 import EventDetail from "./EventDetail";
 import { useUserContext } from "@/contexts/user-context";
+import { TimelineEvent } from "@/model/TimelineEvent";
 
 interface Props {
   category?: string;
@@ -9,11 +12,18 @@ interface Props {
 
 const EventList = (props: Props) => {
   const { user, events, selectedEventId, setSelectedEventId } = useUserContext();
+  const [filteredEvents, setFilteredEvents] = useState<TimelineEvent[]>([]);
 
-  const filteredEvents = useMemo(() => {
-    return props.category
-      ? events.filter((event) => event.categories?.includes(props.category!))
+  useEffect(() => {
+    const filtered = props.category
+      ? events.filter(event =>
+          event.categories?.some(category =>
+            category.toLowerCase().includes(props.category!.toLowerCase())
+          )
+        )
       : events;
+  
+    setFilteredEvents(filtered);
   }, [events, props.category]);
 
   return (

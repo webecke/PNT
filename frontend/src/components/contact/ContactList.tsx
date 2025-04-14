@@ -1,5 +1,7 @@
+"use client";
+
 import { Contact } from '@/model/Contact';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import ContactDetail from './ContactDetail';
 import { IoArrowBackSharp } from 'react-icons/io5';
 import { useUserContext } from '@/contexts/user-context';
@@ -10,11 +12,15 @@ interface Props {
 
 const ContactList = (props: Props) => {
   const { user, contacts, selectedContactId, setSelectedContactId } = useUserContext();
+  const [filteredContacts, setFilteredContacts] = useState<Contact[]>([]);
 
-  const filteredContacts: Contact[] = useMemo(() => {
-    return props.category
-      ? contacts.filter((contact) => contact.categories?.includes(props.category!))
+  // Update filteredContacts whenever contacts or category changes
+  useEffect(() => {
+    const filtered = props.category
+      ? contacts.filter(contact => contact.note?.includes(props.category!))
       : contacts;
+
+    setFilteredContacts(filtered);
   }, [contacts, props.category]);
 
   return (
@@ -32,7 +38,7 @@ const ContactList = (props: Props) => {
             <div className="w-1/2 mx-auto">
               <ul className="border rounded-lg p-4 bg-white shadow">
                 {filteredContacts.map((contact) => (
-                  <li key={contact.id} className="p-2 border-b hover:bg-gray-100 transition">
+                  <li key={contact.id ?? `${contact.firstName}-${contact.lastName}`} className="p-2 border-b hover:bg-gray-100 transition">
                     <div onClick={() => setSelectedContactId(contact.id)}>
                       <div className="cursor-pointer flex justify-between items-center">
                         <span className="font-semibold">
@@ -49,7 +55,9 @@ const ContactList = (props: Props) => {
             <div className="text-lg mb-6">No contacts added yet</div>
           )}
         </>
-      ) : <div className="text-lg">Please log in </div>}
+      ) : (
+        <div className="text-lg">Please log in</div>
+      )}
     </>
   );
 };
