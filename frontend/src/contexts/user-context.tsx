@@ -1,17 +1,9 @@
 'use client';
 
 import { Contact } from '@/model/Contact';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Event } from '@/model/Event';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { TimelineEvent } from "@/model/TimelineEvent";
-
-export interface User {
-  firstName: string;
-  lastName: string;
-  username: string;
-  password: string;
-  token: string;
-}
+import { User } from "@/model/User";
 
 interface UserContextType {
   user: User | undefined;

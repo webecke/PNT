@@ -4,6 +4,7 @@ import { AlmightySingleton } from "@/AlmightySingleton";
 import { hardcodedEventIds } from "@/utils/mockContacts";
 import { Contact } from "@/model/Contact";
 import { UpdateEventRequest } from "@/service/server/message/EventMessage";
+import { CreateResponse } from "@/service/server/message/CreateResponse";
 
 export default class EventService {
   private server: ServerFacade;
@@ -12,7 +13,7 @@ export default class EventService {
     this.server = server ?? AlmightySingleton.getInstance().getServerFacade();
   }
 
-  public async createEvent(newEventData: NewEventData): Promise<any> {
+  public async createEvent(newEventData: NewEventData): Promise<CreateResponse> {
     const response = await this.server.addEvent(newEventData);
     console.log("EventService.createEvent response: ", response);
     return response;

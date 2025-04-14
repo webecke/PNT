@@ -5,6 +5,7 @@ import EventService from "@/service/EventService";
 import { ServerFacade } from "@/service/server";
 import { BasicResponse } from "@/service/server/message/BasicResponse";
 import { GetEventResponse } from "@/service/server/message/EventMessage";
+import { CreateResponse } from "@/service/server/message/CreateResponse";
 
 const NEW_EVENT_DATA: NewEventData = {
   title: "EVENT-NAME",
@@ -28,6 +29,11 @@ const getEventResponse: GetEventResponse = {
   event: {} as TimelineEvent
 };
 
+const createResponse: CreateResponse = {
+  ...basicResponse,
+  id: "TEST-ID"
+};
+
 describe("EventService", () => {
   let serverMock: ServerFacade;
   let service: EventService;
@@ -37,7 +43,7 @@ describe("EventService", () => {
     const server = instance(serverMock);
     service = new EventService(server);
 
-    when(serverMock.addEvent(anything())).thenResolve(basicResponse);
+    when(serverMock.addEvent(anything())).thenResolve(createResponse); // CreateResponse
     when(serverMock.getEvent(anything())).thenResolve(getEventResponse); // GetEventResponse
     when(serverMock.updateEvent(anything())).thenResolve(basicResponse);
     when(serverMock.deleteEvent(anything())).thenResolve(basicResponse);

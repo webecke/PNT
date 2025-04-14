@@ -22,6 +22,7 @@ import {
 } from '@/service/server/message/EventMessage';
 import { TimelineRequest, TimelineResponse } from '@/service/server/message/TimelineMessage';
 import { Contact } from '@/model/Contact';
+import { CreateResponse } from "@/service/server/message/CreateResponse";
 
 export class ServerFacade {
   private communicator: ServerCommunicator;
@@ -182,9 +183,9 @@ export class ServerFacade {
     return response;
   }
 
-  public async addEvent(eventData: AddEventRequest): Promise<any> {
+  public async addEvent(eventData: AddEventRequest): Promise<CreateResponse> {
     const authToken = this.requireToken();
-    const response = await this.communicator.post<BasicResponse>(
+    const response = await this.communicator.post<CreateResponse>(
       '/event/add',
       eventData,
       authToken

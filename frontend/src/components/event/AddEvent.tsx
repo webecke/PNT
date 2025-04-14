@@ -5,7 +5,6 @@ import { AddEventPresenter } from "@/presenter/AddEventPresenter";
 import { AddContactView } from "@/presenter/AddContactPresenter";
 import { useUserContext } from "@/contexts/user-context";
 import { Contact } from "@/model/Contact";
-import { Category } from "@/model/Category";
 
 interface Props {
   presenter?: AddEventPresenter;
@@ -41,7 +40,7 @@ const AddEvent = (props: Props) => {
         title: name,
         date: date,
         description: description,
-        categories: categories.map(cat => ({ name: cat, label: cat, id: cat }) as Category),
+        categories: categories,
         contacts: selectedContacts.map(contact => contact.id),
       }]);
     }
