@@ -1,49 +1,20 @@
-// import { TimelineEvent } from "@/model/TimelineEvent";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
 import EventDetail from "./EventDetail";
-import { EventListPresenter, EventListView } from "@/presenter/EventListPresenter";
-// import { QueryState } from "@/utils/QueryState";
 import { useUserContext } from "@/contexts/user-context";
 
 interface Props {
   category?: string;
-  presenter?: EventListPresenter;
 }
 
 const EventList = (props: Props) => {
-  // TODO Combine EventList and ContactList
-  // TODO? Change EventList and ContactList to use selected Event/Contact instead of their IDs
-  const { user, events, setEvents, selectedEventId, setSelectedEventId } = useUserContext();
-  // const [queryState, setQueryState] = useState<QueryState>(QueryState.IN_PROCESS);
+  const { user, events, selectedEventId, setSelectedEventId } = useUserContext();
 
-  const listener: EventListView = {};
-  const presenter = useRef(props.presenter ?? new EventListPresenter(listener));
-
-  // useEffect(() => {
-  //   // See comment from ContactDetail.tsx about async useEffect()
-  //   const asyncFunction = async () => {
-  //     const timeline = await presenter.current.getTimeline();
-  //     // setQueryState(timeline ? QueryState.SUCCESS : QueryState.FAILURE);
-  //     setEvents(timeline);
-  //   };
-  //   asyncFunction();
-  // }, []);
-
-  // TODO move into EventService.getTimeline
-  // const filteredEvents = useMemo(() => {
-  //   return props.category
-  //     ? events.filter((event) => event.categories?.includes(props.category!))
-  //     : events;
-  // }, [events, props.category]);
-
-  // switch (queryState) {
-  //   // TODO Move the queryState variable (and logic) into the presenter
-  //   case QueryState.IN_PROCESS:
-  //     return <div>Loading timeline...</div>;
-  //   case QueryState.FAILURE:
-  //     return <div>It looks like there are no events yet. Go ahead and add a few!</div>;
-  // }
+  const filteredEvents = useMemo(() => {
+    return props.category
+      ? events.filter((event) => event.categories?.includes(props.category!))
+      : events;
+  }, [events, props.category]);
 
   return (
     <>
@@ -54,10 +25,10 @@ const EventList = (props: Props) => {
           </div>
           <EventDetail eventId={selectedEventId} />
         </div> :
-        events.length > 0 ?
+        filteredEvents.length > 0 ?
         <div className="mx-auto">
           <ul className="border rounded-lg p-4 bg-white shadow">
-            {events.map((event) => (
+            {filteredEvents.map((event) => (
               <li
                 key={event.id}
                 className="p-2 border-b hover:bg-gray-100 transition"
